@@ -1,0 +1,28 @@
+{
+	"settings": {
+		"Main.Mute": {
+			"description": "Turn mute on or off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Source": {
+			"description": "Select the source",
+			"max": 10,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Volume": {
+			"description": "Set the volume in dB",
+			"max": 19,
+			"min": -99,
+			"operators": "+-?",
+			"type": "number",
+			"unit": "dB"
+		}
+	}
+}

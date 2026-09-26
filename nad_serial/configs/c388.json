@@ -1,0 +1,522 @@
+{
+	"device_types": [
+		"amplifier"
+	],
+	"settings": {
+		"Main.Action": {
+			"description": "BluOS Service Mode (if card present)",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"BluOSServiceMode",
+				"BluOSUpgrade",
+				"BluOSFactoryReset",
+				"FactoryReset"
+			]
+		},
+		"Main.AutoSense": {
+			"description": "Turn Amp on when signal sensed",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.AutoStandby": {
+			"description": "Do not automatically power off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.BT.Name": {
+			"description": "Set the Bluetooth Friendly name",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Main.BTWorkMode": {
+			"description": "AMP is the audio source",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Source",
+				"Sink"
+			]
+		},
+		"Main.Balance": {
+			"description": "Range -7L .. 0 .. -7R",
+			"operators": "=+-?",
+			"type": "enum",
+			"unit": "dB",
+			"values": [
+				"-7.0L",
+				"-6.0L",
+				"-5.0L",
+				"-4.0L",
+				"-3.0L",
+				"-2.0L",
+				"-1.0L",
+				"0",
+				"-1.0R",
+				"-2.0R",
+				"-3.0R",
+				"-4.0R",
+				"-5.0R",
+				"-6.0R",
+				"-7.0R"
+			]
+		},
+		"Main.Bass": {
+			"description": "Set bass",
+			"max": 7,
+			"min": -7,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Brightness": {
+			"description": "LCD and Standby LED brightness",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"1",
+				"2",
+				"3"
+			]
+		},
+		"Main.DigitalOut.Rate": {
+			"description": "Set the digital out sample rate",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"48",
+				"192",
+				"96"
+			]
+		},
+		"Main.Filters": {
+			"description": "Main outputs are full range",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Full Range",
+				"High Pass"
+			]
+		},
+		"Main.IR.Channel": {
+			"description": "Set the IR Channel for the front IR sensor",
+			"max": 4,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.ListeningMode": {
+			"description": "Listening Mode",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Reversed",
+				"Stereo",
+				"Mono"
+			]
+		},
+		"Main.Polarity": {
+			"description": "Set polarity Positive",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Positive",
+				"Negative"
+			]
+		},
+		"Main.PreoutSub": {
+			"description": "Subwoofer output becomes full range",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"PreOut",
+				"Subwoofer"
+			]
+		},
+		"Main.Source": {
+			"max": "Main.Sources"
+		},
+		"Main.Sources": {
+			"description": "Returns the total number of sources depending on what MDC cards are installed.",
+			"operators": "?",
+			"type": "number"
+		},
+		"Main.SpeakerA": {
+			"description": "Turn Speaker A On",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.SpeakerB": {
+			"description": "Turn Speaker B Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.ToneDefeat": {
+			"description": "Turn tone controls on",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Treble": {
+			"description": "Set treble",
+			"max": 7,
+			"min": -7,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Volume": {
+			"max": 10,
+			"min": -70,
+			"operators": "=+-?"
+		},
+		"Main.VolumeDisplayMode": {
+			"description": "Show volume as a percent",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Percent",
+				"Decibel"
+			]
+		},
+		"Source1.ADCSampleRate": {
+			"description": "This only applies to analog sources. For Phono inputs the value is fixed at 48.",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"192",
+				"96",
+				"48"
+			]
+		},
+		"Source1.AnalogGain": {
+			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
+			"max": 0,
+			"min": -20,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source1.Enabled": {
+			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source1.Name": {
+			"description": "Set the source name",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Source10.ADCSampleRate": {
+			"description": "This only applies to analog sources. For Phono inputs the value is fixed at 48.",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"192",
+				"96",
+				"48"
+			]
+		},
+		"Source10.AnalogGain": {
+			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
+			"max": 0,
+			"min": -20,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source10.Enabled": {
+			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source10.Name": {
+			"description": "Set the source name",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Source2.ADCSampleRate": {
+			"description": "This only applies to analog sources. For Phono inputs the value is fixed at 48.",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"192",
+				"96",
+				"48"
+			]
+		},
+		"Source2.AnalogGain": {
+			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
+			"max": 0,
+			"min": -20,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source2.Enabled": {
+			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source2.Name": {
+			"description": "Set the source name",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Source3.ADCSampleRate": {
+			"description": "This only applies to analog sources. For Phono inputs the value is fixed at 48.",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"192",
+				"96",
+				"48"
+			]
+		},
+		"Source3.AnalogGain": {
+			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
+			"max": 0,
+			"min": -20,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source3.Enabled": {
+			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source3.Name": {
+			"description": "Set the source name",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Source4.ADCSampleRate": {
+			"description": "This only applies to analog sources. For Phono inputs the value is fixed at 48.",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"192",
+				"96",
+				"48"
+			]
+		},
+		"Source4.AnalogGain": {
+			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
+			"max": 0,
+			"min": -20,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source4.Enabled": {
+			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source4.Name": {
+			"description": "Set the source name",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Source5.ADCSampleRate": {
+			"description": "This only applies to analog sources. For Phono inputs the value is fixed at 48.",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"192",
+				"96",
+				"48"
+			]
+		},
+		"Source5.AnalogGain": {
+			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
+			"max": 0,
+			"min": -20,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source5.Enabled": {
+			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source5.Name": {
+			"description": "Set the source name",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Source6.ADCSampleRate": {
+			"description": "This only applies to analog sources. For Phono inputs the value is fixed at 48.",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"192",
+				"96",
+				"48"
+			]
+		},
+		"Source6.AnalogGain": {
+			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
+			"max": 0,
+			"min": -20,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source6.Enabled": {
+			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source6.Name": {
+			"description": "Set the source name",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Source7.ADCSampleRate": {
+			"description": "This only applies to analog sources. For Phono inputs the value is fixed at 48.",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"192",
+				"96",
+				"48"
+			]
+		},
+		"Source7.AnalogGain": {
+			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
+			"max": 0,
+			"min": -20,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source7.Enabled": {
+			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source7.Name": {
+			"description": "Set the source name",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Source8.ADCSampleRate": {
+			"description": "This only applies to analog sources. For Phono inputs the value is fixed at 48.",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"192",
+				"96",
+				"48"
+			]
+		},
+		"Source8.AnalogGain": {
+			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
+			"max": 0,
+			"min": -20,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source8.Enabled": {
+			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source8.Name": {
+			"description": "Set the source name",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Source9.ADCSampleRate": {
+			"description": "This only applies to analog sources. For Phono inputs the value is fixed at 48.",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"192",
+				"96",
+				"48"
+			]
+		},
+		"Source9.AnalogGain": {
+			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
+			"max": 0,
+			"min": -20,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source9.Enabled": {
+			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source9.Name": {
+			"description": "Set the source name",
+			"operators": "=+-?",
+			"type": "string"
+		}
+	}
+}

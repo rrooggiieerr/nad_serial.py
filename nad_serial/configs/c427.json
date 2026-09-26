@@ -1,0 +1,41 @@
+{
+	"device_types": [
+		"tuner"
+	],
+	"settings": {
+		"Main.IR.Channel": {
+			"description": "Set IR Channel",
+			"max": 2,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Sleep": {
+			"description": "Number of minutes for sleep function",
+			"max": 90,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "minutes"
+		},
+		"Tuner.FM.Mute": {
+			"description": "Turns FM Mute off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Tuner.FM.RDSName": {
+			"description": "Current Stations RDS Name",
+			"operators": "?",
+			"type": "string"
+		},
+		"Tuner.FM.RDSText": {
+			"description": "Current Stations RDS Text",
+			"operators": "?",
+			"type": "string"
+		}
+	}
+}

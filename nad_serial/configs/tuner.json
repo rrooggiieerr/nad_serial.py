@@ -1,0 +1,32 @@
+{
+	"settings": {
+		"Tuner.AM.Frequency": {
+			"description": "The AM frequency",
+			"operators": "=+-?",
+			"type": "string",
+			"unit": "kHz"
+		},
+		"Tuner.Band": {
+			"description": "Select the tuner band",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"FM",
+				"AM"
+			]
+		},
+		"Tuner.FM.Frequency": {
+			"description": "The FM frequency",
+			"operators": "=+-?",
+			"type": "string",
+			"unit": "MHz"
+		},
+		"Tuner.Preset": {
+			"description": "Select the tuner preset",
+			"max": 40,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		}
+	}
+}

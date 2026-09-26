@@ -1,0 +1,23 @@
+{
+	"settings": {
+		"Main.Model": {
+			"description": "Query the model",
+			"operators": "?",
+			"type": "string"
+		},
+		"Main.Power": {
+			"description": "Turn the power on or off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Version": {
+			"description": "Query the firmware version",
+			"operators": "?",
+			"type": "string"
+		}
+	}
+}

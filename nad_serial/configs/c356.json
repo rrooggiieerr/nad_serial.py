@@ -1,0 +1,55 @@
+{
+	"device_types": [
+		"amplifier"
+	],
+	"settings": {
+		"Main.Source": {
+			"max": null,
+			"min": null,
+			"type": "enum",
+			"values": [
+				"CD",
+				"Tuner",
+				"Video",
+				"Disc",
+				"Ipod",
+				"Tape2",
+				"Aux"
+			]
+		},
+		"Main.SpeakerA": {
+			"description": "Set Main Speaker A On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.SpeakerB": {
+			"description": "Set Main Speaker B On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Tape1": {
+			"description": "Set Tape1 On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Version": null,
+		"Main.Volume": {
+			"max": null,
+			"min": null,
+			"operators": "+-",
+			"unit": null
+		}
+	}
+}

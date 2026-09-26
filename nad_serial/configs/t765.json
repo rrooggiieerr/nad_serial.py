@@ -1,0 +1,2310 @@
+{
+	"device_types": [
+		"amplifier",
+		"tuner"
+	],
+	"settings": {
+		"DSP.Version": {
+			"description": "Query DSP Version",
+			"operators": "?",
+			"type": "string"
+		},
+		"Ipod.Album": {
+			"description": "Get the current playing album name",
+			"operators": "?",
+			"type": "string"
+		},
+		"Ipod.Artist": {
+			"description": "Get the current playing track artist",
+			"operators": "?",
+			"type": "string"
+		},
+		"Ipod.AudiobookSpeed": {
+			"description": "iPod Audiobook Speed",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Slow",
+				"Normal",
+				"Fast"
+			]
+		},
+		"Ipod.AutoConnect": {
+			"description": "AutoConnect to iPod when iPod source is selected",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Ipod.Enabled": {
+			"description": "Enable/Disable the iPod interface",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Ipod.MenuTimeout": {
+			"description": "Timeout before returning to iPod \"Now Playing\" screen",
+			"max": 60,
+			"min": 0,
+			"operators": "=+-?",
+			"step": 5,
+			"type": "number",
+			"unit": "seconds"
+		},
+		"Ipod.PlayMode": {
+			"description": "Set the iPod to Rewind",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Rewind",
+				"FastForward",
+				"Pause",
+				"Play"
+			]
+		},
+		"Ipod.Repeat": {
+			"description": "Set the iPod to Repeat Off, One, or All",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"One",
+				"All"
+			]
+		},
+		"Ipod.Shuffle": {
+			"description": "Set the iPod to Shuffle Off, Songs, or Albums. Note: must be set before selecting music.",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Albums",
+				"Songs",
+				"Off"
+			]
+		},
+		"Ipod.Title": {
+			"description": "Get the current playing track title",
+			"operators": "?",
+			"type": "string"
+		},
+		"Ipod.Track": {
+			"description": "Track Next/Previous",
+			"operators": "+-",
+			"type": "string"
+		},
+		"Main.Amp.Back": {
+			"description": "Set the back Amplifier output to Zone2",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Zone2",
+				"Front",
+				"Zone4",
+				"Zone3",
+				"Back"
+			]
+		},
+		"Main.Audyssey.ADV": {
+			"description": "Audyssey Volume (Command Valid with AM200 Only)",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Heavy",
+				"Medium",
+				"Light",
+				"Off"
+			]
+		},
+		"Main.Audyssey.DEQ": {
+			"description": "Audyssey Dynamic EQ (Command Valid with AM200 Only)",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Audyssey.Offset": {
+			"description": "Audyssey Dynamic EQ Offset (Command Valid with AM200 Only)",
+			"max": 15,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.AutoTrigger": {
+			"description": "Set Trigger Input",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Main",
+				"All",
+				"Zone4",
+				"Zone2",
+				"Zone3"
+			]
+		},
+		"Main.Bass": {
+			"description": "Set the Bass Tone Control",
+			"max": 10,
+			"min": -10,
+			"operators": "=+-?",
+			"step": 2,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.CEC.Arc": {
+			"description": "Enables selection of ARC in Source Setup OSD Menu",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"SourceSetup",
+				"Auto",
+				"Off"
+			]
+		},
+		"Main.CEC.Audio": {
+			"description": "Receiver broadcasts a CEC message indicating it is an active audio system",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.CEC.Power": {
+			"description": "Feature Disabled",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.CEC.Switch": {
+			"description": "Allows CEC to change receiver's source",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.CenterDialog": {
+			"description": "Set the CenterDialog Tone Control",
+			"max": 6,
+			"min": -6,
+			"operators": "=+-?",
+			"step": 2,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.ControlStandby": {
+			"description": "Turns Video board off when in standby and does not allow ethernet control",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.DTS.CenterGain": {
+			"description": "Set DTS Center Gain",
+			"max": 0.5,
+			"min": 0,
+			"operators": "=+-?",
+			"step": 0.1,
+			"type": "number"
+		},
+		"Main.DTS.DRC": {
+			"description": "Set DTS Dynamic Range Control",
+			"max": 100,
+			"min": 25,
+			"operators": "=+-?",
+			"step": 25,
+			"type": "number",
+			"unit": "%"
+		},
+		"Main.Dimmer": {
+			"description": "Front VFD Dimmer",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Distance.BackLeft": {
+			"description": "Set the speaker distance in Feet",
+			"max": 30,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "ft"
+		},
+		"Main.Distance.BackRight": {
+			"description": "Set the speaker distance in Feet",
+			"max": 30,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "ft"
+		},
+		"Main.Distance.Center": {
+			"description": "Set the speaker distance in Feet",
+			"max": 30,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "ft"
+		},
+		"Main.Distance.Left": {
+			"description": "Set the speaker distance in Feet",
+			"max": 30,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "ft"
+		},
+		"Main.Distance.Right": {
+			"description": "Set the speaker distance in Feet",
+			"max": 30,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "ft"
+		},
+		"Main.Distance.Sub": {
+			"description": "Set the speaker distance in Feet",
+			"max": 30,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "ft"
+		},
+		"Main.Distance.SurroundLeft": {
+			"description": "Set the speaker distance in Feet",
+			"max": 30,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "ft"
+		},
+		"Main.Distance.SurroundRight": {
+			"description": "Set the speaker distance in Feet",
+			"max": 30,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "ft"
+		},
+		"Main.Distance.UOM": {
+			"description": "Set the Unit of Measurement",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Feet",
+				"Meters"
+			]
+		},
+		"Main.Dolby.CenterWidth": {
+			"description": "Dolby Center Width",
+			"max": 7,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Dolby.DRC": {
+			"description": "Dolby Dynamic Range Control (100% is maximum dynamic range)",
+			"max": 100,
+			"min": 25,
+			"operators": "=+-?",
+			"step": 25,
+			"type": "number",
+			"unit": "%"
+		},
+		"Main.Dolby.Dimension": {
+			"description": "Dolby Dimension",
+			"max": 7,
+			"min": -7,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Dolby.Panorama": {
+			"description": "Set Dolby Panorama",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.EnhancedBass": {
+			"description": "Set Enhanced Bass On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.EnhancedStereo.Back": {
+			"description": "Set Enhanced Stereo Speakers",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.EnhancedStereo.Center": {
+			"description": "Set Enhanced Stereo Speakers",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.EnhancedStereo.Front": {
+			"description": "Set Enhanced Stereo Speakers",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.EnhancedStereo.Surround": {
+			"description": "Set Enhanced Stereo Speakers",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.IR": {
+			"description": "Send IR Commands via RS232 where <VALUE> is decimal IR code",
+			"operators": "=",
+			"type": "string"
+		},
+		"Main.IR.Channel": {
+			"description": "Set the Main IR Channel (allows for two NADs to be controlled separately)",
+			"max": 1,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.IR1": {
+			"description": "String showing the HEX value of a supported IR command (0x877C customer code)",
+			"operators": "=",
+			"type": "string"
+		},
+		"Main.IR2": {
+			"description": "String showing the HEX value of a supported IR command (0x860F customer code)",
+			"operators": "=",
+			"type": "string"
+		},
+		"Main.Level.BackLeft": {
+			"description": "Set Speaker Level",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Level.BackRight": {
+			"description": "Set Speaker Level",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Level.Center": {
+			"description": "Set Speaker Level",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Level.Left": {
+			"description": "Set Speaker Level",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Level.Right": {
+			"description": "Set Speaker Level",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Level.Sub": {
+			"description": "Set Speaker Level",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Level.SurroundLeft": {
+			"description": "Set Speaker Level",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Level.SurroundRight": {
+			"description": "Set Speaker Level",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.LipSyncDelay": {
+			"description": "Set Lip Sync Delay",
+			"max": 120,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "ms"
+		},
+		"Main.ListeningMode": {
+			"description": "Set Active Listening Mode",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"NEO6Music",
+				"PLIIMusic",
+				"NEO6Cinema",
+				"PLIIMovie",
+				"EARS",
+				"ProLogic",
+				"AnalogBypass",
+				"StereoDownmix",
+				"EnhancedStereo",
+				"SurroundEX"
+			]
+		},
+		"Main.ListeningMode.Analog": {
+			"description": "Set default Analog Signal Listening Mode",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"NEO6Cinema",
+				"EnhancedStereo",
+				"ProLogic",
+				"PLIIMovie",
+				"PLIIMusic",
+				"EARS",
+				"AnalogBypass",
+				"None",
+				"NEO6Music"
+			]
+		},
+		"Main.ListeningMode.DTS": {
+			"description": "Set default DTS Listening Mode",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"NEO6Music",
+				"StereoDownmix",
+				"None"
+			]
+		},
+		"Main.ListeningMode.Digital": {
+			"description": "Set default Digital Signal Listening Mode",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"StereoDownmix",
+				"NEO6Music",
+				"EnhancedStereo",
+				"EARS",
+				"NEO6Cinema",
+				"PLIIMovie",
+				"PLIIMusic",
+				"ProLogic"
+			]
+		},
+		"Main.ListeningMode.DolbyDigital": {
+			"description": "Set default Dolby Digital Listening Mode",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"StereoDownmix",
+				"PLIIMusic",
+				"PLIIMovie",
+				"SurroundEX",
+				"None"
+			]
+		},
+		"Main.ListeningMode.DolbyDigital2ch": {
+			"description": "Set default Dolby Digital 2 channel Listening Mode",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"PLIIMusic",
+				"PLIIMovie",
+				"ProLogic"
+			]
+		},
+		"Main.OSD.TempDisplay": {
+			"description": "Set OSD Temp Display On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Sleep": {
+			"description": "Set Time before Sleep",
+			"max": 90,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "minutes"
+		},
+		"Main.Speaker.Back.Config1": {
+			"description": "Set Back Speakers to Off, One, or Two speakers",
+			"max": 2,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Speaker.Back.Config2": {
+			"description": "Set Speaker Size",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Small",
+				"Large"
+			]
+		},
+		"Main.Speaker.Back.Frequency": {
+			"description": "Set Speaker Crossover",
+			"max": 200,
+			"min": 40,
+			"operators": "=+-?",
+			"step": 10,
+			"type": "number",
+			"unit": "Hz"
+		},
+		"Main.Speaker.Center.Config": {
+			"description": "Set Speaker Size or Turn Speaker Off",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Small",
+				"Large"
+			]
+		},
+		"Main.Speaker.Center.Frequency": {
+			"description": "Set Speaker Crossover",
+			"max": 200,
+			"min": 40,
+			"operators": "=+-?",
+			"step": 10,
+			"type": "number",
+			"unit": "Hz"
+		},
+		"Main.Speaker.Front.Config": {
+			"description": "Set Speaker Size",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Small",
+				"Large"
+			]
+		},
+		"Main.Speaker.Front.Frequency": {
+			"description": "Set Speaker Crossover",
+			"max": 200,
+			"min": 40,
+			"operators": "=+-?",
+			"step": 10,
+			"type": "number",
+			"unit": "Hz"
+		},
+		"Main.Speaker.Sub": {
+			"description": "Set Subwoofer On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Speaker.Surround.Config": {
+			"description": "Set Speaker Size or Turn Speaker Off",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Small",
+				"Large",
+				"Off"
+			]
+		},
+		"Main.Speaker.Surround.Frequency": {
+			"description": "Set Speaker Crossover",
+			"max": 200,
+			"min": 40,
+			"operators": "=+-?",
+			"step": 10,
+			"type": "number",
+			"unit": "Hz"
+		},
+		"Main.SpeakerA": {
+			"description": "Set Speaker A On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.SpeakerB": {
+			"description": "Set Speaker B On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.ToneDefeat": {
+			"description": "Set Tone Defeat On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Treble": {
+			"description": "Set Treble Tone Control",
+			"max": 10,
+			"min": -10,
+			"operators": "=+-?",
+			"step": 2,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Trigger1.Delay": {
+			"description": "Set Trigger 1 Delay",
+			"max": 15,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "seconds"
+		},
+		"Main.Trigger1.Out": {
+			"description": "Set Trigger 1",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Zone2",
+				"Main",
+				"Source",
+				"Zone234",
+				"Zone4",
+				"Zone3"
+			]
+		},
+		"Main.Trigger2.Delay": {
+			"description": "Set Trigger 2 Delay",
+			"max": 15,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "seconds"
+		},
+		"Main.Trigger2.Out": {
+			"description": "Set Trigger 2",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Main",
+				"Source",
+				"Zone234",
+				"Zone4",
+				"Zone2",
+				"Zone3"
+			]
+		},
+		"Main.Trigger3.Delay": {
+			"description": "Set Trigger 3 Delay",
+			"max": 15,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "seconds"
+		},
+		"Main.Trigger3.Out": {
+			"description": "Set Trigger 3",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Source",
+				"Zone234",
+				"Zone4",
+				"Zone3",
+				"Zone2",
+				"Main"
+			]
+		},
+		"Main.Trim.Center": {
+			"description": "Set Trim Level (Not saved when receiver power is cycled)",
+			"max": 6,
+			"min": -6,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Trim.Sub": {
+			"description": "Set Trim Level (Not saved when receiver power is cycled)",
+			"max": 6,
+			"min": -6,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Trim.Surround": {
+			"description": "Set Trim Level (Not saved when receiver power is cycled)",
+			"max": 6,
+			"min": -6,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.VFD.Display": {
+			"description": "Set VFD Display Temp/On",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"On",
+				"Temp"
+			]
+		},
+		"Main.VFD.Line1": {
+			"description": "Set VFD Line 1 Item",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Zone3Source",
+				"Zone4Source",
+				"ListeningMode",
+				"MainSource",
+				"Zone2Source",
+				"Volume",
+				"Off",
+				"AudioSourceFormat"
+			]
+		},
+		"Main.VFD.Line2": {
+			"description": "Set VFD Line 2 Item",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Zone4Source",
+				"Zone3Source",
+				"Zone2Source",
+				"AudioSourceFormat",
+				"ListeningMode",
+				"Volume",
+				"MainSource",
+				"Off"
+			]
+		},
+		"Main.VFD.TempLine": {
+			"description": "Set VFD Time Line to 1 or 2",
+			"max": 2,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Video.Aspect.Mode": {
+			"description": "Zoom the video output (Command Valid with VM200 Only)",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Zoom",
+				"Stretch",
+				"LetterBox"
+			]
+		},
+		"Main.Video.Aspect.Ratio": {
+			"description": "(Command Valid with VM200 Only)",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"4:3",
+				"16:9"
+			]
+		},
+		"Main.Video.Brightness": {
+			"description": "Brightness (Command Valid with VM200 Only)",
+			"max": 100,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Video.Contrast": {
+			"description": "Contrast (Command Valid with VM200 Only)",
+			"max": 100,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Video.EdgeEnhancement.Level": {
+			"description": "Edge Enhancement (Command Valid with VM200 Only)",
+			"max": 100,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Video.EdgeEnhancement.Treshold": {
+			"description": "Edge Enhancement (Command Valid with VM200 Only)",
+			"max": 100,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Video.NoiseReduction": {
+			"description": "Noise Reduction (Command Valid with VM200 Only)",
+			"max": 50,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Video.Rate": {
+			"description": "(Command Valid with VM200 Only)",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"60",
+				"50"
+			]
+		},
+		"Main.Video.Resolution": {
+			"description": "Video Resolution (Command Valid with VM200 Only)",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"480p",
+				"480i",
+				"1080i",
+				"1080p",
+				"576i",
+				"720p",
+				"576p"
+			]
+		},
+		"Main.VideoMode": {
+			"description": "Set Main Video Mode",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"PAL",
+				"NTSC"
+			]
+		},
+		"Main.Volume": {
+			"operators": "=+-?"
+		},
+		"Preset1.Setup.DSPOptions": {
+			"description": "Set Preset to include DSP Options",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset1.Setup.Display": {
+			"description": "Set Preset to not include Display settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset1.Setup.ListeningMode": {
+			"description": "Set Preset to not include Listening Mode Options",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset1.Setup.PictureControls": {
+			"description": "(Command Valid with VM200 Only)",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset1.Setup.Speaker": {
+			"description": "Set Preset to not include Speaker Settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset1.Setup.ToneControls": {
+			"description": "Set Preset to not include Tone Control Settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset2.Setup.DSPOptions": {
+			"description": "Set Preset to include DSP Options",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset2.Setup.Display": {
+			"description": "Set Preset to not include Display settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset2.Setup.ListeningMode": {
+			"description": "Set Preset to include Listening Mode Options",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset2.Setup.PictureControls": {
+			"description": "(Command Valid with VM200 Only)",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset2.Setup.Speaker": {
+			"description": "Set Preset to include Speaker Settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset2.Setup.ToneControls": {
+			"description": "Set Preset to include Tone Control Settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset3.Setup.DSPOptions": {
+			"description": "Set Preset to not include DSP Options",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset3.Setup.Display": {
+			"description": "Set Preset to include Display settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset3.Setup.ListeningMode": {
+			"description": "Set Preset to include Listening Mode Options",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset3.Setup.PictureControls": {
+			"description": "(Command Valid with VM200 Only)",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset3.Setup.Speaker": {
+			"description": "Set Preset to include Speaker Settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset3.Setup.ToneControls": {
+			"description": "Set Preset to not include Tone Control Settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset4.Setup.DSPOptions": {
+			"description": "Set Preset to not include DSP Options",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset4.Setup.Display": {
+			"description": "Set Preset to not include Display settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset4.Setup.ListeningMode": {
+			"description": "Set Preset to include Listening Mode Options",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset4.Setup.PictureControls": {
+			"description": "(Command Valid with VM200 Only)",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset4.Setup.Speaker": {
+			"description": "Set Preset to not include Speaker Settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset4.Setup.ToneControls": {
+			"description": "Set Preset to not include Tone Control Settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset5.Setup.DSPOptions": {
+			"description": "Set Preset to not include DSP Options",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset5.Setup.Display": {
+			"description": "Set Preset to not include Display settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset5.Setup.ListeningMode": {
+			"description": "Set Preset to include Listening Mode Options",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset5.Setup.PictureControls": {
+			"description": "(Command Valid with VM200 Only)",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset5.Setup.Speaker": {
+			"description": "Set Preset to not include Speaker Settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Preset5.Setup.ToneControls": {
+			"description": "Set Preset to not include Tone Control Settings",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source1.AnalogAudioFormat": {
+			"description": "Set Analog Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"7.1",
+				"Stereo",
+				"Off"
+			]
+		},
+		"Source1.AnalogAudioInput": {
+			"description": "Set Analog Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source1.AnalogGain": {
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"step": 3,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source1.DigitalAudioFormat": {
+			"description": "Set Digital Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Coaxial",
+				"Optical",
+				"ARC",
+				"Off"
+			]
+		},
+		"Source1.DigitalAudioInput": {
+			"description": "Set Digital Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source1.Enabled": {
+			"description": "Set Source Enabled No/Yes",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source1.Preset": {
+			"description": "Set Source Preset",
+			"max": 5,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source1.TriggerOut": {
+			"description": "Set Source Trigger Out",
+			"max": 7,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source1.VideoFormat": {
+			"description": "Set Source Video Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Video",
+				"SVideo",
+				"Component",
+				"HDMI"
+			]
+		},
+		"Source1.VideoInput": {
+			"description": "Set Source Video Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source10.AnalogAudioFormat": {
+			"description": "Set Analog Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Stereo"
+			]
+		},
+		"Source10.AnalogAudioInput": {
+			"description": "Set Analog Audio Format",
+			"max": 9,
+			"min": 9,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source10.AnalogGain": {
+			"description": "Set Analog Audio Format",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"step": 3,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source10.DigitalAudioFormat": {
+			"description": "Set Digital Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Optical",
+				"Coaxial",
+				"ARC"
+			]
+		},
+		"Source10.DigitalAudioInput": {
+			"description": "Set Digital Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source10.Enabled": {
+			"description": "Set Enabled Yes",
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source10.Preset": {
+			"description": "Set Source Preset",
+			"max": 5,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source10.TriggerOut": {
+			"description": "Set Source Trigger Out",
+			"max": 7,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source10.VideoFormat": {
+			"description": "Set Video Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"SVideo",
+				"Component",
+				"HDMI",
+				"Off",
+				"Video"
+			]
+		},
+		"Source10.VideoInput": {
+			"description": "Set Video Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source2.AnalogAudioFormat": {
+			"description": "Set Analog Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Stereo",
+				"7.1"
+			]
+		},
+		"Source2.AnalogAudioInput": {
+			"description": "Set Analog Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source2.AnalogGain": {
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"step": 3,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source2.DigitalAudioFormat": {
+			"description": "Set source's digital audio to HDMI's audio return channel (ARC)",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"ARC",
+				"Coaxial",
+				"Off",
+				"Optical"
+			]
+		},
+		"Source2.DigitalAudioInput": {
+			"description": "Set Digital Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source2.Enabled": {
+			"description": "Set Source Enabled No/Yes",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source2.Preset": {
+			"description": "Set Source Preset",
+			"max": 5,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source2.TriggerOut": {
+			"description": "Set Source Trigger Out",
+			"max": 7,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source2.VideoFormat": {
+			"description": "Set Source Video Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Video",
+				"SVideo",
+				"Component",
+				"HDMI",
+				"Off"
+			]
+		},
+		"Source2.VideoInput": {
+			"description": "Set Source Video Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source3.AnalogAudioFormat": {
+			"description": "Set Analog Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Stereo",
+				"7.1"
+			]
+		},
+		"Source3.AnalogAudioInput": {
+			"description": "Set Analog Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source3.AnalogGain": {
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"step": 3,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source3.DigitalAudioFormat": {
+			"description": "Set Digital Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Optical",
+				"ARC",
+				"Off",
+				"Coaxial"
+			]
+		},
+		"Source3.DigitalAudioInput": {
+			"description": "Set Digital Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source3.Enabled": {
+			"description": "Set Source Enabled No/Yes",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source3.Preset": {
+			"description": "Set Source Preset",
+			"max": 5,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source3.TriggerOut": {
+			"description": "Set Source Trigger Out",
+			"max": 7,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source3.VideoFormat": {
+			"description": "Set Source Video Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Component",
+				"HDMI",
+				"SVideo",
+				"Video",
+				"Off"
+			]
+		},
+		"Source3.VideoInput": {
+			"description": "Set Source Video Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source4.AnalogAudioFormat": {
+			"description": "Set Analog Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Stereo",
+				"7.1"
+			]
+		},
+		"Source4.AnalogAudioInput": {
+			"description": "Set Analog Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source4.AnalogGain": {
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"step": 3,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source4.DigitalAudioFormat": {
+			"description": "Set Digital Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Coaxial",
+				"Optical",
+				"ARC",
+				"Off"
+			]
+		},
+		"Source4.DigitalAudioInput": {
+			"description": "Set Digital Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source4.Enabled": {
+			"description": "Set Source Enabled No/Yes",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source4.Preset": {
+			"description": "Set Source Preset",
+			"max": 5,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source4.TriggerOut": {
+			"description": "Set Source Trigger Out",
+			"max": 7,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source4.VideoFormat": {
+			"description": "Set Source Video Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Video",
+				"HDMI",
+				"Off",
+				"Component",
+				"SVideo"
+			]
+		},
+		"Source4.VideoInput": {
+			"description": "Set Source Video Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source5.AnalogAudioFormat": {
+			"description": "Set Analog Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Stereo",
+				"7.1"
+			]
+		},
+		"Source5.AnalogAudioInput": {
+			"description": "Set Analog Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source5.AnalogGain": {
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"step": 3,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source5.DigitalAudioFormat": {
+			"description": "Set Digital Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Optical",
+				"Coaxial",
+				"ARC"
+			]
+		},
+		"Source5.DigitalAudioInput": {
+			"description": "Set Digital Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source5.Enabled": {
+			"description": "Set Source Enabled No/Yes",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source5.Preset": {
+			"description": "Set Source Preset",
+			"max": 5,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source5.TriggerOut": {
+			"description": "Set Source Trigger Out",
+			"max": 7,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source5.VideoFormat": {
+			"description": "Set Source Video Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Video",
+				"HDMI",
+				"SVideo",
+				"Off",
+				"Component"
+			]
+		},
+		"Source5.VideoInput": {
+			"description": "Set Source Video Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source6.AnalogAudioFormat": {
+			"description": "Set Analog Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Stereo",
+				"7.1"
+			]
+		},
+		"Source6.AnalogAudioInput": {
+			"description": "Set Analog Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source6.AnalogGain": {
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"step": 3,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source6.DigitalAudioFormat": {
+			"description": "Set Digital Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Optical",
+				"ARC",
+				"Off",
+				"Coaxial"
+			]
+		},
+		"Source6.DigitalAudioInput": {
+			"description": "Set Digital Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source6.Enabled": {
+			"description": "Set Source Enabled No/Yes",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source6.Preset": {
+			"description": "Set Source Preset",
+			"max": 5,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source6.TriggerOut": {
+			"description": "Set Source Trigger Out",
+			"max": 7,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source6.VideoFormat": {
+			"description": "Set Source Video Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Video",
+				"SVideo",
+				"Component",
+				"HDMI"
+			]
+		},
+		"Source6.VideoInput": {
+			"description": "Set Source Video Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source7.AnalogAudioFormat": {
+			"description": "Set Analog Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Stereo",
+				"7.1"
+			]
+		},
+		"Source7.AnalogAudioInput": {
+			"description": "Set Analog Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source7.AnalogGain": {
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"step": 3,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source7.DigitalAudioFormat": {
+			"description": "Set source's digital audio to HDMI's audio return channel (ARC)",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"ARC",
+				"Coaxial",
+				"Optical",
+				"Off"
+			]
+		},
+		"Source7.DigitalAudioInput": {
+			"description": "Set Digital Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source7.Enabled": {
+			"description": "Set Source Enabled No/Yes",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source7.Preset": {
+			"description": "Set Source Preset",
+			"max": 5,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source7.TriggerOut": {
+			"description": "Set Source Trigger Out",
+			"max": 7,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source7.VideoFormat": {
+			"description": "Set Source Video Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"HDMI",
+				"SVideo",
+				"Component",
+				"Off",
+				"Video"
+			]
+		},
+		"Source7.VideoInput": {
+			"description": "Set Source Video Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source8.AnalogAudioFormat": {
+			"description": "Set Analog Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Stereo",
+				"7.1"
+			]
+		},
+		"Source8.AnalogAudioInput": {
+			"description": "Set Analog Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source8.AnalogGain": {
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"step": 3,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source8.DigitalAudioFormat": {
+			"description": "Set source's digital audio to HDMI's audio return channel (ARC)",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"ARC",
+				"Off",
+				"Coaxial",
+				"Optical"
+			]
+		},
+		"Source8.DigitalAudioInput": {
+			"description": "Set Digital Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source8.Enabled": {
+			"description": "Set Source Enabled No/Yes",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source8.Preset": {
+			"description": "Set Source Preset",
+			"max": 5,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source8.TriggerOut": {
+			"description": "Set Source Trigger Out",
+			"max": 7,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source8.VideoFormat": {
+			"description": "Set Source Video Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"HDMI",
+				"Component",
+				"SVideo",
+				"Video",
+				"Off"
+			]
+		},
+		"Source8.VideoInput": {
+			"description": "Set Source Video Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source9.AnalogAudioFormat": {
+			"description": "Set Analog Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"7.1",
+				"Off",
+				"Stereo"
+			]
+		},
+		"Source9.AnalogAudioInput": {
+			"description": "Set Analog Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source9.AnalogGain": {
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"step": 3,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source9.DigitalAudioFormat": {
+			"description": "Set Digital Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Coaxial",
+				"Optical",
+				"Off",
+				"ARC"
+			]
+		},
+		"Source9.DigitalAudioInput": {
+			"description": "Set Digital Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source9.Enabled": {
+			"description": "Set Source Enabled No/Yes",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Source9.Preset": {
+			"description": "Set Source Preset",
+			"max": 5,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source9.TriggerOut": {
+			"description": "Set Source Trigger Out",
+			"max": 7,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source9.VideoFormat": {
+			"description": "Set Source Video Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"SVideo",
+				"Video",
+				"Off",
+				"Component",
+				"HDMI"
+			]
+		},
+		"Source9.VideoInput": {
+			"description": "Set Source Video Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Tuner.AMStep": {
+			"description": "Set Tuner AM Step Value",
+			"max": 10,
+			"min": 9,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Tuner.Band": {
+			"values": [
+				"FM",
+				"AM",
+				"DAB",
+				"XM"
+			]
+		},
+		"Tuner.DAB.DLS": {
+			"description": "DAB DLS Text",
+			"operators": "?",
+			"type": "string"
+		},
+		"Tuner.DAB.Service": {
+			"description": "DAB Service Name",
+			"operators": "?",
+			"type": "string"
+		},
+		"Tuner.DigitalMode": {
+			"description": "Set Digital Mode (AH Version)",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"XM",
+				"DAB"
+			]
+		},
+		"Tuner.FM.Mute": {
+			"description": "Set Tuner FM Mute On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Tuner.FM.RDSName": {
+			"description": "FM RDS Name",
+			"operators": "?",
+			"type": "string"
+		},
+		"Tuner.FM.RDSText": {
+			"description": "FM RDS Text",
+			"operators": "?",
+			"type": "string"
+		},
+		"Tuner.XM.Channel": {
+			"description": "XM Channel Number",
+			"max": 255,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Tuner.XM.ChannelName": {
+			"description": "XM Channel Name",
+			"operators": "?",
+			"type": "string"
+		},
+		"Tuner.XM.Name": {
+			"description": "XM Song name",
+			"operators": "?",
+			"type": "string"
+		},
+		"Tuner.XM.Title": {
+			"description": "XM Song Title",
+			"operators": "?",
+			"type": "string"
+		},
+		"UART.Version": {
+			"description": "Query UART Version",
+			"operators": "?",
+			"type": "string"
+		},
+		"Zone2.Mute": {
+			"description": "Set Zone Mute",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Zone2.Power": {
+			"description": "Set Zone Power",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Zone2.Source": {
+			"description": "Set Zone Source",
+			"max": 11,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Zone2.Volume": {
+			"description": "Set Zone Volume",
+			"max": 19,
+			"min": -99,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Zone2.VolumeControl": {
+			"description": "Set Zone Volume Control Variable/Fixed",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Variable",
+				"Fixed"
+			]
+		},
+		"Zone2.VolumeFixed": {
+			"description": "Set Zone Fixed Volume Value",
+			"max": 16,
+			"min": -95,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Zone3.Mode": {
+			"description": "Set Zone Mode Zone/Record",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Zone",
+				"Record"
+			]
+		},
+		"Zone3.Mute": {
+			"description": "Set Zone Mute",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Zone3.Power": {
+			"description": "Set Zone Power",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Zone3.Source": {
+			"description": "Set Zone Source",
+			"max": 11,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Zone3.Volume": {
+			"description": "Set Zone Volume",
+			"max": 19,
+			"min": -99,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Zone3.VolumeControl": {
+			"description": "Set Zone Volume Control Variable/Fixed",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Variable",
+				"Fixed"
+			]
+		},
+		"Zone3.VolumeFixed": {
+			"description": "Set Zone Fixed Volume",
+			"max": 16,
+			"min": -95,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Zone4.Mode": {
+			"description": "Set Zone Mode Zone/Record",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Zone",
+				"Record"
+			]
+		},
+		"Zone4.Mute": {
+			"description": "Set Zone Mute",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Zone4.Power": {
+			"description": "Set Zone Power",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Zone4.Source": {
+			"description": "Set Zone Source",
+			"max": 11,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Zone4.Volume": {
+			"description": "Set Zone Volume",
+			"max": 19,
+			"min": -99,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Zone4.VolumeControl": {
+			"description": "Set Zone Volume Control Variable/Fixed",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Fixed",
+				"Variable"
+			]
+		},
+		"Zone4.VolumeFixed": {
+			"description": "Set Zone Fixed Volume",
+			"max": 16,
+			"min": -95,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		}
+	}
+}
