@@ -51,9 +51,6 @@ dependencies = [
     "serialx>=1.10.0"
 ]
 
-[project.scripts]
-nad_serial = "nad_serial.__main__:main"
-
 [project.urls]
 Homepage = "https://github.com/rrooggiieerr/nad_serial.py"
 Repository = "https://github.com/rrooggiieerr/nad_serial.py"

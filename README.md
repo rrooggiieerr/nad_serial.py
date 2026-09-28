@@ -22,7 +22,7 @@ over serial (RS-232) or Ethernet (telnet).
 - Detects the device type for models without configuration.
 - Read, set, increment and decrement any supported setting.
 - Reads the source names on supported devices.
-
+- Supports zones on multi-zone receivers.
 
 ## Supported protocol
 
@@ -87,8 +87,7 @@ Additionally, NAD Serial includes untested configuration files for the following
 - C427
 
 Other NAD devices that use the [supported protocol](#supported-protocol) should work too, with a
-basic set of settings: power, model, version, volume, mute and source. Use the
-[`examine`](CLI.md#examine-your-device) CLI command to find out which settings your device supports.
+basic set of settings: power, model, version, volume, mute and source.
 
 ## Connecting
 
@@ -136,8 +135,8 @@ Is your device supported by NAD Serial but not listed under *Supported devices*?
 know your device model so I can improve the overview of supported devices.
 
 Is there no configuration file for your device model yet, or is the configuration file incomplete or
-incorrect? Use [`examine`](CLI.md#examine-your-device) to find out which settings your device
-supports, and submit a pull request with the new or updated configuration file.
+incorrect? Create a [configuration file](nad_serial/configs/README.md) and submit a pull request
+with the new or updated configuration file.
 
 ### Star this GitHub page
 
