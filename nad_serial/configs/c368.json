@@ -79,13 +79,10 @@
 		},
 		"Main.Brightness": {
 			"description": "LCD and Standby LED brightness",
+			"max": 3,
+			"min": 1,
 			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"1",
-				"2",
-				"3"
-			]
+			"type": "number"
 		},
 		"Main.DigitalOut.Rate": {
 			"description": "Set the digital out sample rate",
@@ -93,8 +90,8 @@
 			"type": "enum",
 			"values": [
 				"48",
-				"192",
-				"96"
+				"96",
+				"192"
 			]
 		},
 		"Main.Filters": {
@@ -118,9 +115,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Reversed",
 				"Stereo",
-				"Mono"
+				"Mono",
+				"Reversed"
 			]
 		},
 		"Main.Polarity": {
@@ -194,8 +191,8 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Percent",
-				"Decibel"
+				"Decibel",
+				"Percent"
 			]
 		},
 		"Source1.ADCSampleRate": {
@@ -203,9 +200,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"192",
+				"48",
 				"96",
-				"48"
+				"192"
 			]
 		},
 		"Source1.AnalogGain": {
@@ -235,9 +232,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"192",
+				"48",
 				"96",
-				"48"
+				"192"
 			]
 		},
 		"Source10.AnalogGain": {
@@ -267,9 +264,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"192",
+				"48",
 				"96",
-				"48"
+				"192"
 			]
 		},
 		"Source2.AnalogGain": {
@@ -299,9 +296,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"192",
+				"48",
 				"96",
-				"48"
+				"192"
 			]
 		},
 		"Source3.AnalogGain": {
@@ -331,9 +328,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"192",
+				"48",
 				"96",
-				"48"
+				"192"
 			]
 		},
 		"Source4.AnalogGain": {
@@ -363,9 +360,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"192",
+				"48",
 				"96",
-				"48"
+				"192"
 			]
 		},
 		"Source5.AnalogGain": {
@@ -395,9 +392,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"192",
+				"48",
 				"96",
-				"48"
+				"192"
 			]
 		},
 		"Source6.AnalogGain": {
@@ -427,9 +424,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"192",
+				"48",
 				"96",
-				"48"
+				"192"
 			]
 		},
 		"Source7.AnalogGain": {
@@ -459,9 +456,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"192",
+				"48",
 				"96",
-				"48"
+				"192"
 			]
 		},
 		"Source8.AnalogGain": {
@@ -491,9 +488,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"192",
+				"48",
 				"96",
-				"48"
+				"192"
 			]
 		},
 		"Source9.AnalogGain": {

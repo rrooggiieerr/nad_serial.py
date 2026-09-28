@@ -1,7 +1,8 @@
 {
 	"device_types": [
 		"amplifier",
-		"tuner"
+		"tuner",
+		"zones"
 	],
 	"sends_updates": true,
 	"settings": {
@@ -25,9 +26,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"Slow",
 				"Normal",
-				"Fast",
-				"Slow"
+				"Fast"
 			]
 		},
 		"Ipod.AutoConnect": {
@@ -58,14 +59,14 @@
 			"unit": "seconds"
 		},
 		"Ipod.PlayMode": {
-			"description": "Set the iPod to Fast Forward",
+			"description": "Set the iPod to Rewind",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"FastForward",
 				"Play",
+				"Pause",
 				"Rewind",
-				"Pause"
+				"FastForward"
 			]
 		},
 		"Ipod.Repeat": {
@@ -73,8 +74,8 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"One",
 				"Off",
+				"One",
 				"All"
 			]
 		},
@@ -83,9 +84,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Albums",
+				"Off",
 				"Songs",
-				"Off"
+				"Albums"
 			]
 		},
 		"Ipod.Title": {
@@ -94,14 +95,14 @@
 			"type": "string"
 		},
 		"Main.Amp.Back": {
-			"description": "Set the back Amplifier output to Zone2",
+			"description": "Set the back Amplifier output to Zone3",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Zone2",
-				"Front",
-				"Zone3",
 				"Back",
+				"Front",
+				"Zone2",
+				"Zone3",
 				"Zone4"
 			]
 		},
@@ -110,25 +111,25 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Flat",
-				"NAD",
+				"Off",
 				"Audyssey",
-				"Off"
+				"Flat",
+				"NAD"
 			]
 		},
 		"Main.Audyssey.ADV": {
-			"description": "Audyssey Volume",
+			"description": "Audyssey Volume (Command Valid with AM200 Only)",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Heavy",
-				"Medium",
+				"Off",
 				"Light",
-				"Off"
+				"Medium",
+				"Heavy"
 			]
 		},
 		"Main.Audyssey.DEQ": {
-			"description": "Audyssey Dynamic EQ",
+			"description": "Audyssey Dynamic EQ (Command Valid with AM200 Only)",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -137,7 +138,7 @@
 			]
 		},
 		"Main.Audyssey.Offset": {
-			"description": "Audyssey Dynamic EQ Offset",
+			"description": "Audyssey Dynamic EQ Offset (Command Valid with AM200 Only)",
 			"max": 15,
 			"min": 0,
 			"operators": "=+-?",
@@ -153,10 +154,11 @@
 			]
 		},
 		"Main.Bass": {
-			"description": "Set bass",
-			"max": 7,
-			"min": -7,
+			"description": "Set the Bass Tone Control",
+			"max": 10,
+			"min": -10,
 			"operators": "=+-?",
+			"step": 2,
 			"type": "number",
 			"unit": "dB"
 		},
@@ -165,13 +167,13 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"SourceSetup",
+				"Off",
 				"Auto",
-				"Off"
+				"SourceSetup"
 			]
 		},
 		"Main.CEC.Audio": {
-			"description": "Receiver broadcasts a CEC message indicating it is an active audio system",
+			"description": "Feature Disabled",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -180,7 +182,7 @@
 			]
 		},
 		"Main.CEC.Power": {
-			"description": "Feature Disabled",
+			"description": "Allows receiver to be turned on and off via CEC (TXX5 series only turns off)",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -198,7 +200,7 @@
 			]
 		},
 		"Main.ControlStandby": {
-			"description": "Turns Video board off when in standby and does not allow ethernet control",
+			"description": "Allow Ethernet control when in standby",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -383,8 +385,8 @@
 			]
 		},
 		"Main.IR.Channel": {
-			"description": "Set the IR Channel for the front IR sensor",
-			"max": 4,
+			"description": "Set the Main IR Channel (allows for two NADs to be controlled separately)",
+			"max": 1,
 			"min": 0,
 			"operators": "=+-?",
 			"type": "number"
@@ -467,16 +469,16 @@
 			"type": "enum",
 			"values": [
 				"None",
-				"NEO6Music",
-				"EnhancedStereo",
 				"AnalogBypass",
+				"StereoDownmix",
+				"EnhancedStereo",
+				"EARS",
+				"ProLogic",
+				"PLIIMovie",
+				"PLIIMusic",
 				"SurroundEX",
 				"NEO6Cinema",
-				"StereoDownmix",
-				"EARS",
-				"PLIIMovie",
-				"ProLogic",
-				"PLIIMusic"
+				"NEO6Music"
 			]
 		},
 		"Main.ListeningMode.Analog": {
@@ -484,15 +486,15 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"None",
+				"AnalogBypass",
+				"EnhancedStereo",
+				"EARS",
 				"ProLogic",
 				"PLIIMovie",
-				"EnhancedStereo",
 				"PLIIMusic",
 				"NEO6Cinema",
-				"None",
-				"EARS",
-				"NEO6Music",
-				"AnalogBypass"
+				"NEO6Music"
 			]
 		},
 		"Main.OSD.TempDisplay": {
@@ -505,7 +507,7 @@
 			]
 		},
 		"Main.Sleep": {
-			"description": "Number of minutes for sleep function",
+			"description": "Set Time before Sleep",
 			"max": 90,
 			"min": 0,
 			"operators": "=+-?",
@@ -587,7 +589,7 @@
 			"unit": "Hz"
 		},
 		"Main.ToneDefeat": {
-			"description": "Turn tone controls on",
+			"description": "Set Tone Defeat On/Off",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -596,10 +598,11 @@
 			]
 		},
 		"Main.Treble": {
-			"description": "Set treble",
-			"max": 7,
-			"min": -7,
+			"description": "Set Treble Tone Control",
+			"max": 10,
+			"min": -10,
 			"operators": "=+-?",
+			"step": 2,
 			"type": "number",
 			"unit": "dB"
 		},
@@ -616,12 +619,12 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Source",
 				"Main",
 				"Zone2",
 				"Zone3",
 				"Zone4",
-				"Zone234"
+				"Zone234",
+				"Source"
 			]
 		},
 		"Main.Trim.Center": {
@@ -653,8 +656,8 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Temp",
-				"On"
+				"On",
+				"Temp"
 			]
 		},
 		"Main.VFD.Line1": {
@@ -662,14 +665,14 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Zone4Source",
 				"Off",
 				"MainSource",
 				"Volume",
 				"ListeningMode",
 				"AudioSourceFormat",
 				"Zone2Source",
-				"Zone3Source"
+				"Zone3Source",
+				"Zone4Source"
 			]
 		},
 		"Main.VFD.Line2": {
@@ -677,14 +680,14 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"Off",
 				"MainSource",
 				"Volume",
 				"ListeningMode",
 				"AudioSourceFormat",
 				"Zone2Source",
 				"Zone3Source",
-				"Zone4Source",
-				"Off"
+				"Zone4Source"
 			]
 		},
 		"Main.VFD.TempLine": {
@@ -695,17 +698,17 @@
 			"type": "number"
 		},
 		"Main.Video.Resolution": {
-			"description": "Video Resolution",
+			"description": "Video Resolution (Command Valid with VM200 Only)",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"480i",
 				"480p",
 				"576i",
-				"1080p",
-				"1080i",
+				"576p",
 				"720p",
-				"480i",
-				"576p"
+				"1080i",
+				"1080p"
 			]
 		},
 		"Main.VideoMode": {
@@ -713,8 +716,8 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"PAL",
-				"NTSC"
+				"NTSC",
+				"PAL"
 			]
 		},
 		"Main.Volume": {
@@ -748,7 +751,7 @@
 			]
 		},
 		"Preset1.Setup.PictureControls": {
-			"description": "#Error",
+			"description": "(Command Valid with VM200 Only)",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -757,7 +760,7 @@
 			]
 		},
 		"Preset1.Setup.Speaker": {
-			"description": "Set Preset to include Speaker Settings",
+			"description": "Set Preset to not include Speaker Settings",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -766,7 +769,7 @@
 			]
 		},
 		"Preset1.Setup.ToneControls": {
-			"description": "Set Preset to include Tone Control Settings",
+			"description": "Set Preset to not include Tone Control Settings",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -784,7 +787,7 @@
 			]
 		},
 		"Preset2.Setup.Display": {
-			"description": "Set Preset to include Display settings",
+			"description": "Set Preset to not include Display settings",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -793,7 +796,7 @@
 			]
 		},
 		"Preset2.Setup.ListeningMode": {
-			"description": "Set Preset to include Listening Mode Options",
+			"description": "Set Preset to not include Listening Mode Options",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -802,7 +805,7 @@
 			]
 		},
 		"Preset2.Setup.PictureControls": {
-			"description": "#Error",
+			"description": "(Command Valid with VM200 Only)",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -820,7 +823,7 @@
 			]
 		},
 		"Preset2.Setup.ToneControls": {
-			"description": "Set Preset to include Tone Control Settings",
+			"description": "Set Preset to not include Tone Control Settings",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -829,7 +832,7 @@
 			]
 		},
 		"Preset3.Setup.DSPOptions": {
-			"description": "Set Preset to not include DSP Options",
+			"description": "Set Preset to include DSP Options",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -856,7 +859,7 @@
 			]
 		},
 		"Preset3.Setup.PictureControls": {
-			"description": "#Error",
+			"description": "(Command Valid with VM200 Only)",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -865,7 +868,7 @@
 			]
 		},
 		"Preset3.Setup.Speaker": {
-			"description": "Set Preset to include Speaker Settings",
+			"description": "Set Preset to not include Speaker Settings",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -874,7 +877,7 @@
 			]
 		},
 		"Preset3.Setup.ToneControls": {
-			"description": "Set Preset to include Tone Control Settings",
+			"description": "Set Preset to not include Tone Control Settings",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -892,7 +895,7 @@
 			]
 		},
 		"Preset4.Setup.Display": {
-			"description": "Set Preset to not include Display settings",
+			"description": "Set Preset to include Display settings",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -910,7 +913,7 @@
 			]
 		},
 		"Preset4.Setup.PictureControls": {
-			"description": "#Error",
+			"description": "(Command Valid with VM200 Only)",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -919,7 +922,7 @@
 			]
 		},
 		"Preset4.Setup.Speaker": {
-			"description": "Set Preset to not include Speaker Settings",
+			"description": "Set Preset to include Speaker Settings",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -937,7 +940,7 @@
 			]
 		},
 		"Preset5.Setup.DSPOptions": {
-			"description": "Set Preset to include DSP Options",
+			"description": "Set Preset to not include DSP Options",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -955,7 +958,7 @@
 			]
 		},
 		"Preset5.Setup.ListeningMode": {
-			"description": "Set Preset to include Listening Mode Options",
+			"description": "Set Preset to not include Listening Mode Options",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -964,7 +967,7 @@
 			]
 		},
 		"Preset5.Setup.PictureControls": {
-			"description": "#Error",
+			"description": "(Command Valid with VM200 Only)",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -973,7 +976,7 @@
 			]
 		},
 		"Preset5.Setup.Speaker": {
-			"description": "Set Preset to include Speaker Settings",
+			"description": "Set Preset to not include Speaker Settings",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -982,7 +985,7 @@
 			]
 		},
 		"Preset5.Setup.ToneControls": {
-			"description": "Set Preset to include Tone Control Settings",
+			"description": "Set Preset to not include Tone Control Settings",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -995,9 +998,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"7.1",
+				"Off",
 				"Stereo",
-				"Off"
+				"7.1"
 			]
 		},
 		"Source1.AnalogAudioInput": {
@@ -1008,21 +1011,22 @@
 			"type": "number"
 		},
 		"Source1.AnalogGain": {
-			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
-			"max": 0,
-			"min": -20,
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
 			"operators": "=+-?",
+			"step": 3,
 			"type": "number",
 			"unit": "dB"
 		},
 		"Source1.DigitalAudioFormat": {
-			"description": "Set Digital Audio Format",
+			"description": "Set source's digital audio to HDMI's audio return channel (ARC)",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
 				"Off",
-				"Optical",
 				"Coaxial",
+				"Optical",
 				"HDMI",
 				"ARC"
 			]
@@ -1035,7 +1039,7 @@
 			"type": "number"
 		},
 		"Source1.Enabled": {
-			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"description": "Set Source Enabled No/Yes",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -1068,10 +1072,10 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"HDMI",
-				"Component",
 				"Video",
-				"SVideo"
+				"SVideo",
+				"Component",
+				"HDMI"
 			]
 		},
 		"Source1.VideoInput": {
@@ -1097,22 +1101,23 @@
 			"type": "number"
 		},
 		"Source10.AnalogGain": {
-			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
-			"max": 0,
-			"min": -20,
+			"description": "Set Analog Audio Format",
+			"max": 12,
+			"min": -12,
 			"operators": "=+-?",
+			"step": 3,
 			"type": "number",
 			"unit": "dB"
 		},
 		"Source10.DigitalAudioFormat": {
-			"description": "Set Digital Audio Format",
+			"description": "Set source's digital audio to HDMI's audio return channel (ARC)",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"HDMI",
-				"Coaxial",
 				"Off",
+				"Coaxial",
 				"Optical",
+				"HDMI",
 				"ARC"
 			]
 		},
@@ -1124,8 +1129,8 @@
 			"type": "number"
 		},
 		"Source10.Enabled": {
-			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
-			"operators": "=+-?",
+			"description": "Set Enabled Yes",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"No",
@@ -1156,11 +1161,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Component",
-				"HDMI",
-				"SVideo",
+				"Off",
 				"Video",
-				"Off"
+				"SVideo",
+				"Component",
+				"HDMI"
 			]
 		},
 		"Source10.VideoInput": {
@@ -1188,23 +1193,24 @@
 			"type": "number"
 		},
 		"Source2.AnalogGain": {
-			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
-			"max": 0,
-			"min": -20,
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
 			"operators": "=+-?",
+			"step": 3,
 			"type": "number",
 			"unit": "dB"
 		},
 		"Source2.DigitalAudioFormat": {
-			"description": "Set Digital Audio Format",
+			"description": "Set source's digital audio to HDMI's audio return channel (ARC)",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"HDMI",
-				"Coaxial",
-				"ARC",
 				"Off",
-				"Optical"
+				"Coaxial",
+				"Optical",
+				"HDMI",
+				"ARC"
 			]
 		},
 		"Source2.DigitalAudioInput": {
@@ -1215,7 +1221,7 @@
 			"type": "number"
 		},
 		"Source2.Enabled": {
-			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"description": "Set Source Enabled No/Yes",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -1279,10 +1285,11 @@
 			"type": "number"
 		},
 		"Source3.AnalogGain": {
-			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
-			"max": 0,
-			"min": -20,
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
 			"operators": "=+-?",
+			"step": 3,
 			"type": "number",
 			"unit": "dB"
 		},
@@ -1292,8 +1299,8 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"Optical",
 				"Coaxial",
+				"Optical",
 				"HDMI",
 				"ARC"
 			]
@@ -1306,7 +1313,7 @@
 			"type": "number"
 		},
 		"Source3.Enabled": {
-			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"description": "Set Source Enabled No/Yes",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -1338,11 +1345,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Video",
-				"HDMI",
-				"SVideo",
 				"Off",
-				"Component"
+				"Video",
+				"SVideo",
+				"Component",
+				"HDMI"
 			]
 		},
 		"Source3.VideoInput": {
@@ -1370,23 +1377,24 @@
 			"type": "number"
 		},
 		"Source4.AnalogGain": {
-			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
-			"max": 0,
-			"min": -20,
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
 			"operators": "=+-?",
+			"step": 3,
 			"type": "number",
 			"unit": "dB"
 		},
 		"Source4.DigitalAudioFormat": {
-			"description": "Set source's digital audio to HDMI's audio return channel (ARC)",
+			"description": "Set Digital Audio Format",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"ARC",
-				"Optical",
 				"Off",
 				"Coaxial",
-				"HDMI"
+				"Optical",
+				"HDMI",
+				"ARC"
 			]
 		},
 		"Source4.DigitalAudioInput": {
@@ -1397,7 +1405,7 @@
 			"type": "number"
 		},
 		"Source4.Enabled": {
-			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"description": "Set Source Enabled No/Yes",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -1448,9 +1456,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"7.1",
 				"Off",
-				"Stereo"
+				"Stereo",
+				"7.1"
 			]
 		},
 		"Source5.AnalogAudioInput": {
@@ -1461,23 +1469,24 @@
 			"type": "number"
 		},
 		"Source5.AnalogGain": {
-			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
-			"max": 0,
-			"min": -20,
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
 			"operators": "=+-?",
+			"step": 3,
 			"type": "number",
 			"unit": "dB"
 		},
 		"Source5.DigitalAudioFormat": {
-			"description": "Set source's digital audio to HDMI's audio return channel (ARC)",
+			"description": "Set Digital Audio Format",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"ARC",
-				"HDMI",
-				"Coaxial",
 				"Off",
-				"Optical"
+				"Coaxial",
+				"Optical",
+				"HDMI",
+				"ARC"
 			]
 		},
 		"Source5.DigitalAudioInput": {
@@ -1488,7 +1497,7 @@
 			"type": "number"
 		},
 		"Source5.Enabled": {
-			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"description": "Set Source Enabled No/Yes",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -1520,11 +1529,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"Off",
 				"Video",
 				"SVideo",
 				"Component",
-				"HDMI",
-				"Off"
+				"HDMI"
 			]
 		},
 		"Source5.VideoInput": {
@@ -1539,9 +1548,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"Off",
 				"Stereo",
-				"7.1",
-				"Off"
+				"7.1"
 			]
 		},
 		"Source6.AnalogAudioInput": {
@@ -1552,10 +1561,11 @@
 			"type": "number"
 		},
 		"Source6.AnalogGain": {
-			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
-			"max": 0,
-			"min": -20,
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
 			"operators": "=+-?",
+			"step": 3,
 			"type": "number",
 			"unit": "dB"
 		},
@@ -1564,11 +1574,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"ARC",
-				"HDMI",
+				"Off",
 				"Coaxial",
 				"Optical",
-				"Off"
+				"HDMI",
+				"ARC"
 			]
 		},
 		"Source6.DigitalAudioInput": {
@@ -1579,7 +1589,7 @@
 			"type": "number"
 		},
 		"Source6.Enabled": {
-			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"description": "Set Source Enabled No/Yes",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -1611,11 +1621,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"Off",
 				"Video",
-				"Component",
 				"SVideo",
-				"HDMI",
-				"Off"
+				"Component",
+				"HDMI"
 			]
 		},
 		"Source6.VideoInput": {
@@ -1630,9 +1640,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"7.1",
+				"Off",
 				"Stereo",
-				"Off"
+				"7.1"
 			]
 		},
 		"Source7.AnalogAudioInput": {
@@ -1643,22 +1653,23 @@
 			"type": "number"
 		},
 		"Source7.AnalogGain": {
-			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
-			"max": 0,
-			"min": -20,
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
 			"operators": "=+-?",
+			"step": 3,
 			"type": "number",
 			"unit": "dB"
 		},
 		"Source7.DigitalAudioFormat": {
-			"description": "Set Digital Audio Format",
+			"description": "Set source's digital audio to HDMI's audio return channel (ARC)",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Optical",
-				"Coaxial",
-				"HDMI",
 				"Off",
+				"Coaxial",
+				"Optical",
+				"HDMI",
 				"ARC"
 			]
 		},
@@ -1670,7 +1681,7 @@
 			"type": "number"
 		},
 		"Source7.Enabled": {
-			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"description": "Set Source Enabled No/Yes",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -1703,10 +1714,10 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"HDMI",
-				"Component",
 				"Video",
-				"SVideo"
+				"SVideo",
+				"Component",
+				"HDMI"
 			]
 		},
 		"Source7.VideoInput": {
@@ -1734,10 +1745,11 @@
 			"type": "number"
 		},
 		"Source8.AnalogGain": {
-			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
-			"max": 0,
-			"min": -20,
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
 			"operators": "=+-?",
+			"step": 3,
 			"type": "number",
 			"unit": "dB"
 		},
@@ -1746,10 +1758,10 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"HDMI",
+				"Off",
 				"Coaxial",
 				"Optical",
-				"Off",
+				"HDMI",
 				"ARC"
 			]
 		},
@@ -1761,7 +1773,7 @@
 			"type": "number"
 		},
 		"Source8.Enabled": {
-			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"description": "Set Source Enabled No/Yes",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -1825,10 +1837,11 @@
 			"type": "number"
 		},
 		"Source9.AnalogGain": {
-			"description": "This only applies to analog sources and is similar to the \"Balance.Leveltrim\" and \"Single_Ended.Leveltrim\" variables of the C390. The valid values of this variable depend on the input type.",
-			"max": 0,
-			"min": -20,
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
 			"operators": "=+-?",
+			"step": 3,
 			"type": "number",
 			"unit": "dB"
 		},
@@ -1837,11 +1850,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"HDMI",
+				"Off",
 				"Coaxial",
-				"ARC",
 				"Optical",
-				"Off"
+				"HDMI",
+				"ARC"
 			]
 		},
 		"Source9.DigitalAudioInput": {
@@ -1852,7 +1865,7 @@
 			"type": "number"
 		},
 		"Source9.Enabled": {
-			"description": "This is actually multiple variables, one for each source. Example: Source5.Enable",
+			"description": "Set Source Enabled No/Yes",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -1884,11 +1897,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"HDMI",
-				"SVideo",
-				"Video",
 				"Off",
-				"Component"
+				"Video",
+				"SVideo",
+				"Component",
+				"HDMI"
 			]
 		},
 		"Source9.VideoInput": {
@@ -1905,6 +1918,14 @@
 			"operators": "=+-?",
 			"type": "number"
 		},
+		"Tuner.Band": {
+			"values": [
+				"FM",
+				"AM",
+				"DAB",
+				"XM"
+			]
+		},
 		"Tuner.DAB.DLS": {
 			"description": "DAB DLS Text",
 			"operators": "?",
@@ -1916,7 +1937,7 @@
 			"type": "string"
 		},
 		"Tuner.FM.Mute": {
-			"description": "Turns FM Mute off",
+			"description": "Set Tuner FM Mute On/Off",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -1925,65 +1946,14 @@
 			]
 		},
 		"Tuner.FM.RDSName": {
-			"description": "Current Stations RDS Name",
+			"description": "FM RDS Name",
 			"operators": "?",
 			"type": "string"
 		},
 		"Tuner.FM.RDSText": {
-			"description": "Current Stations RDS Text",
+			"description": "FM RDS Text",
 			"operators": "?",
 			"type": "string"
-		},
-		"Zone2.Mute": {
-			"description": "Set Zone Mute",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
-		},
-		"Zone2.Power": {
-			"description": "Set Zone Power",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
-		},
-		"Zone2.Source": {
-			"description": "Set Zone Source",
-			"max": 11,
-			"min": 1,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Zone2.Volume": {
-			"description": "Set Zone Volume",
-			"max": 19,
-			"min": -99,
-			"operators": "=+-?",
-			"type": "number",
-			"unit": "dB"
-		},
-		"Zone2.VolumeControl": {
-			"description": "Set Zone Volume Control Variable/Fixed",
-			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"Fixed",
-				"Variable"
-			]
-		},
-		"Zone2.VolumeFixed": {
-			"description": "Set Zone Fixed Volume Value",
-			"max": 16,
-			"min": -95,
-			"operators": "=+-?",
-			"type": "number",
-			"unit": "dB"
 		}
-	},
-	"supports_source_names": true
+	}
 }

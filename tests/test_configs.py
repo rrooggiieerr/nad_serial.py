@@ -28,11 +28,21 @@ async def test_async_read_device_config_tuner():
 async def test_async_read_device_config_receiver():
     """Test that an amplifier device type loads both the `device,json`, `amplifier.json` and `tuner.json` config."""
     device_config = await configs.async_read_device_config("T755")
-    assert device_config["device_types"] == ["amplifier", "tuner"]
+    assert device_config["device_types"] == ["amplifier", "tuner", "zones"]
     assert device_config["settings"]["Main.Power"]
     assert device_config["settings"]["Main.Volume"]
     assert device_config["settings"]["Tuner.Band"]
     assert device_config["settings"]["DSP.Version"]
+
+
+async def test_async_read_device_config_none_device():
+    """Test that an unknown device only loads the `device.json` config."""
+    device_config = await configs.async_read_device_config(None)
+    assert "device_types" not in device_config
+    assert device_config["settings"]["Main.Power"]
+    assert "Main.Volume" not in device_config["settings"]
+    assert "Tuner.Band" not in device_config["settings"]
+    assert "DSP.Version" not in device_config["settings"]
 
 
 async def test_async_read_device_config_unknown_device():
@@ -102,12 +112,19 @@ async def test_all_files(model: str):
     assert "device_types" in device_config
 
     for device_type in device_config["device_types"]:
-        assert device_type in ["amplifier", "tuner"]
+        assert device_type in ["amplifier", "tuner", "zones"]
 
     for setting in device_config["settings"].values():
         assert setting["type"] in ("number", "enum", "boolean", "string")
         assert setting["operators"]
-        if setting["type"] == "number" and "=" in setting["operators"]:
+        if "+" in setting["operators"]:
+            # Make sure +- is always in that order
+            assert "+-" in setting["operators"]
+        if (
+            setting["type"] == "number"
+            and "?" in setting["operators"]
+            and "+-" in setting["operators"]
+        ):
             assert "min" in setting
             assert "max" in setting
         if setting["type"] in ("enum", "boolean"):

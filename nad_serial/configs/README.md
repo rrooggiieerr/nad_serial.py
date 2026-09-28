@@ -14,11 +14,12 @@ The configuration is built from these files, each merged over the previous:
 1. `device.json`: the settings every device has: power, model and version.
 2. `amplifier.json` for an amplifier: volume, mute and source.
 3. `tuner.json` for a tuner: band, frequencies and presets.
-4. `<model>.json`: the model specific settings.
+4. `zones.json` for an amplifier that supports zones.
+5. `<model>.json`: the model specific settings.
 
-The model configuration gives the device types, which decide which of `amplifier.json` and
-`tuner.json` are used. When there is no configuration for the model, the types given with the
-`detected_device_types` argument are used.
+The model configuration gives the device types, which decide which of `amplifier.json`,
+`tuner.json` and `zones.json` are used. When there is no configuration for the model, NAD Serial
+detects which device types are supported.
 
 ## Format
 
@@ -26,7 +27,8 @@ The model configuration gives the device types, which decide which of `amplifier
 {
 	"device_types": [
 		"amplifier",
-		"tuner"
+		"tuner",
+		"zones"
 	],
 	"settings": {
 		"Main.Volume": {
@@ -37,19 +39,17 @@ The model configuration gives the device types, which decide which of `amplifier
 			"type": "number"
 		}
 	},
-	"sends_updates": true,
-	"supports_source_names": true
+	"sends_updates": true
 }
 ```
 
 | Key | Description |
 |---|---|
-| `device_types` | The device types, `amplifier` and/or `tuner`, or `[]` for neither. They decide the base configuration files and the class `NADDevice.async_connect()` returns. |
+| `device_types` | The device types, `amplifier`, `tuner` and/or `zones`, or `[]` for none. They decide the base configuration files and the class `NADDevice.async_connect()` returns. |
 | `settings` | The supported settings by name, `<Prefix>.<Variable>`, see below. |
 | `sends_updates` | Optional. Whether the device reports changes on its own. When not set, the library detects this. |
-| `supports_source_names` | Optional. Whether the device reports its source names with `Source<N>.Name?`. When not set, the library detects this when connecting. |
 
-Every setting has the following keys:
+A setting can have the following keys:
 
 | Key | Description |
 |---|---|
@@ -57,24 +57,26 @@ Every setting has the following keys:
 | `operators` | The operators the setting accepts, e.g. `=+-?` or `?` for a read-only setting. |
 | `description` | What the setting does, e.g. from the NAD command list. |
 | `min`, `max` | `number` only. The lowest and highest value. Either a number, or the name of a setting that reports it, e.g. `"max": "Main.Sources"`. That setting is then used. |
-| `step` | `number` only. The value changes in steps of this size, e.g. `0.5`. Default `1`. |
+| `step` | `number` only. The value changes in steps of this size, e.g. `0.5`. Either a number, or the name of a setting that reports it, e.g. `"step": "Tuner.AMStep"`. That setting is then used. Default `1`. |
 | `values` | `enum`: the accepted values. `boolean`: the values the device uses for false and true, in that order, e.g. `["Off", "On"]` or `["No", "Yes"]`. |
 | `unit` | Optional. The unit of the value, e.g. `dB`, `Hz`. |
+| `regex` | `string` only, optional. A regular expression the whole value must match, e.g. `"0x([0-9A-Fa-f]{2})+"` for a hex code with the `0x` prefix, in pairs of digits. |
 
 | Type | Values |
 |---|---|
-| `number` | A number, e.g. `-30` or `0.5`. Units the device adds, e.g. `5dB`, are ignored when reading. `None` or `Unknown` are read as no value. |
+| `number` | A number, e.g. `-30` or `0.5`. `None` or `Unknown` are read as no value. |
 | `boolean` | `True` or `False`, sent and read as the two `values`, e.g. `On` and `Off`. |
 | `enum` | One of `values`. |
 | `string` | Any text. |
 
-The keys are sorted and the files are indented with tabs, as enforced by the pre-commit hooks.
+Setting names and values should be spelled exactly as the device reports them, including case and
+spaces. The keys are sorted and the files are indented with tabs, as enforced by the pre-commit
+hooks.
 
 ### `Main.Volume`
 
-Most devices don't accept `=` for `Main.Volume`, so `amplifier.json` only has `+-?`. For devices
-that do, add `"operators": "=+-?"`. Without `=`, the library sets the volume by stepping with `+`
-and `-`.
+Some devices don't accept `=` for `Main.Volume`, so `amplifier.json` only has `+-?`. For devices
+that do, add `"operators": "=+-?"`.
 
 ## Inheriting from the base configuration files
 

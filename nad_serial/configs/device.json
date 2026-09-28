@@ -1,5 +1,9 @@
 {
 	"settings": {
+		"Main.Build": {
+			"operators": "?",
+			"type": "string"
+		},
 		"Main.Model": {
 			"description": "Query the model",
 			"operators": "?",
@@ -13,6 +17,11 @@
 				"Off",
 				"On"
 			]
+		},
+		"Main.Serial": {
+			"description": "Query the serial number",
+			"operators": "?",
+			"type": "string"
 		},
 		"Main.Version": {
 			"description": "Query the firmware version",

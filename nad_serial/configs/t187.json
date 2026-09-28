@@ -1,7 +1,8 @@
 {
 	"device_types": [
 		"amplifier",
-		"tuner"
+		"tuner",
+		"zones"
 	],
 	"settings": {
 		"DSP.Version": {
@@ -61,10 +62,10 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Rewind",
-				"FastForward",
+				"Play",
 				"Pause",
-				"Play"
+				"Rewind",
+				"FastForward"
 			]
 		},
 		"Ipod.Repeat": {
@@ -72,9 +73,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"All",
 				"Off",
-				"One"
+				"One",
+				"All"
 			]
 		},
 		"Ipod.Shuffle": {
@@ -83,8 +84,8 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"Albums",
-				"Songs"
+				"Songs",
+				"Albums"
 			]
 		},
 		"Ipod.Title": {
@@ -102,11 +103,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Zone3",
+				"Back",
 				"Front",
-				"Zone4",
 				"Zone2",
-				"Back"
+				"Zone3",
+				"Zone4"
 			]
 		},
 		"Main.Audyssey": {
@@ -114,9 +115,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"Off",
 				"Audyssey",
 				"Flat",
-				"Off",
 				"NAD"
 			]
 		},
@@ -126,9 +127,9 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"Heavy",
+				"Light",
 				"Medium",
-				"Light"
+				"Heavy"
 			]
 		},
 		"Main.Audyssey.DEQ": {
@@ -153,10 +154,10 @@
 			"type": "enum",
 			"values": [
 				"Main",
-				"All",
-				"Zone4",
+				"Zone2",
 				"Zone3",
-				"Zone2"
+				"Zone4",
+				"All"
 			]
 		},
 		"Main.Bass": {
@@ -173,9 +174,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"SourceSetup",
 				"Off",
-				"Auto"
+				"Auto",
+				"SourceSetup"
 			]
 		},
 		"Main.CEC.Audio": {
@@ -318,8 +319,8 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Feet",
-				"Meters"
+				"Meters",
+				"Feet"
 			]
 		},
 		"Main.Dolby.CenterWidth": {
@@ -401,8 +402,9 @@
 		},
 		"Main.IR": {
 			"description": "Send IR Commands via RS232 where <VALUE> is decimal IR code",
+			"min": 0,
 			"operators": "=",
-			"type": "string"
+			"type": "number"
 		},
 		"Main.IR.Channel": {
 			"description": "Set the Main IR Channel (allows for two NADs to be controlled separately)",
@@ -414,11 +416,13 @@
 		"Main.IR1": {
 			"description": "String showing the HEX value of a supported IR command (0x877C customer code)",
 			"operators": "=",
+			"regex": "0x([0-9A-Fa-f]{2})+",
 			"type": "string"
 		},
 		"Main.IR2": {
 			"description": "String showing the HEX value of a supported IR command (0x860F customer code)",
 			"operators": "=",
+			"regex": "0x([0-9A-Fa-f]{2})+",
 			"type": "string"
 		},
 		"Main.Level.BackLeft": {
@@ -499,16 +503,16 @@
 			"type": "enum",
 			"values": [
 				"None",
-				"PLIIMusic",
-				"SurroundEX",
 				"AnalogBypass",
 				"StereoDownmix",
 				"EnhancedStereo",
 				"EARS",
-				"NEO6Music",
-				"NEO6Cinema",
 				"ProLogic",
-				"PLIIMovie"
+				"PLIIMovie",
+				"PLIIMusic",
+				"SurroundEX",
+				"NEO6Cinema",
+				"NEO6Music"
 			]
 		},
 		"Main.ListeningMode.Analog": {
@@ -517,14 +521,14 @@
 			"type": "enum",
 			"values": [
 				"None",
-				"PLIIMusic",
-				"NEO6Music",
-				"EARS",
-				"EnhancedStereo",
 				"AnalogBypass",
-				"NEO6Cinema",
+				"EnhancedStereo",
+				"EARS",
 				"ProLogic",
-				"PLIIMovie"
+				"PLIIMovie",
+				"PLIIMusic",
+				"NEO6Cinema",
+				"NEO6Music"
 			]
 		},
 		"Main.ListeningMode.DTS": {
@@ -532,9 +536,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"NEO6Music",
 				"None",
-				"StereoDownmix"
+				"StereoDownmix",
+				"NEO6Music"
 			]
 		},
 		"Main.ListeningMode.Digital": {
@@ -543,14 +547,14 @@
 			"type": "enum",
 			"values": [
 				"None",
+				"StereoDownmix",
 				"EnhancedStereo",
 				"EARS",
-				"NEO6Music",
-				"NEO6Cinema",
-				"PLIIMusic",
 				"ProLogic",
-				"StereoDownmix",
-				"PLIIMovie"
+				"PLIIMovie",
+				"PLIIMusic",
+				"NEO6Cinema",
+				"NEO6Music"
 			]
 		},
 		"Main.ListeningMode.DolbyDigital": {
@@ -558,11 +562,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"SurroundEX",
-				"PLIIMovie",
 				"None",
 				"StereoDownmix",
-				"PLIIMusic"
+				"PLIIMovie",
+				"PLIIMusic",
+				"SurroundEX"
 			]
 		},
 		"Main.ListeningMode.DolbyDigital2ch": {
@@ -570,10 +574,10 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"PLIIMovie",
-				"PLIIMusic",
+				"None",
 				"ProLogic",
-				"None"
+				"PLIIMovie",
+				"PLIIMusic"
 			]
 		},
 		"Main.OSD.TempDisplay": {
@@ -669,9 +673,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Large",
 				"Off",
-				"Small"
+				"Small",
+				"Large"
 			]
 		},
 		"Main.Speaker.Surround.Frequency": {
@@ -714,12 +718,12 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Zone3",
 				"Main",
 				"Zone2",
-				"Source",
+				"Zone3",
 				"Zone4",
-				"Zone234"
+				"Zone234",
+				"Source"
 			]
 		},
 		"Main.Trigger2.Delay": {
@@ -735,11 +739,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"Main",
+				"Zone2",
+				"Zone3",
 				"Zone4",
 				"Zone234",
-				"Zone3",
-				"Zone2",
-				"Main",
 				"Source"
 			]
 		},
@@ -756,12 +760,12 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Zone2",
-				"Source",
-				"Zone234",
-				"Zone3",
 				"Main",
-				"Zone4"
+				"Zone2",
+				"Zone3",
+				"Zone4",
+				"Zone234",
+				"Source"
 			]
 		},
 		"Main.Trim.Center": {
@@ -793,8 +797,8 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Temp",
-				"On"
+				"On",
+				"Temp"
 			]
 		},
 		"Main.VFD.Line1": {
@@ -802,14 +806,14 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"Off",
+				"MainSource",
 				"Volume",
 				"ListeningMode",
-				"MainSource",
 				"AudioSourceFormat",
 				"Zone2Source",
-				"Zone4Source",
 				"Zone3Source",
-				"Off"
+				"Zone4Source"
 			]
 		},
 		"Main.VFD.Line2": {
@@ -818,13 +822,13 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"Zone4Source",
-				"Zone3Source",
-				"Zone2Source",
-				"AudioSourceFormat",
-				"ListeningMode",
+				"MainSource",
 				"Volume",
-				"MainSource"
+				"ListeningMode",
+				"AudioSourceFormat",
+				"Zone2Source",
+				"Zone3Source",
+				"Zone4Source"
 			]
 		},
 		"Main.VFD.TempLine": {
@@ -839,9 +843,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"Stretch",
 				"Zoom",
-				"LetterBox",
-				"Stretch"
+				"LetterBox"
 			]
 		},
 		"Main.Video.Aspect.Ratio": {
@@ -893,8 +897,8 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"60",
-				"50"
+				"50",
+				"60"
 			]
 		},
 		"Main.Video.Resolution": {
@@ -902,13 +906,13 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"576p",
-				"1080p",
-				"576i",
 				"480i",
 				"480p",
+				"576i",
+				"576p",
 				"720p",
-				"1080i"
+				"1080i",
+				"1080p"
 			]
 		},
 		"Main.VideoMode": {
@@ -1199,8 +1203,8 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"7.1",
-				"Stereo"
+				"Stereo",
+				"7.1"
 			]
 		},
 		"Source1.AnalogAudioInput": {
@@ -1224,11 +1228,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"ARC",
-				"HDMI",
+				"Off",
 				"Coaxial",
 				"Optical",
-				"Off"
+				"HDMI",
+				"ARC"
 			]
 		},
 		"Source1.DigitalAudioInput": {
@@ -1266,11 +1270,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"Off",
 				"Video",
 				"SVideo",
 				"Component",
-				"HDMI",
-				"Off"
+				"HDMI"
 			]
 		},
 		"Source1.VideoInput": {
@@ -1309,11 +1313,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"Off",
 				"Coaxial",
-				"ARC",
-				"HDMI",
 				"Optical",
-				"Off"
+				"HDMI",
+				"ARC"
 			]
 		},
 		"Source10.DigitalAudioInput": {
@@ -1370,9 +1374,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"Off",
 				"Stereo",
-				"7.1",
-				"Off"
+				"7.1"
 			]
 		},
 		"Source2.AnalogAudioInput": {
@@ -1396,10 +1400,10 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"HDMI",
 				"Off",
-				"Optical",
 				"Coaxial",
+				"Optical",
+				"HDMI",
 				"ARC"
 			]
 		},
@@ -1438,11 +1442,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"HDMI",
+				"Off",
 				"Video",
 				"SVideo",
-				"Off",
-				"Component"
+				"Component",
+				"HDMI"
 			]
 		},
 		"Source2.VideoInput": {
@@ -1483,11 +1487,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"ARC",
 				"Off",
-				"Optical",
 				"Coaxial",
-				"HDMI"
+				"Optical",
+				"HDMI",
+				"ARC"
 			]
 		},
 		"Source3.DigitalAudioInput": {
@@ -1544,9 +1548,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"7.1",
 				"Off",
-				"Stereo"
+				"Stereo",
+				"7.1"
 			]
 		},
 		"Source4.AnalogAudioInput": {
@@ -1570,11 +1574,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"ARC",
-				"HDMI",
-				"Coaxial",
 				"Off",
-				"Optical"
+				"Coaxial",
+				"Optical",
+				"HDMI",
+				"ARC"
 			]
 		},
 		"Source4.DigitalAudioInput": {
@@ -1612,11 +1616,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Component",
-				"Video",
-				"HDMI",
 				"Off",
-				"SVideo"
+				"Video",
+				"SVideo",
+				"Component",
+				"HDMI"
 			]
 		},
 		"Source4.VideoInput": {
@@ -1657,10 +1661,10 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"HDMI",
 				"Off",
-				"Optical",
 				"Coaxial",
+				"Optical",
+				"HDMI",
 				"ARC"
 			]
 		},
@@ -1700,10 +1704,10 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"HDMI",
-				"Component",
 				"Video",
-				"SVideo"
+				"SVideo",
+				"Component",
+				"HDMI"
 			]
 		},
 		"Source5.VideoInput": {
@@ -1744,11 +1748,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Coaxial",
-				"ARC",
-				"HDMI",
 				"Off",
-				"Optical"
+				"Coaxial",
+				"Optical",
+				"HDMI",
+				"ARC"
 			]
 		},
 		"Source6.DigitalAudioInput": {
@@ -1831,11 +1835,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"ARC",
-				"HDMI",
+				"Off",
 				"Coaxial",
 				"Optical",
-				"Off"
+				"HDMI",
+				"ARC"
 			]
 		},
 		"Source7.DigitalAudioInput": {
@@ -1873,11 +1877,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"HDMI",
-				"Component",
-				"SVideo",
+				"Off",
 				"Video",
-				"Off"
+				"SVideo",
+				"Component",
+				"HDMI"
 			]
 		},
 		"Source7.VideoInput": {
@@ -1918,11 +1922,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Optical",
-				"ARC",
-				"Coaxial",
 				"Off",
-				"HDMI"
+				"Coaxial",
+				"Optical",
+				"HDMI",
+				"ARC"
 			]
 		},
 		"Source8.DigitalAudioInput": {
@@ -1960,11 +1964,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Component",
-				"HDMI",
 				"Off",
 				"Video",
-				"SVideo"
+				"SVideo",
+				"Component",
+				"HDMI"
 			]
 		},
 		"Source8.VideoInput": {
@@ -1979,9 +1983,9 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
+				"Off",
 				"Stereo",
-				"7.1",
-				"Off"
+				"7.1"
 			]
 		},
 		"Source9.AnalogAudioInput": {
@@ -2005,10 +2009,10 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"HDMI",
+				"Off",
 				"Coaxial",
 				"Optical",
-				"Off",
+				"HDMI",
 				"ARC"
 			]
 		},
@@ -2047,11 +2051,11 @@
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"SVideo",
+				"Off",
 				"Video",
+				"SVideo",
 				"Component",
-				"HDMI",
-				"Off"
+				"HDMI"
 			]
 		},
 		"Source9.VideoInput": {
@@ -2070,8 +2074,8 @@
 		},
 		"Tuner.Band": {
 			"values": [
-				"AM",
 				"FM",
+				"AM",
 				"DAB",
 				"XM"
 			]
@@ -2141,63 +2145,13 @@
 			"operators": "?",
 			"type": "string"
 		},
-		"Zone2.Mute": {
-			"description": "Set Zone Mute",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
-		},
-		"Zone2.Power": {
-			"description": "Set Zone Power",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
-		},
-		"Zone2.Source": {
-			"description": "Set Zone Source",
-			"max": 11,
-			"min": 1,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Zone2.Volume": {
-			"description": "Set Zone Volume",
-			"max": 19,
-			"min": -99,
-			"operators": "=+-?",
-			"type": "number",
-			"unit": "dB"
-		},
-		"Zone2.VolumeControl": {
-			"description": "Set Zone Volume Control Variable/Fixed",
-			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"Fixed",
-				"Variable"
-			]
-		},
-		"Zone2.VolumeFixed": {
-			"description": "Set Zone Fixed Volume Value",
-			"max": 16,
-			"min": -95,
-			"operators": "=+-?",
-			"type": "number",
-			"unit": "dB"
-		},
 		"Zone3.Mode": {
 			"description": "Set Zone Mode Zone/Record",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"Record",
-				"Zone"
+				"Zone",
+				"Record"
 			]
 		},
 		"Zone3.Mute": {

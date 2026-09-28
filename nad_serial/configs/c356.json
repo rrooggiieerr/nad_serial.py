@@ -8,13 +8,13 @@
 			"min": null,
 			"type": "enum",
 			"values": [
+				"Ipod",
 				"CD",
 				"Tuner",
-				"Video",
 				"Disc",
-				"Ipod",
+				"Aux",
 				"Tape2",
-				"Aux"
+				"Video"
 			]
 		},
 		"Main.SpeakerA": {

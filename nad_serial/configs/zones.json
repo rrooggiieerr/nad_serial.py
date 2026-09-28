@@ -1,0 +1,54 @@
+{
+	"settings": {
+		"Zone2.Mute": {
+			"description": "Set Zone Mute",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Zone2.Power": {
+			"description": "Set Zone Power",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Zone2.Source": {
+			"description": "Set Zone Source",
+			"max": 11,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Zone2.Volume": {
+			"description": "Set Zone Volume",
+			"max": 19,
+			"min": -99,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Zone2.VolumeControl": {
+			"description": "Set Zone Volume Control Variable/Fixed",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Variable",
+				"Fixed"
+			]
+		},
+		"Zone2.VolumeFixed": {
+			"description": "Set Zone Fixed Volume Value",
+			"max": 16,
+			"min": -95,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		}
+	}
+}

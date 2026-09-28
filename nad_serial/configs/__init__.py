@@ -68,12 +68,15 @@ async def _async_read_config_file(config: str) -> dict[str, Any] | None:
 
 
 async def async_read_device_config(
-    model: str, detected_device_types: list[str] | None = None
+    model: str | None = None, detected_device_types: list[str] | None = None
 ) -> dict[str, Any]:
     device_types = ["device"]
     device_config: dict[str, Any] = {}
 
-    model_config = await _async_read_config_file(model)
+    model_config = None
+    if model:
+        model_config = await _async_read_config_file(model)
+
     if model_config is not None:
         device_types += model_config.get("device_types", [])
     elif detected_device_types:

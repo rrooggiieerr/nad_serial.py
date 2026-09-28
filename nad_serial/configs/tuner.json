@@ -2,8 +2,11 @@
 	"settings": {
 		"Tuner.AM.Frequency": {
 			"description": "The AM frequency",
+			"max": 1710,
+			"min": 522,
 			"operators": "=+-?",
-			"type": "string",
+			"step": 1,
+			"type": "number",
 			"unit": "kHz"
 		},
 		"Tuner.Band": {
@@ -17,8 +20,11 @@
 		},
 		"Tuner.FM.Frequency": {
 			"description": "The FM frequency",
+			"max": 108.0,
+			"min": 87.5,
 			"operators": "=+-?",
-			"type": "string",
+			"step": 0.05,
+			"type": "number",
 			"unit": "MHz"
 		},
 		"Tuner.Preset": {
