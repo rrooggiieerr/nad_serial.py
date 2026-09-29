@@ -287,15 +287,13 @@ class NADDevice:
         # Read all settings from the device
         await self._async_read_all_settings()
 
-        # Resolve links to settings states in _device_settings
+        # Resolve links to setting states in _device_settings
         for config in self._device_config["settings"].values():
             for key in ("min", "max", "step"):
                 if isinstance(config.get(key), str):
-                    resolved = self._setting_states.get(config.get(key).lower())
-                    if isinstance(resolved, (int, float)) and not isinstance(
-                        resolved, bool
-                    ):
-                        config[key] = resolved
+                    value = self.get_setting_value(config.get(key))
+                    if isinstance(value, (int, float)) and not isinstance(value, bool):
+                        config[key] = value
                     else:
                         del config[key]
 
@@ -577,13 +575,13 @@ class NADAmplifier(NADDevice):
         if (
             source_config
             and source_config["type"] != "enum"
-            and self._setting_states.get("source1.name") is None
+            and self.get_setting_value("Source1.Name") is None
         ):
             # Try to get the source names, even though the device does not specify the needed
             # settings.
             for i in range(1, 11):
                 try:
-                    setting = f"source{i}.name"
+                    setting = f"Source{i}.Name"
                     value = await self._async_request(
                         setting, "?", timeout=SETUP_TIMEOUT
                     )
@@ -602,9 +600,9 @@ class NADAmplifier(NADDevice):
 
         source_names = {}
         for i in range(1, 11):
-            if self._setting_states.get(f"Source{i}.Enabled") is False:
+            if self.get_setting_value(f"Source{i}.Enabled") is False:
                 continue
-            value = self._setting_states.get(f"Source{i}.Name")
+            value = self.get_setting_value(f"Source{i}.Name")
             if value:
                 source_names[i] = value
 
