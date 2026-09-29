@@ -1,5 +1,6 @@
 import pytest
 
+from nad_serial.exceptions import NADCommandError
 from nad_serial.helpers import build_command, parse_response
 
 
@@ -108,7 +109,7 @@ def test_build_command_set_setting_bool():
 
 @pytest.mark.parametrize(
     "value",
-    ("On", "on", "".join(["O", "n"]), "".join(["o", "n"])),  # noqa: FLY002
+    ["On", "on", "".join(["O", "n"]), "".join(["o", "n"])],  # noqa: FLY002
 )
 def test_build_command_set_setting_bool_string(value):
     command = build_command(
@@ -121,7 +122,7 @@ def test_build_command_set_setting_bool_string(value):
 
 
 def test_build_command_set_setting_bool_invalid_string():
-    with pytest.raises(ValueError):
+    with pytest.raises(NADCommandError):
         build_command(
             "Main.Power",
             "=",
@@ -232,7 +233,7 @@ def test_build_command_set_setting_number(setting, value, config, expected):
 
 
 def test_build_command_set_setting_number_string():
-    with pytest.raises(ValueError):
+    with pytest.raises(NADCommandError):
         build_command(
             "Main.Volume",
             "=",
@@ -242,7 +243,7 @@ def test_build_command_set_setting_number_string():
 
 
 def test_build_command_set_setting_number_bool():
-    with pytest.raises(ValueError):
+    with pytest.raises(NADCommandError):
         build_command(
             "Main.Volume",
             "=",
@@ -252,7 +253,7 @@ def test_build_command_set_setting_number_bool():
 
 
 def test_build_command_set_setting_not_supported():
-    with pytest.raises(ValueError):
+    with pytest.raises(NADCommandError):
         build_command("Main.Model", "=", "value", {"operators": "?", "type": "string"})
 
 
@@ -331,12 +332,12 @@ def test_build_command_previous():
     ],
 )
 def test_build_command_set_setting_invalid_characters(setting, value, config):
-    with pytest.raises(ValueError):
+    with pytest.raises(NADCommandError):
         build_command(setting, "=", value, config)
 
 
 def test_build_command_invalid_operator():
-    with pytest.raises(ValueError):
+    with pytest.raises(NADCommandError):
         build_command(
             "Main.Power",
             "^",
@@ -354,12 +355,12 @@ def test_build_command_invalid_operator():
     ],
 )
 def test_build_command_unsupported_operator(setting, operator, value, config):
-    with pytest.raises(ValueError):
+    with pytest.raises(NADCommandError):
         build_command(setting, operator, value, config)
 
 
 def test_build_command_unsupported_value_type():
-    with pytest.raises(ValueError):
+    with pytest.raises(NADCommandError):
         build_command("A.B", "=", "value", {"operators": "=+-?", "type": "dict"})
 
 
@@ -373,9 +374,9 @@ def test_build_command_valid_format():
     assert command == "Main.IR1=0x0000"
 
 
-@pytest.mark.parametrize(("value"), ("0000", "0x000", "None", 0000))
+@pytest.mark.parametrize(("value"), ["0000", "0x000", "None", 0000])
 def test_build_command_invalid_format(value):
-    with pytest.raises(ValueError):
+    with pytest.raises(NADCommandError):
         build_command(
             "Main.IR1",
             "=",
