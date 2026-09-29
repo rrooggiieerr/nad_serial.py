@@ -1,12 +1,23 @@
 """Tests the configuration file functions."""
 
+import importlib.resources
+
 import pytest
 
 from nad_serial import configs
 
+BASE_CONFIGS = ("device", "amplifier", "tuner", "zones")
+_CONFIG_DIR = importlib.resources.files("nad_serial.configs")
+CONFIG_FILES = sorted(p.name for p in _CONFIG_DIR.iterdir() if p.name.endswith(".json"))
+MODELS = tuple(
+    name.removesuffix(".json")
+    for name in CONFIG_FILES
+    if name.removesuffix(".json") not in BASE_CONFIGS
+)
+
 
 async def test_async_read_device_config_amplifier():
-    """Test that an amplifier device type only loads the `device,json` and `amplifier.json` config."""
+    """Test that an amplifier device type only loads the `device.json` and `amplifier.json` config."""
     device_config = await configs.async_read_device_config("C356")
     assert device_config["device_types"] == ["amplifier"]
     assert device_config["settings"]["Main.Power"]
@@ -16,7 +27,7 @@ async def test_async_read_device_config_amplifier():
 
 
 async def test_async_read_device_config_tuner():
-    """Test that an amplifier device type only loads the `device,json` and `tuner.json` config."""
+    """Test that an amplifier device type only loads the `device.json` and `tuner.json` config."""
     device_config = await configs.async_read_device_config("C427")
     assert device_config["device_types"] == ["tuner"]
     assert device_config["settings"]["Main.Power"]
@@ -26,7 +37,7 @@ async def test_async_read_device_config_tuner():
 
 
 async def test_async_read_device_config_receiver():
-    """Test that an amplifier device type loads both the `device,json`, `amplifier.json` and `tuner.json` config."""
+    """Test that an amplifier device type loads both the `device.json`, `amplifier.json` and `tuner.json` config."""
     device_config = await configs.async_read_device_config("T755")
     assert device_config["device_types"] == ["amplifier", "tuner", "zones"]
     assert device_config["settings"]["Main.Power"]
@@ -89,22 +100,7 @@ async def test_async_read_device_config_unknown_device_detected_receiver():
 
 @pytest.mark.parametrize(
     "model",
-    (
-        "C356",
-        "C368",
-        "C388",
-        "C427",
-        "M15HD",
-        "T175",
-        "T187",
-        "T755",
-        "T757",
-        "T765",
-        "T775",
-        "T777",
-        "T785",
-        "T787",
-    ),
+    MODELS,
 )
 async def test_all_files(model: str):
     """Tests if all configuration files follow the specification."""
@@ -112,14 +108,12 @@ async def test_all_files(model: str):
     assert "device_types" in device_config
 
     for device_type in device_config["device_types"]:
-        assert device_type in ["amplifier", "tuner", "zones"]
+        assert device_type in BASE_CONFIGS
 
     for setting in device_config["settings"].values():
         assert setting["type"] in ("number", "enum", "boolean", "string")
         assert setting["operators"]
-        if "+" in setting["operators"]:
-            # Make sure +- is always in that order
-            assert "+-" in setting["operators"]
+        assert setting["operators"] in ("=+-?", "?", "=", "+-", "+-?")
         if (
             setting["type"] == "number"
             and "?" in setting["operators"]
