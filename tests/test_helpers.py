@@ -1,7 +1,7 @@
 import pytest
 
 from nad_serial.exceptions import NADCommandError
-from nad_serial.helpers import build_command, parse_response
+from nad_serial.helpers import build_command, parse_response, parse_value
 
 
 def test_parse_response():
@@ -17,48 +17,45 @@ def test_parse_response_empty_value():
 
 
 def test_parse_response_string():
-    setting, value = parse_response(
-        b"Main.Model=T755\n", {"operators": "?", "type": "string"}
-    )
+    setting, value = parse_response(b"Main.Model=T755\n")
+    value = parse_value(setting, value, {"operators": "?", "type": "string"})
     assert setting == "Main.Model"
     assert value == "T755"
 
 
 def test_parse_response_int():
-    setting, value = parse_response(
-        b"Main.Volume=-30\n", {"operators": "?", "type": "number"}
-    )
+    setting, value = parse_response(b"Main.Volume=-30\n")
+    value = parse_value(setting, value, {"operators": "?", "type": "number"})
     assert setting == "Main.Volume"
     assert value == -30
 
 
 def test_parse_response_float():
-    setting, value = parse_response(
-        b"Tuner.FM.Frequency=87.5\n", {"operators": "?", "type": "number"}
-    )
+    setting, value = parse_response(b"Tuner.FM.Frequency=87.5\n")
+    value = parse_value(setting, value, {"operators": "?", "type": "number"})
     assert setting == "Tuner.FM.Frequency"
     assert value == 87.5
 
 
 def test_parse_response_none():
-    setting, value = parse_response(
-        b"Tuner.FM.Frequency=None\n", {"operators": "?", "type": "number"}
-    )
+    setting, value = parse_response(b"Tuner.FM.Frequency=None\n")
+    value = parse_value(setting, value, {"operators": "?", "type": "number"})
     assert setting == "Tuner.FM.Frequency"
     assert value is None
 
 
 def test_parse_response_unknown():
-    setting, value = parse_response(
-        b"Tuner.FM.Frequency=Unknown\n", {"operators": "?", "type": "number"}
-    )
+    setting, value = parse_response(b"Tuner.FM.Frequency=Unknown\n")
+    value = parse_value(setting, value, {"operators": "?", "type": "number"})
     assert setting == "Tuner.FM.Frequency"
     assert value is None
 
 
 def test_parse_response_boolean():
-    setting, value = parse_response(
-        b"Main.Power=On\n",
+    setting, value = parse_response(b"Main.Power=On\n")
+    value = parse_value(
+        setting,
+        value,
         {"operators": "=+-?", "type": "boolean", "values": ["Off", "On"]},
     )
     assert setting == "Main.Power"

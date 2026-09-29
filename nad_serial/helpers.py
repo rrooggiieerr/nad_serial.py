@@ -8,56 +8,51 @@ from typing import Any
 from .exceptions import NADCommandError
 
 ValueType = str | int | float | bool
+REPORT_MESSAGE = "Please report this to the NAD Serial library maintainers on https://github.com/rrooggiieerr/nad_serial.py/issues."
 
 SETTING_RE = re.compile(r"[A-Za-z0-9]+(\.[A-Za-z0-9]+)+")
 
 logger = logging.getLogger(__name__)
 
 
-def parse_response(
-    response: bytes, config: dict[str, Any] | None = None
-) -> tuple[str | None, ValueType | None]:
-    """Parse a response from the NAD device."""
+def parse_response(response: bytes) -> tuple[str | None, str | None]:
+    """Split a NAD device response into the raw setting name and value."""
     if not response:
         return None, None
 
     response = response.strip(b" \t\r\n\x00")
     response = response.decode("ascii", errors="replace")
-    setting = None
-    value = None
     try:
         setting, value = response.split("=", 1)
-        setting = setting.strip()
-        value = value.strip()
+        return setting.strip(), value.strip()
     except ValueError:
         return None, None
 
-    if not config:
-        return setting, value
 
+def parse_value(setting: str, value: str, config: dict[str, Any]) -> ValueType | None:
+    """Convert a raw NAD device value using the setting's config."""
     if config["type"] in ["boolean", "enum"] and value not in config["values"]:
-        logger.error("%s returned an unsupported value %s.", setting, value)
+        logger.error("%s returned an unsupported value %s", setting, value)
+        logger.error(REPORT_MESSAGE)
 
     if config["type"] == "number":
         if value in ["None", "Unknown"]:
-            value = None
-        else:
-            # ToDo Improve number parsing
+            return None
+        # ToDo Improve number parsing
+        try:
+            return int(value)
+        except ValueError:
             try:
-                value = int(value)
+                return float(value)
             except ValueError:
-                try:
-                    value = float(value)
-                except ValueError:
-                    logger.warning("%s returned an invalid number %s", setting, value)
-                    value = None
+                logger.warning("%s returned an invalid number %s", setting, value)
+                return None
     if config["type"] == "boolean":
         if value in config["values"]:
-            value = bool(config["values"].index(value))
-        else:
-            value = None
+            return bool(config["values"].index(value))
+        return None
 
-    return setting, value
+    return value
 
 
 def build_command(

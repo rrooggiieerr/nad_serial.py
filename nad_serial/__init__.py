@@ -21,7 +21,12 @@ from .exceptions import (
     NADResponseError,
     NADTimeoutError,
 )
-from .helpers import ValueType, build_command, parse_response
+from .helpers import (
+    ValueType,
+    build_command,
+    parse_response,
+    parse_value,
+)
 
 with contextlib.suppress(ModuleNotFoundError):
     from ._version import __version__ as __version__
@@ -301,14 +306,10 @@ class NADDevice:
         return self._setting_states.get(setting.lower())
 
     def _parse_response(self, response: bytes) -> tuple[str | None, ValueType | None]:
-        try:
-            setting, _ = response.split(b"=", 1)
-            setting = setting.strip(b" \t\r\n\x00").decode("ascii", errors="replace")
-        except ValueError:
+        setting, value = parse_response(response)
+        if setting is None:
             return None, None
-
-        config = self.get_setting_config(setting)
-        return parse_response(response, config)
+        return setting, parse_value(setting, value, self.get_setting_config(setting))
 
     async def _reader_loop(self) -> None:
         """Reads all data sent by the device."""
