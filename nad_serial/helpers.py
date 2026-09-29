@@ -1,4 +1,4 @@
-"""Helpers for NAD Serial"""
+"""Helpers for NAD Serial."""
 
 import logging
 import math
@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 def parse_response(
     response: bytes, config: dict[str, Any] | None = None
 ) -> tuple[str | None, ValueType | None]:
+    """Parse a response from the NAD device."""
     if not response:
         return None, None
 
@@ -48,7 +49,7 @@ def parse_response(
                 try:
                     value = float(value)
                 except ValueError:
-                    logger.error("%s returned an invalid number %s", setting, value)
+                    logger.warning("%s returned an invalid number %s", setting, value)
                     value = None
     if config["type"] == "boolean":
         if value in config["values"]:
@@ -65,6 +66,7 @@ def build_command(
     value: ValueType | None = None,
     config: dict[str, Any] | None = None,
 ) -> str:
+    """Builds a command for the NAD device."""
     if not SETTING_RE.fullmatch(setting):
         raise NADCommandError(f"Invalid characters in setting {setting!r}")
     if isinstance(value, str) and not (value.isascii() and value.isprintable()):

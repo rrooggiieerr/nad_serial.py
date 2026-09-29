@@ -1,6 +1,4 @@
-"""
-Configuration files for NAD devices.
-"""
+"""Configuration files for NAD devices."""
 
 import asyncio
 import copy
@@ -70,6 +68,7 @@ async def _async_read_config_file(config: str) -> dict[str, Any] | None:
 async def async_read_device_config(
     model: str | None = None, detected_device_types: list[str] | None = None
 ) -> dict[str, Any]:
+    """Reads the device configuration."""
     device_types = ["device"]
     device_config: dict[str, Any] = {}
 

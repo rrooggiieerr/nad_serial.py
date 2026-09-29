@@ -1,6 +1,9 @@
+"""The NAD Serial library."""
+
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import logging
 import math
 from collections.abc import Callable
@@ -20,10 +23,8 @@ from .exceptions import (
 )
 from .helpers import ValueType, build_command, parse_response
 
-try:
+with contextlib.suppress(ModuleNotFoundError):
     from ._version import __version__ as __version__
-except ModuleNotFoundError:
-    pass
 
 
 _LINE_ENDINGS = (b"\r", b"\n", b"\x00")
@@ -42,7 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class NADDevice:
-    """A minimal NAD device"""
+    """A minimal NAD device."""
 
     # The prefix of the device settings.
     _prefix = "Main"
@@ -74,6 +75,7 @@ class NADDevice:
         model: str | None,
         device_config: dict[str, Any],
     ):
+        """Initializes a NAD device."""
         self._connection = connection
         self._model = model
         self._device_config = device_config
@@ -110,13 +112,11 @@ class NADDevice:
         command = build_command(setting, "?")
         try:
             # Empty read buffer
-            try:
+            with contextlib.suppress(TimeoutError):
                 while True:
                     async with asyncio.timeout(0.05):
                         if not await connection.read(1024):
                             break
-            except TimeoutError:
-                pass
 
             await connection.write(f"\r{command}\r".encode("ascii"))
 
@@ -130,7 +130,7 @@ class NADDevice:
             return None
         except (OSError, SerialException, asyncio.IncompleteReadError) as ex:
             await connection.close()
-            raise NADConnectionError() from ex
+            raise NADConnectionError("Disconnected") from ex
 
     @staticmethod
     async def async_connect(
@@ -138,7 +138,7 @@ class NADDevice:
         *,
         model_hint: str | None = None,
     ) -> NADDevice:
-        """Connects to the device and returns one of the NAD device classes"""
+        """Connects to the device and returns one of the NAD device classes."""
         try:
             connection = serialx.async_serial_for_url(
                 url,
@@ -207,7 +207,7 @@ class NADDevice:
             raise
         except Exception as ex:
             await device.async_disconnect()
-            raise NADConnectionError() from ex
+            raise NADConnectionError("Disconnected") from ex
 
         return device
 
@@ -219,10 +219,8 @@ class NADDevice:
             self._pending_request[1].set_exception(NADConnectionError("Disconnected"))
             self._pending_request = None
 
-        try:
+        with contextlib.suppress(OSError, SerialException):
             await self._connection.close()
-        except (OSError, SerialException):
-            pass
 
     async def async_reconnect(self) -> None:
         """Reconnects the connection."""
@@ -243,10 +241,8 @@ class NADDevice:
         self._callbacks.append(callback)
 
         def remove_callback():
-            try:
+            with contextlib.suppress(ValueError):
                 self._callbacks.remove(callback)
-            except ValueError:
-                pass
 
         return remove_callback
 
@@ -262,15 +258,14 @@ class NADDevice:
         for setting, config in self._device_config["settings"].items():
             if "?" in config["operators"]:
                 try:
-                    value = await self._async_request(
-                        setting, "?", timeout=SETUP_TIMEOUT
-                    )
+                    async with asyncio.timeout(SETUP_TIMEOUT):
+                        value = await self._async_request(setting, "?")
                     self._setting_states[setting.lower()] = value
-                except NADTimeoutError:
+                except (TimeoutError, NADTimeoutError):
                     logger.debug("No response for %s", setting)
 
     async def _async_setup(self) -> None:
-        """Setup the device"""
+        """Setup the NAD device."""
         self._sends_updates = self._device_config.get("sends_updates")
 
         self._supported_settings = list(self._device_config["settings"].keys())
@@ -299,8 +294,7 @@ class NADDevice:
 
     def get_setting_config(self, setting: str) -> dict[str, Any] | None:
         """Gets the configuration for a setting."""
-        setting_config = self._device_config["settings"].get(setting.lower())
-        return setting_config
+        return self._device_config["settings"].get(setting.lower())
 
     def get_setting_value(self, setting: str) -> ValueType | None:
         """Gets the state of a setting."""
@@ -351,8 +345,7 @@ class NADDevice:
                                 # Device-initiated updates
                                 if self._sends_updates is None:
                                     logger.info(
-                                        "The NAD %s sends updates, please update the device "
-                                        + "configuration file accordingly",
+                                        "The NAD %s sends updates, please update the device configuration file accordingly",
                                         self.model,
                                     )
                                 self._sends_updates = True
@@ -362,8 +355,7 @@ class NADDevice:
                                     not in self._device_config["settings"]
                                 ):
                                     logger.info(
-                                        "New setting %s detected, please update the device "
-                                        + "configuration file accordingly",
+                                        "New setting %s detected, please update the device configuration file accordingly",
                                         setting,
                                     )
                             self._setting_states[setting.lower()] = value
@@ -383,10 +375,8 @@ class NADDevice:
                 )
                 self._pending_request = None
 
-            try:
+            with contextlib.suppress(OSError, SerialException):
                 await self._connection.close()
-            except (OSError, SerialException):
-                pass
 
     def _start_reader(self) -> None:
         if self._reader_task is None or self._reader_task.done():
@@ -398,17 +388,14 @@ class NADDevice:
         task, self._reader_task = self._reader_task, None
         if task is not None:
             task.cancel()
-            try:
+            with contextlib.suppress(asyncio.CancelledError):
                 await task
-            except asyncio.CancelledError:
-                pass
 
     async def _async_request(
         self,
         setting: str,
         operator: str,
         value: ValueType | None = None,
-        timeout: float | None = None,
     ) -> ValueType | None:
         """Sends a request and waits for the response."""
         if not self.connected:
@@ -430,9 +417,7 @@ class NADDevice:
                     raise NADConnectionError("Not connected")
                 self._pending_request = (setting.lower(), future)
                 await self._connection.write(request.encode("ascii"))
-                return await asyncio.wait_for(
-                    future, TIMEOUT if timeout is None else timeout
-                )
+                return await asyncio.wait_for(future, TIMEOUT)
             except TimeoutError as ex:
                 raise NADTimeoutError(
                     f"No response from device on {request.strip()}"
@@ -572,7 +557,7 @@ class NADAmplifier(NADDevice):
     _device_type: str = "amplifier"
 
     async def _async_setup(self) -> None:
-        """Setup the amplifier"""
+        """Setup the NAD amplifier."""
         await super()._async_setup()
 
         source_config = self.get_setting_config(f"{self._prefix}.source")
@@ -581,18 +566,16 @@ class NADAmplifier(NADDevice):
             and source_config["type"] != "enum"
             and self.get_setting_value("Source1.Name") is None
         ):
-            # Try to get the source names, even though the device does not specify the needed
-            # settings.
+            # Try to get the source names, even though the device does not specify the needed settings.
             for i in range(1, 11):
                 try:
                     setting = f"Source{i}.Name"
-                    value = await self._async_request(
-                        setting, "?", timeout=SETUP_TIMEOUT
-                    )
+                    async with asyncio.timeout(SETUP_TIMEOUT):
+                        value = await self._async_request(setting, "?")
                     if value is None:
                         break
                     self._setting_states[setting.lower()] = value
-                except NADTimeoutError:
+                except (TimeoutError, NADTimeoutError):
                     break
 
     @property
@@ -610,7 +593,7 @@ class NADAmplifier(NADDevice):
             if value:
                 source_names[i] = value
 
-        return source_names if source_names else None
+        return source_names or None
 
     @property
     def source_name(self) -> str | None:
@@ -656,7 +639,7 @@ class NADMultiZoneAmplifier(NADAmplifier):
     _zones: list[NADZone] | None = None
 
     async def _async_setup(self) -> None:
-        """Setup the amplifier"""
+        """Setup the multi-zone NAD amplifier."""
         await super()._async_setup()
 
         zones = []
@@ -680,6 +663,7 @@ class NADZone(NADAmplifier):
     _zone_number: int
 
     def __init__(self, parent_device: NADMultiZoneAmplifier, zone_number: int):
+        """Initializes an amplifier zone."""
         self._parent_device = parent_device
         self._zone_number = zone_number
         self._prefix = f"Zone{zone_number}"
@@ -688,7 +672,7 @@ class NADZone(NADAmplifier):
     def _setting_states(self):
         return {
             setting: state
-            for setting, state in self._parent_device._setting_states.items()
+            for setting, state in self._parent_device._setting_states.items()  # noqa: SLF001
             if setting.startswith(f"{self._prefix.lower()}.")
         }
 
@@ -717,7 +701,7 @@ class NADZone(NADAmplifier):
         """The by the device supported settings."""
         return [
             setting
-            for setting in self._parent_device._supported_settings
+            for setting in self._parent_device._supported_settings  # noqa: SLF001
             if setting.lower().startswith(f"{self._prefix.lower()}.")
         ]
 
@@ -753,13 +737,12 @@ class NADZone(NADAmplifier):
         """Change a setting."""
         if not setting.lower().startswith(f"{self._prefix.lower()}."):
             raise NADCommandError(
-                f"Setting {setting} is not supported by "
-                + "NAD {self._parent_device.model} Zone {self._zone_number}"
+                f"Setting {setting} is not supported by NAD {self._parent_device.model} Zone {self._zone_number}"
             )
         return await self._parent_device.async_change_setting(setting, value)
 
     async def _async_step(self, setting: str, operator: str) -> bool:
-        return await self._parent_device._async_step(setting, operator)
+        return await self._parent_device._async_step(setting, operator)  # noqa: SLF001
 
 
 class NADTuner(NADDevice):
@@ -768,62 +751,48 @@ class NADTuner(NADDevice):
     _device_type: str = "tuner"
 
     def get_band(self) -> str | None:
-        """
-        Gets the tuner band.
-        """
+        """Gets the tuner band."""
         value = self.get_setting_value("Tuner.Band")
         return str(value) if value else None
 
     async def async_set_band(self, band: str) -> bool:
-        """
-        Selects the tuner band.
-        """
+        """Selects the tuner band."""
         return await self.async_change_setting("Tuner.Band", band)
 
     def get_am_frequency(self) -> int | None:
-        """
-        Gets the AM frequency.
-        """
+        """Gets the AM frequency."""
         value = self.get_setting_value("Tuner.AM.Frequency")
         return int(value) if value is not None else None
 
     async def async_set_am_frequency(self, frequency: int) -> bool:
-        """
-        Tunes to an AM frequency.
-        """
+        """Tunes to an AM frequency."""
         return await self.async_change_setting("Tuner.AM.Frequency", frequency)
 
     def get_fm_frequency(self) -> float | None:
-        """
-        Gets the FM frequency.
-        """
+        """Gets the FM frequency."""
         value = self.get_setting_value("Tuner.FM.Frequency")
         return float(value) if value is not None else None
 
     async def async_set_fm_frequency(self, frequency: float) -> bool:
-        """
-        Tunes to an FM frequency.
-        """
+        """Tunes to an FM frequency."""
         return await self.async_change_setting("Tuner.FM.Frequency", frequency)
 
     def get_preset(self) -> int | None:
+        """Gets the current preset."""
         value = self.get_setting_value("Tuner.Preset")
         return int(value) if value is not None else None
 
     async def async_set_preset(self, preset: int) -> bool:
-        """
-        Selects a tuner preset.
-        """
+        """Selects a tuner preset."""
         return await self.async_change_setting("Tuner.Preset", preset)
 
     def get_fm_rdsname(self) -> str | None:
-        """
-        Gets the AM frequency.
-        """
+        """Gets the AM frequency."""
         value = self.get_setting_value("Tuner.FM.RDSName")
         return str(value) if value else None
 
     def get_fm_rdstext(self) -> str | None:
+        """Gets the RDS text."""
         value = self.get_setting_value("Tuner.FM.RDSText")
         return str(value) if value else None
 

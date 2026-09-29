@@ -66,8 +66,29 @@ target-version = "py313"
 extend-exclude = ["nad_serial/_version.py"]
 
 [tool.ruff.lint]
-# The default rules, plus import sorting (isort).
-extend-select = ["I"]
+# Following Home Assistant Core rules
+select = [
+  "ASYNC", "B", "BLE", "C", "D", "E", "F", "FLY", "FURB", "G", "I", "ISC",
+  "LOG", "PERF", "PIE", "PL", "PT", "RET", "RSE", "RUF", "SIM", "SLF",
+  "T20", "TRY", "UP", "W",
+]
+ignore = [
+  "D202", "D203", "D213", "E501", "PLR0911", "PLR0912", "PLR0913",
+  "PLR0915", "PLR2004", "TRY003", "COM812",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D", "SLF"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.flake8-pytest-style]
+fixture-parentheses = false
+mark-parentheses = false
+
+[tool.ruff.lint.mccabe]
+max-complexity = 25
 
 [tool.pylint]
 ignore = "_version.py"
