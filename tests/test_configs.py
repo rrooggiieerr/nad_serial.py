@@ -123,6 +123,9 @@ async def test_all_files(model: str):
             assert "max" in setting
         if setting["type"] in ("enum", "boolean"):
             assert setting["values"]
+            # Validate that all values are case-insensitive unique
+            lowered = [v.lower() for v in setting["values"]]
+            assert len(lowered) == len(set(lowered))
 
 
 def test_deep_merge():

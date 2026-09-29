@@ -513,8 +513,12 @@ class NADDevice:
             return isinstance(current_value, (int, float)) and math.isclose(
                 current_value, value, abs_tol=1e-9
             )
-        else:
-            return current_value == value
+        if setting_config["type"] == "enum" and isinstance(value, str):
+            return (
+                isinstance(current_value, str)
+                and current_value.lower() == value.lower()
+            )
+        return current_value == value
 
     async def _async_step(self, setting: str, operator: str) -> bool:
         current_value = self.get_setting_value(setting)
