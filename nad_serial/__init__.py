@@ -309,7 +309,10 @@ class NADDevice:
         setting, value = parse_response(response)
         if setting is None:
             return None, None
-        return setting, parse_value(setting, value, self.get_setting_config(setting))
+        setting_config = self.get_setting_config(setting)
+        if setting_config is None:
+            return setting, value
+        return setting, parse_value(setting, value, setting_config)
 
     async def _reader_loop(self) -> None:
         """Reads all data sent by the device."""
