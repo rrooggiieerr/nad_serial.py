@@ -131,7 +131,7 @@ following ways.
 
 ### Contribute your device model
 
-Is your device supported by NAD Serial but not listed under *Supported devices*? Let me
+Is your device supported by NAD Serial but not listed under [Supported devices](#supported-devices)? Let me
 know your device model so I can improve the overview of supported devices.
 
 Is there no configuration file for your device model yet, or is the configuration file incomplete or
