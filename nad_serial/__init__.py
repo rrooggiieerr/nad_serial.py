@@ -22,6 +22,7 @@ from .exceptions import (
     NADTimeoutError,
 )
 from .helpers import (
+    REPORT_MESSAGE,
     ValueType,
     build_command,
     parse_response,
@@ -187,6 +188,14 @@ class NADDevice:
 
             device_config = await async_read_device_config(model, detected_device_types)
 
+        if model and detected_device_types is not None:
+            logger.warning(
+                "No device configuration found for NAD %s with detected device types %s. %s",
+                model,
+                detected_device_types,
+                REPORT_MESSAGE,
+            )
+
         device_types = device_config.get("device_types", [])
         if (
             "zones" in device_types
@@ -334,9 +343,10 @@ class NADDevice:
                     logger.debug("Received %s", response)
                     setting, value = self._parse_response(response)
                     if setting:
+                        setting_lc = setting.lower()
                         if (
                             self._pending_request
-                            and self._pending_request[0] == setting.lower()
+                            and self._pending_request[0] == setting_lc
                             and not self._pending_request[1].done()
                         ):
                             # Response to a request
@@ -344,23 +354,26 @@ class NADDevice:
                         else:
                             if not (
                                 self._pending_request
-                                and self._pending_request[0] == setting.lower()
+                                and self._pending_request[0] == setting_lc
                             ):
                                 # Device-initiated updates
-                                if self._sends_updates is None:
-                                    logger.info(
-                                        "The NAD %s sends updates, please update the device configuration file accordingly",
+                                if self._sends_updates is not True:
+                                    logger.warning(
+                                        "The NAD %s reports changes on its own, but its configuration doesn't say so. %s",
                                         self.model,
+                                        REPORT_MESSAGE,
                                     )
                                 self._sends_updates = True
 
                                 if (
-                                    setting.lower()
-                                    not in self._device_config["settings"]
+                                    setting_lc not in self._device_config["settings"]
+                                    and setting_lc not in self._setting_states
                                 ):
-                                    logger.info(
-                                        "New setting %s detected, please update the device configuration file accordingly",
+                                    logger.warning(
+                                        "The NAD %s reported a new setting %s that is not in its configuration. %s",
+                                        self.model,
                                         setting,
+                                        REPORT_MESSAGE,
                                     )
                             self._setting_states[setting.lower()] = value
 
@@ -648,8 +661,8 @@ class NADMultiZoneAmplifier(NADAmplifier):
 
         zones = []
         for i in range(2, 5):
-            value = self.get_setting_config(f"zone{i}.power")
-            if value is not None:
+            setting_config = self.get_setting_config(f"zone{i}.power")
+            if setting_config is not None:
                 zones.append(NADZone(self, i))
 
         if zones:

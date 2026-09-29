@@ -8,7 +8,7 @@ from typing import Any
 from .exceptions import NADCommandError
 
 ValueType = str | int | float | bool
-REPORT_MESSAGE = "Please report this to the NAD Serial library maintainers on https://github.com/rrooggiieerr/nad_serial.py/issues."
+REPORT_MESSAGE = "Please report this to the NAD Serial library maintainers on https://github.com/rrooggiieerr/nad_serial.py/issues"
 
 SETTING_RE = re.compile(r"[A-Za-z0-9]+(\.[A-Za-z0-9]+)+")
 
@@ -32,8 +32,9 @@ def parse_response(response: bytes) -> tuple[str | None, str | None]:
 def parse_value(setting: str, value: str, config: dict[str, Any]) -> ValueType | None:
     """Convert a raw NAD device value using the setting's config."""
     if config["type"] in ["boolean", "enum"] and value not in config["values"]:
-        logger.error("%s returned an unsupported value %s", setting, value)
-        logger.error(REPORT_MESSAGE)
+        logger.warning(
+            "%s returned an unsupported value %s. %s", setting, value, REPORT_MESSAGE
+        )
 
     if config["type"] == "number":
         if value in ["None", "Unknown"]:
@@ -45,7 +46,12 @@ def parse_value(setting: str, value: str, config: dict[str, Any]) -> ValueType |
             try:
                 return float(value)
             except ValueError:
-                logger.warning("%s returned an invalid number %s", setting, value)
+                logger.warning(
+                    "%s returned an invalid number %s. %s",
+                    setting,
+                    value,
+                    REPORT_MESSAGE,
+                )
                 return None
     if config["type"] == "boolean":
         if value in config["values"]:
