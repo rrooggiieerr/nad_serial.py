@@ -110,7 +110,8 @@ async def test_all_files(model: str):
     for device_type in device_config["device_types"]:
         assert device_type in BASE_CONFIGS
 
-    for setting in device_config["settings"].values():
+    settings = device_config["settings"]
+    for setting in settings.values():
         assert setting["type"] in ("number", "enum", "boolean", "string")
         assert setting["operators"]
         assert setting["operators"] in ("=+-?", "?", "=", "+-", "+-?")
@@ -126,6 +127,10 @@ async def test_all_files(model: str):
             # Validate that all values are case-insensitive unique
             lowered = [v.lower() for v in setting["values"]]
             assert len(lowered) == len(set(lowered))
+        for key in ("min", "max", "step"):
+            reference = setting.get(key)
+            if isinstance(reference, str):
+                assert settings.get(reference, {}).get("type") == "number"
 
 
 def test_deep_merge():
