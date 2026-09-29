@@ -1,3 +1,5 @@
 serialx>=1.10.0
 pytest
 pytest-asyncio
+pylint
+pylint-per-file-ignores

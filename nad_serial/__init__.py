@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import asyncio
+from collections.abc import Callable
 import contextlib
 import logging
 import math
-from collections.abc import Callable
 from typing import Any
 
 import serialx
@@ -249,7 +249,7 @@ class NADDevice:
         await self._async_read_all_settings()
 
     def add_callback(
-        self, callback: Callable[[str, ValueType], None]
+        self, callback: Callable[[str, ValueType | None], None]
     ) -> Callable[[], None]:
         """Adds a callback."""
         self._callbacks.append(callback)
@@ -264,7 +264,7 @@ class NADDevice:
         for callback in self._callbacks.copy():
             try:
                 callback(setting, value)
-            except Exception:  # pylint: disable=broad-exception-caught
+            except Exception:
                 logger.exception("Exception in callback: %s", callback)
 
     async def _async_read_all_settings(self) -> None:
@@ -318,8 +318,7 @@ class NADDevice:
         setting, value = parse_response(response)
         if setting is None:
             return None, None
-        setting_config = self.get_setting_config(setting)
-        if setting_config is None:
+        if (setting_config := self.get_setting_config(setting)) is None:
             return setting, value
         return setting, parse_value(setting, value, setting_config)
 
@@ -338,49 +337,52 @@ class NADDevice:
                     await self._connection.readexactly(ex.consumed)
                     continue
 
-                response = response.strip(b" \t\r\n\x00")
-                if response:
-                    logger.debug("Received %s", response)
-                    setting, value = self._parse_response(response)
-                    if setting:
-                        setting_lc = setting.lower()
-                        if (
-                            self._pending_request
-                            and self._pending_request[0] == setting_lc
-                            and not self._pending_request[1].done()
-                        ):
-                            # Response to a request
-                            self._pending_request[1].set_result(value)
-                        else:
-                            if not (
-                                self._pending_request
-                                and self._pending_request[0] == setting_lc
-                            ):
-                                # Device-initiated updates
-                                if self._sends_updates is not True:
-                                    logger.warning(
-                                        "The NAD %s reports changes on its own, but its configuration doesn't say so. %s",
-                                        self.model,
-                                        REPORT_MESSAGE,
-                                    )
-                                self._sends_updates = True
+                if not (response := response.strip(b" \t\r\n\x00")):
+                    continue
 
-                                if (
-                                    setting_lc not in self._device_config["settings"]
-                                    and setting_lc not in self._setting_states
-                                ):
-                                    logger.warning(
-                                        "The NAD %s reported a new setting %s that is not in its configuration. %s",
-                                        self.model,
-                                        setting,
-                                        REPORT_MESSAGE,
-                                    )
-                            self._setting_states[setting.lower()] = value
+                logger.debug("Received %s", response)
+                setting, value = self._parse_response(response)
+                if not setting:
+                    continue
 
-                            self._update_callbacks(setting, value)
+                setting_lc = setting.lower()
+                if (
+                    self._pending_request
+                    and self._pending_request[0] == setting_lc
+                    and not self._pending_request[1].done()
+                ):
+                    # Response to a request
+                    self._pending_request[1].set_result(value)
+                    continue
+
+                if not (
+                    self._pending_request and self._pending_request[0] == setting_lc
+                ):
+                    # Device-initiated updates
+                    if self._sends_updates is not True:
+                        logger.warning(
+                            "The NAD %s reports changes on its own, but its configuration doesn't say so. %s",
+                            self.model,
+                            REPORT_MESSAGE,
+                        )
+                    self._sends_updates = True
+
+                    if (
+                        setting_lc not in self._device_config["settings"]
+                        and setting_lc not in self._setting_states
+                    ):
+                        logger.warning(
+                            "The NAD %s reported a new setting %s that is not in its configuration. %s",
+                            self.model,
+                            setting,
+                            REPORT_MESSAGE,
+                        )
+                self._setting_states[setting_lc] = value
+
+                self._update_callbacks(setting, value)
         except asyncio.CancelledError:
             raise
-        except Exception as ex:  # pylint: disable=broad-exception-caught
+        except Exception as ex:
             logger.exception("Connection to NAD %s lost", self.model)
 
             if (
@@ -450,8 +452,7 @@ class NADDevice:
 
     async def async_change_setting(self, setting: str, value: ValueType) -> bool:
         """Change a setting."""
-        setting_config = self.get_setting_config(setting)
-        if not setting_config:
+        if not (setting_config := self.get_setting_config(setting)):
             raise NADCommandError(
                 f"Setting {setting} is not supported by NAD {self.model}"
             )
@@ -532,8 +533,7 @@ class NADDevice:
 
     async def async_increment(self, setting: str) -> bool:
         """Increments a setting."""
-        setting_config = self.get_setting_config(setting)
-        if not setting_config:
+        if not (setting_config := self.get_setting_config(setting)):
             raise NADCommandError(
                 f"Setting {setting} is not supported by NAD {self.model}"
             )
@@ -544,8 +544,7 @@ class NADDevice:
 
     async def async_decrement(self, setting: str) -> bool:
         """Decrements a setting."""
-        setting_config = self.get_setting_config(setting)
-        if not setting_config:
+        if not (setting_config := self.get_setting_config(setting)):
             raise NADCommandError(
                 f"Setting {setting} is not supported by NAD {self.model}"
             )
@@ -606,8 +605,7 @@ class NADAmplifier(NADDevice):
         for i in range(1, 11):
             if self.get_setting_value(f"Source{i}.Enabled") is False:
                 continue
-            value = self.get_setting_value(f"Source{i}.Name")
-            if value:
+            if value := self.get_setting_value(f"Source{i}.Name"):
                 source_names[i] = value
 
         return source_names or None
@@ -679,7 +677,7 @@ class NADZone(NADAmplifier):
     _parent_device: NADMultiZoneAmplifier
     _zone_number: int
 
-    def __init__(self, parent_device: NADMultiZoneAmplifier, zone_number: int):
+    def __init__(self, parent_device: NADMultiZoneAmplifier, zone_number: int):  # pylint: disable=super-init-not-called
         """Initializes an amplifier zone."""
         self._parent_device = parent_device
         self._zone_number = zone_number

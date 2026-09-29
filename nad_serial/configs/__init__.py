@@ -5,8 +5,8 @@ import copy
 import functools
 import importlib.resources
 import json
-import logging
 from json.decoder import JSONDecodeError
+import logging
 from typing import Any
 
 logger = logging.getLogger(__name__)
@@ -47,8 +47,7 @@ async def _async_read_config_file(config: str) -> dict[str, Any] | None:
         logger.exception("Invalid configuration file %s, Unicode error", config_file)
         return None
 
-    text = text.strip()
-    if not text:
+    if not (text := text.strip()):
         logger.error("Empty configuration file %s", config_file)
         return None
 

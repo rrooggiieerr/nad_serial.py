@@ -39,7 +39,6 @@ def parse_value(setting: str, value: str, config: dict[str, Any]) -> ValueType |
     if config["type"] == "number":
         if value in ["None", "Unknown"]:
             return None
-        # ToDo Improve number parsing
         try:
             return int(value)
         except ValueError:
