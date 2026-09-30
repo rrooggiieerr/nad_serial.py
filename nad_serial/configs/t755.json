@@ -696,6 +696,7 @@
 				"MainSource",
 				"Volume",
 				"ListeningMode",
+				"AudioCodec",
 				"AudioSourceFormat",
 				"Zone2Source",
 				"Zone3Source",
@@ -719,6 +720,7 @@
 			]
 		},
 		"Main.Volume": {
+			"min": -89,
 			"operators": "=+-?"
 		},
 		"Preset1.Setup.DSPOptions": {
