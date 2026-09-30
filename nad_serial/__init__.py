@@ -605,6 +605,16 @@ class NADAmplifier(NADDevice):
                     break
 
     @property
+    def volume(self) -> float | int:
+        """Gets the amplifier volume."""
+        return self.get_setting_value(f"{self._prefix}.Volume")
+
+    @property
+    def muted(self) -> bool:
+        """Gets the amplifier mute state."""
+        return self.get_setting_value(f"{self._prefix}.Mute")
+
+    @property
     def source_names(self) -> dict[int | str, str] | None:
         """The source names by source, None if they are not known."""
         source_config = self.get_setting_config(f"{self._prefix}.source")
