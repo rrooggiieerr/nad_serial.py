@@ -117,6 +117,11 @@ class NADDevice:
         return self.get_setting_value("Main.Serial")
 
     @property
+    def sends_updates(self) -> bool:
+        """If the device sends updates by itself."""
+        return bool(self._sends_updates)
+
+    @property
     def supported_settings(self) -> list[str]:
         """The by the device supported settings."""
         return self._supported_settings
