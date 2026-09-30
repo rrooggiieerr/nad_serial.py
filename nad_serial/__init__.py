@@ -107,6 +107,16 @@ class NADDevice:
         return f"NAD {self._model or self._device_type}"
 
     @property
+    def firmware_version(self) -> str:
+        """The firmware version."""
+        return self.get_setting_value("Main.Version")
+
+    @property
+    def serial_number(self) -> str:
+        """The serial number."""
+        return self.get_setting_value("Main.Serial")
+
+    @property
     def supported_settings(self) -> list[str]:
         """The by the device supported settings."""
         return self._supported_settings
