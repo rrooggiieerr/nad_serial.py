@@ -258,6 +258,17 @@ class NADDevice:
         # Read all settings from the device
         await self._async_read_all_settings()
 
+    async def async_ping(self) -> bool:
+        """Sends a message to the device to see if the connection is still up."""
+        try:
+            value = await self._async_request("Main.Power", "?")
+        except (NADTimeoutError, NADConnectionError):
+            pass
+        else:
+            return value is not None
+
+        return False
+
     def add_callback(
         self, callback: Callable[[str, ValueType | None], None]
     ) -> Callable[[], None]:
