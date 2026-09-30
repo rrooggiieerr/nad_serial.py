@@ -181,6 +181,10 @@ class NADDevice:
 
         if not model:
             model = model_hint
+
+        if not model:
+            raise NADConnectionError(f"Unable to connect to {url}")
+
         device_config = None
         if model:
             device_config = await async_read_device_config(model)
