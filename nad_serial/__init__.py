@@ -321,7 +321,7 @@ class NADDevice:
         return self._device_config["settings"].get(setting.lower())
 
     def get_setting_value(self, setting: str) -> ValueType | None:
-        """Gets the state of a setting."""
+        """Gets the value of a setting from the setting state dict."""
         return self._setting_states.get(setting.lower())
 
     def _parse_response(self, response: bytes) -> tuple[str | None, ValueType | None]:
@@ -459,6 +459,10 @@ class NADDevice:
                     and self._pending_request[1] is future
                 ):
                     self._pending_request = None
+
+    async def async_request_setting(self, setting: str) -> ValueType | None:
+        """Gets the value of a setting from the device."""
+        return await self._async_request(setting, "?")
 
     async def async_change_setting(self, setting: str, value: ValueType) -> bool:
         """Change a setting."""
