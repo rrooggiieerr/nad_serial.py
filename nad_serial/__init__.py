@@ -666,7 +666,8 @@ class NADMultiZoneAmplifier(NADAmplifier):
         if zones:
             self._zones = zones
 
-    def get_zones(self) -> list[NADZone] | None:
+    @property
+    def zones(self) -> list[NADZone] | None:
         """Returns the zones of the amplifier."""
         return self._zones
 
