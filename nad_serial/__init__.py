@@ -295,14 +295,19 @@ class NADDevice:
 
     async def _async_read_all_settings(self) -> None:
         """Read all settings from the device."""
+        consecutive_response_failures = 0
         for setting, config in self._device_config["settings"].items():
             if "?" in config["operators"]:
                 try:
                     async with asyncio.timeout(SETUP_TIMEOUT):
                         value = await self._async_request(setting, "?")
+                    consecutive_response_failures = 0
                     self._setting_states[setting.lower()] = value
-                except (TimeoutError, NADTimeoutError):
+                except (TimeoutError, NADTimeoutError) as ex:
                     logger.debug("No response for %s", setting)
+                    consecutive_response_failures += 1
+                    if consecutive_response_failures >= 5:
+                        raise NADConnectionError("No response") from ex
 
     async def _async_setup(self) -> None:
         """Setup the NAD device."""
