@@ -7,7 +7,6 @@ import logging
 import math
 from typing import Any, override
 
-from aenum._enum import property
 import serialx
 from serialx import SerialException
 from serialx.common import Parity, StopBits
