@@ -514,7 +514,7 @@ mark-parentheses = false
 "pytz".msg = "use zoneinfo instead"
 "tests".msg = "You should not import tests"
 "voluptuous".msg = "use probatio instead"
-#"__future__.annotations".msg = "It should not be needed because NAD Serial requires Python 3.14+"
+"__future__.annotations".msg = "It should not be needed because NAD Serial requires Python 3.14+"
 
 [tool.ruff.lint.isort]
 force-sort-within-sections = true
