@@ -1,5 +1,6 @@
-serialx>=1.10.0
+codespell
 pytest
 pytest-asyncio
 pylint
 pylint-per-file-ignores
+pre-commit
