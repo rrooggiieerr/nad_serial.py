@@ -2,7 +2,6 @@
 
 import asyncio
 import copy
-import functools
 import importlib.resources
 import json
 from json.decoder import JSONDecodeError
@@ -34,31 +33,24 @@ async def _async_read_config_file(config: str) -> dict[str, Any] | None:
 
     try:
         path = importlib.resources.files("nad_serial.configs").joinpath(config_file)
-        text: str = await asyncio.get_running_loop().run_in_executor(
-            None, functools.partial(path.read_text, encoding="utf-8")
+        data = await asyncio.to_thread(
+            lambda: json.loads(path.read_text(encoding="utf-8"))
         )
     except FileNotFoundError:
         logger.debug("Configuration file %s not found", config_file)
         return None
-    except (IsADirectoryError, PermissionError):
+    except IsADirectoryError, PermissionError:
         logger.exception("Configuration file %s not accessible", config_file)
         return None
     except UnicodeDecodeError:
         logger.exception("Invalid configuration file %s, Unicode error", config_file)
         return None
-
-    if not (text := text.strip()):
-        logger.error("Empty configuration file %s", config_file)
-        return None
-
-    try:
-        data = json.loads(text)
     except JSONDecodeError:
         logger.exception("Invalid configuration file %s, JSON error", config_file)
         return None
 
     if not isinstance(data, dict):
-        logger.error("Invalid configuration file %s, not a dictionary", config_file)
+        logger.error("Invalid configuration file %s", config_file)
         return None
 
     return data
