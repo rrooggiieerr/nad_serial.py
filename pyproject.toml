@@ -523,7 +523,7 @@ combine-as-imports = true
 split-on-trailing-comma = false
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["D", "SLF", "TID252"]
+"tests/**" = ["D", "SLF", "TID251", "TID252"]
 
 [tool.ruff.lint.mccabe]
 max-complexity = 25
