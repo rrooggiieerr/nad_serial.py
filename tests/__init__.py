@@ -1,3 +1,1 @@
-"""
-NAD Serial Unit Tests.
-"""
+"""NAD Serial Unit Tests."""
