@@ -21,9 +21,9 @@ def parse_response(response: bytes) -> tuple[str | None, str | None]:
         return None, None
 
     response = response.strip(b" \t\r\n\x00")
-    response = response.decode("ascii", errors="replace")
+    response_str = response.decode("ascii", errors="replace")
     try:
-        setting, value = response.split("=", 1)
+        setting, value = response_str.split("=", 1)
         return setting.strip(), value.strip()
     except ValueError:
         return None, None
@@ -115,17 +115,17 @@ def build_command(
             raise NADCommandError(f"Invalid value {value} for {setting}, not a string")
 
         if config["type"] == "string":
-            command += value
+            command += str(value)
         elif config["type"] == "number":
             step = config.get("step", 1)
             if float(step).is_integer():
-                command += str(round(value))
+                command += str(round(float(value)))
             else:
-                command += f"{round(value, 9):.9f}".rstrip("0").rstrip(".")
+                command += f"{round(float(value), 9):.9f}".rstrip("0").rstrip(".")
         elif config["type"] == "boolean" and isinstance(value, bool):
             command += config["values"][int(value)]
         elif config["type"] in ["boolean", "enum"]:
-            matches = [v for v in config["values"] if v.lower() == value.lower()]
+            matches = [v for v in config["values"] if v.lower() == str(value).lower()]
             if not matches:
                 raise NADCommandError(f"Invalid value {value} for {setting}")
             command += matches[0]

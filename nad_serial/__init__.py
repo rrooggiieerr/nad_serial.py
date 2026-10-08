@@ -148,7 +148,7 @@ class NADDevice:
             async with asyncio.timeout(TIMEOUT):
                 while True:
                     try:
-                        response = await connection.readuntil(_LINE_ENDINGS)
+                        response = await connection.readuntil(_LINE_ENDINGS)  # type: ignore[arg-type]
                     except asyncio.LimitOverrunError as ex:
                         logger.debug("Ignoring %d bytes", ex.consumed)
                         await connection.readexactly(ex.consumed)
@@ -189,7 +189,7 @@ class NADDevice:
             detection_setting, connection
         )
 
-        if not model:
+        if not isinstance(model, str):
             model = model_hint
 
         if not model:
@@ -227,6 +227,7 @@ class NADDevice:
                 REPORT_MESSAGE,
             )
 
+        device: NADDevice
         device_types = device_config.get("device_types", [])
         if (
             "zones" in device_types
@@ -363,7 +364,7 @@ class NADDevice:
 
     def _parse_response(self, response: bytes) -> tuple[str | None, ValueType | None]:
         setting, value = parse_response(response)
-        if setting is None:
+        if setting is None or value is None:
             return None, None
         if (setting_config := self.get_setting_config(setting)) is None:
             return setting, value
@@ -374,7 +375,7 @@ class NADDevice:
         try:
             while True:
                 try:
-                    response = await self._connection.readuntil(_LINE_ENDINGS)
+                    response = await self._connection.readuntil(_LINE_ENDINGS)  # type: ignore[arg-type]
                 except TimeoutError:
                     continue
                 except asyncio.IncompleteReadError as ex:
@@ -537,9 +538,10 @@ class NADDevice:
             maximum = setting_config.get("max")
             if isinstance(value, bool) or not isinstance(value, (int, float)):
                 raise NADCommandError(f"{value} not a number")
+            number: float = value
             if "=" not in setting_config["operators"] and (
-                (minimum is not None and value < minimum)
-                or (maximum is not None and value > maximum)
+                (minimum is not None and number < minimum)
+                or (maximum is not None and number > maximum)
             ):
                 raise NADCommandError(f"{value} out of range {minimum} - {maximum}")
         if setting_config["type"] == "boolean" and not isinstance(value, bool):
@@ -551,23 +553,27 @@ class NADDevice:
         ):
             # Numerical can not directly be set but needs to be stepped to.
             current_value = self.get_setting_value(setting)
-            if current_value is None:
+            if isinstance(current_value, bool) or not isinstance(
+                current_value, (int, float)
+            ):
                 raise NADResponseError("Invalid current value")
-            if current_value == value:
+            if current_value == number:
                 return True
 
             step = setting_config.get("step", 1)
-            direction = "+" if current_value < value else "-"
-            needed_steps = math.ceil(abs(value - current_value) / step)
+            direction = "+" if current_value < number else "-"
+            needed_steps = math.ceil(abs(number - current_value) / step)
             for _ in range(needed_steps + 1):
                 current_value = await self._async_request(setting, direction, None)
-                if current_value is None:
+                if isinstance(current_value, bool) or not isinstance(
+                    current_value, (int, float)
+                ):
                     raise NADResponseError("Unexpected response")
-                if current_value == value:
+                if current_value == number:
                     break
-                if direction == "+" and current_value > value:
+                if direction == "+" and current_value > number:
                     break
-                if direction == "-" and current_value < value:
+                if direction == "-" and current_value < number:
                     break
         else:
             current_value = await self._async_request(setting, "=", value)
@@ -576,7 +582,7 @@ class NADDevice:
 
         if setting_config["type"] == "number":
             return isinstance(current_value, (int, float)) and math.isclose(
-                current_value, value, abs_tol=1e-9
+                current_value, number, abs_tol=1e-9
             )
         if setting_config["type"] == "enum" and isinstance(value, str):
             return (
@@ -718,11 +724,12 @@ class NADAmplifier(NADDevice):
         if source_config and source_config["type"] == "enum":
             return {source_name: source_name for source_name in source_config["values"]}
 
-        source_names = {}
+        source_names: dict[int | str, str] = {}
         for i in range(1, 11):
             if self.get_setting_value(f"Source{i}.Enabled") is False:
                 continue
-            if value := self.get_setting_value(f"Source{i}.Name"):
+            value = self.get_setting_value(f"Source{i}.Name")
+            if isinstance(value, str) and value:
                 source_names[i] = value
 
         return source_names or None
@@ -743,7 +750,11 @@ class NADAmplifier(NADDevice):
         ):
             return self.source_names.get(source)
 
-        if source_config["type"] == "enum" and source in source_config["values"]:
+        if (
+            source_config["type"] == "enum"
+            and isinstance(source, str)
+            and source in source_config["values"]
+        ):
             return source
 
         return None
