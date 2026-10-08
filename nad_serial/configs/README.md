@@ -43,31 +43,31 @@ detects which device types are supported.
 }
 ```
 
-| Key | Description |
-|---|---|
-| `device_types` | The device types, `amplifier`, `tuner` and/or `zones`, or `[]` for none. They decide the base configuration files and the class `NADDevice.async_connect()` returns. |
-| `settings` | The supported settings by name, `<Prefix>.<Variable>`, see below. |
-| `sends_updates` | Optional. Whether the device reports changes on its own. When not set, the library detects this. |
+| Key             | Description                                                                                                                                                          |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `device_types`  | The device types, `amplifier`, `tuner` and/or `zones`, or `[]` for none. They decide the base configuration files and the class `NADDevice.async_connect()` returns. |
+| `settings`      | The supported settings by name, `<Prefix>.<Variable>`, see below.                                                                                                    |
+| `sends_updates` | Optional. Whether the device reports changes on its own. When not set, the library detects this.                                                                     |
 
 A setting can have the following keys:
 
-| Key | Description |
-|---|---|
-| `type` | `number`, `boolean`, `enum` or `string`, see below. |
-| `operators` | The operators the setting accepts, e.g. `=+-?` or `?` for a read-only setting. |
-| `description` | What the setting does, e.g. from the NAD command list. |
-| `min`, `max` | `number` only. The lowest and highest value. Either a number, or the name of a setting that reports it, e.g. `"max": "Main.Sources"`. That setting is then used. |
-| `step` | `number` only. The value changes in steps of this size, e.g. `0.5`. Either a number, or the name of a setting that reports it, e.g. `"step": "Tuner.AMStep"`. That setting is then used. Default `1`. |
-| `values` | `enum`: the accepted values. `boolean`: the values the device uses for false and true, in that order, e.g. `["Off", "On"]` or `["No", "Yes"]`. |
-| `unit` | Optional. The unit of the value, e.g. `dB`, `Hz`. |
-| `regex` | `string` only, optional. A regular expression the whole value must match, e.g. `"0x([0-9A-Fa-f]{2})+"` for a hex code with the `0x` prefix, in pairs of digits. |
+| Key           | Description                                                                                                                                                                                           |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`        | `number`, `boolean`, `enum` or `string`, see below.                                                                                                                                                   |
+| `operators`   | The operators the setting accepts, e.g. `=+-?` or `?` for a read-only setting.                                                                                                                        |
+| `description` | What the setting does, e.g. from the NAD command list.                                                                                                                                                |
+| `min`, `max`  | `number` only. The lowest and highest value. Either a number, or the name of a setting that reports it, e.g. `"max": "Main.Sources"`. That setting is then used.                                      |
+| `step`        | `number` only. The value changes in steps of this size, e.g. `0.5`. Either a number, or the name of a setting that reports it, e.g. `"step": "Tuner.AMStep"`. That setting is then used. Default `1`. |
+| `values`      | `enum`: the accepted values. `boolean`: the values the device uses for false and true, in that order, e.g. `["Off", "On"]` or `["No", "Yes"]`.                                                        |
+| `unit`        | Optional. The unit of the value, e.g. `dB`, `Hz`.                                                                                                                                                     |
+| `regex`       | `string` only, optional. A regular expression the whole value must match, e.g. `"0x([0-9A-Fa-f]{2})+"` for a hex code with the `0x` prefix, in pairs of digits.                                       |
 
-| Type | Values |
-|---|---|
-| `number` | A number, e.g. `-30` or `0.5`. `None` or `Unknown` are read as no value. |
+| Type      | Values                                                                     |
+| --------- | -------------------------------------------------------------------------- |
+| `number`  | A number, e.g. `-30` or `0.5`. `None` or `Unknown` are read as no value.   |
 | `boolean` | `True` or `False`, sent and read as the two `values`, e.g. `On` and `Off`. |
-| `enum` | One of `values`. |
-| `string` | Any text. |
+| `enum`    | One of `values`.                                                           |
+| `string`  | Any text.                                                                  |
 
 Setting names and values should be spelled exactly as the device reports them, including case and
 spaces. The keys are sorted and the files are indented with tabs, as enforced by the pre-commit
