@@ -423,9 +423,10 @@ class NADDevice:
                     ):
                         self._setting_states[setting_lc] = value
                         logger.warning(
-                            "The NAD %s reported a new setting %s that is not in its configuration. %s",
+                            "The NAD %s reported a new setting %s = %s that is not in its configuration. %s",
                             self.model,
                             setting,
+                            value,
                             REPORT_MESSAGE,
                         )
 
