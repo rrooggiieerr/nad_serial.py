@@ -10,7 +10,7 @@ from .exceptions import NADCommandError
 ValueType = str | int | float | bool
 REPORT_MESSAGE = "Please report this to the NAD Serial library maintainers on https://github.com/rrooggiieerr/nad_serial.py/issues"
 
-SETTING_RE = re.compile(r"[A-Za-z0-9]+(\.[A-Za-z0-9]+)+")
+SETTING_RE = re.compile(r"[A-Za-z0-9]+(\.[A-Za-z0-9]+)*")
 
 logger = logging.getLogger(__name__)
 
