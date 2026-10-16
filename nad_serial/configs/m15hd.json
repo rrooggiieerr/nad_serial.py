@@ -1,7 +1,6 @@
 {
 	"device_types": [
 		"amplifier",
-		"tuner",
 		"zones"
 	],
 	"settings": {
@@ -120,6 +119,41 @@
 				"Zone4"
 			]
 		},
+		"Main.Audio.CODEC": {
+			"operators": "?",
+			"type": "string",
+			"values": [
+				"Analog",
+				"PCM"
+			]
+		},
+		"Main.Audio.Channels": {
+			"description": "3/4.1",
+			"operators": "?",
+			"type": "string",
+			"values": [
+				"2/0.0",
+				"3/4.1"
+			]
+		},
+		"Main.Audio.Lock": {
+			"description": "Whether the audio input is locked",
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Main.Audio.Rate": {
+			"description": "Audio Rate",
+			"operators": "?",
+			"type": "number",
+			"values": [
+				"44.1",
+				"48"
+			]
+		},
 		"Main.Audyssey": {
 			"description": "Set the Audyssey Curve",
 			"operators": "=+-?",
@@ -178,43 +212,6 @@
 			"step": 2,
 			"type": "number",
 			"unit": "dB"
-		},
-		"Main.CEC.Arc": {
-			"description": "Enables selection of ARC in Source Setup OSD Menu",
-			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"Off",
-				"Auto",
-				"SourceSetup"
-			]
-		},
-		"Main.CEC.Audio": {
-			"description": "Receiver broadcasts a CEC message indicating it is an active audio system",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
-		},
-		"Main.CEC.Power": {
-			"description": "Feature Disabled",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
-		},
-		"Main.CEC.Switch": {
-			"description": "Allows CEC to change receiver's source",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
 		},
 		"Main.CenterDialog": {
 			"description": "Set the CenterDialog Tone Control",
@@ -532,17 +529,50 @@
 				"NEO6Music"
 			]
 		},
-		"Main.ListeningMode.DTS": {
+		"Main.ListeningMode.DTS.Stereo": {
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"NEO6Cinema",
+				"NEO6Music"
+			]
+		},
+		"Main.ListeningMode.DTS.Surround": {
 			"description": "Set default DTS Listening Mode",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
 				"None",
 				"StereoDownmix",
-				"NEO6Music"
+				"NEO6Music",
+				"NEO6Cinema"
 			]
 		},
-		"Main.ListeningMode.Digital": {
+		"Main.ListeningMode.Dolby.Stereo": {
+			"description": "Set default Dolby Digital 2 channel Listening Mode",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"ProLogic",
+				"PLIIMovie",
+				"PLIIMusic"
+			]
+		},
+		"Main.ListeningMode.Dolby.Surround": {
+			"description": "Set default Dolby Digital Listening Mode",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"StereoDownmix",
+				"PLIIMovie",
+				"PLIIMusic",
+				"SurroundEX"
+			]
+		},
+		"Main.ListeningMode.PCM.Stereo": {
 			"description": "Set default Digital Signal Listening Mode",
 			"operators": "=+-?",
 			"type": "enum",
@@ -558,27 +588,16 @@
 				"NEO6Music"
 			]
 		},
-		"Main.ListeningMode.DolbyDigital": {
-			"description": "Set default Dolby Digital Listening Mode",
+		"Main.ListeningMode.PCM.Surround": {
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
 				"None",
-				"StereoDownmix",
 				"PLIIMovie",
 				"PLIIMusic",
-				"SurroundEX"
-			]
-		},
-		"Main.ListeningMode.DolbyDigital2ch": {
-			"description": "Set default Dolby Digital 2 channel Listening Mode",
-			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"None",
-				"ProLogic",
-				"PLIIMovie",
-				"PLIIMusic"
+				"NEO6Cinema",
+				"NEO6Music",
+				"StereoDownmix"
 			]
 		},
 		"Main.OSD.TempDisplay": {
@@ -597,6 +616,9 @@
 			"operators": "=+-?",
 			"type": "number",
 			"unit": "minutes"
+		},
+		"Main.Source": {
+			"max": 9
 		},
 		"Main.Speaker.Back.Config1": {
 			"description": "Set Back Speakers to Off, One, or Two speakers",
@@ -857,81 +879,35 @@
 			"operators": "=+-?",
 			"type": "number"
 		},
-		"Main.Video.Aspect.Mode": {
-			"description": "Zoom the video output",
-			"operators": "=+-?",
-			"type": "enum",
+		"Main.Video.Bits": {
+			"operators": "?",
+			"type": "string",
 			"values": [
-				"Stretch",
-				"Zoom",
-				"LetterBox"
+				"24"
 			]
 		},
-		"Main.Video.Aspect.Ratio": {
-			"description": "#Error",
-			"operators": "=+-?",
-			"type": "enum",
+		"Main.Video.Color": {
+			"operators": "?",
+			"type": "string",
 			"values": [
-				"4:3",
-				"16:9"
+				"YCC 4:4:4",
+				"RGB 4:4:4"
 			]
 		},
-		"Main.Video.Brightness": {
-			"description": "Brightness",
-			"max": 100,
-			"min": 0,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Main.Video.Contrast": {
-			"description": "Contrast",
-			"max": 100,
-			"min": 0,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Main.Video.EdgeEnhancement.Level": {
-			"description": "Edge Enhancement",
-			"max": 100,
-			"min": 0,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Main.Video.EdgeEnhancement.Treshold": {
-			"description": "Edge Enhancement",
-			"max": 100,
-			"min": 0,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Main.Video.NoiseReduction": {
-			"description": "Noise Reduction",
-			"max": 50,
-			"min": 0,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Main.Video.Rate": {
-			"description": "#Error",
-			"operators": "=+-?",
-			"type": "enum",
+		"Main.Video.HDR": {
+			"operators": "?",
+			"type": "boolean",
 			"values": [
-				"50",
-				"60"
+				"No",
+				"Yes"
 			]
 		},
-		"Main.Video.Resolution": {
-			"description": "Video Resolution",
-			"operators": "=+-?",
-			"type": "enum",
+		"Main.Video.Lock": {
+			"operators": "?",
+			"type": "boolean",
 			"values": [
-				"480i",
-				"480p",
-				"576i",
-				"576p",
-				"720p",
-				"1080i",
-				"1080p"
+				"No",
+				"Yes"
 			]
 		},
 		"Main.VideoMode": {
@@ -1270,6 +1246,11 @@
 				"Yes"
 			]
 		},
+		"Source1.Name": {
+			"description": "Get the source name",
+			"operators": "=?",
+			"type": "string"
+		},
 		"Source1.Preset": {
 			"description": "Set Source Preset",
 			"max": 5,
@@ -1298,91 +1279,6 @@
 		},
 		"Source1.VideoInput": {
 			"description": "Set Source Video Input",
-			"max": 8,
-			"min": 1,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Source10.AnalogAudioFormat": {
-			"description": "Set Analog Audio Format",
-			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"Stereo"
-			]
-		},
-		"Source10.AnalogAudioInput": {
-			"description": "Set Analog Audio Format",
-			"max": 9,
-			"min": 9,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Source10.AnalogGain": {
-			"description": "Set Analog Audio Format",
-			"max": 12,
-			"min": -12,
-			"operators": "=+-?",
-			"step": 3,
-			"type": "number",
-			"unit": "dB"
-		},
-		"Source10.DigitalAudioFormat": {
-			"description": "Set Digital Audio Format",
-			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"Off",
-				"Coaxial",
-				"Optical",
-				"HDMI",
-				"ARC"
-			]
-		},
-		"Source10.DigitalAudioInput": {
-			"description": "Set Digital Audio Input",
-			"max": 8,
-			"min": 1,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Source10.Enabled": {
-			"description": "Set Enabled Yes",
-			"operators": "?",
-			"type": "boolean",
-			"values": [
-				"No",
-				"Yes"
-			]
-		},
-		"Source10.Preset": {
-			"description": "Set Source Preset",
-			"max": 5,
-			"min": 0,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Source10.TriggerOut": {
-			"description": "Set Source Trigger Out",
-			"max": 7,
-			"min": 0,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Source10.VideoFormat": {
-			"description": "Set Video Format",
-			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"Off",
-				"Video",
-				"SVideo",
-				"Component",
-				"HDMI"
-			]
-		},
-		"Source10.VideoInput": {
-			"description": "Set Video Input",
 			"max": 8,
 			"min": 1,
 			"operators": "=+-?",
@@ -1441,6 +1337,11 @@
 				"No",
 				"Yes"
 			]
+		},
+		"Source2.Name": {
+			"description": "Get the source name",
+			"operators": "=?",
+			"type": "string"
 		},
 		"Source2.Preset": {
 			"description": "Set Source Preset",
@@ -1529,6 +1430,11 @@
 				"Yes"
 			]
 		},
+		"Source3.Name": {
+			"description": "Get the source name",
+			"operators": "=?",
+			"type": "string"
+		},
 		"Source3.Preset": {
 			"description": "Set Source Preset",
 			"max": 5,
@@ -1615,6 +1521,11 @@
 				"No",
 				"Yes"
 			]
+		},
+		"Source4.Name": {
+			"description": "Get the source name",
+			"operators": "=?",
+			"type": "string"
 		},
 		"Source4.Preset": {
 			"description": "Set Source Preset",
@@ -1703,6 +1614,11 @@
 				"Yes"
 			]
 		},
+		"Source5.Name": {
+			"description": "Get the source name",
+			"operators": "=?",
+			"type": "string"
+		},
 		"Source5.Preset": {
 			"description": "Set Source Preset",
 			"max": 5,
@@ -1789,6 +1705,11 @@
 				"No",
 				"Yes"
 			]
+		},
+		"Source6.Name": {
+			"description": "Get the source name",
+			"operators": "=?",
+			"type": "string"
 		},
 		"Source6.Preset": {
 			"description": "Set Source Preset",
@@ -1877,6 +1798,11 @@
 				"Yes"
 			]
 		},
+		"Source7.Name": {
+			"description": "Get the source name",
+			"operators": "=?",
+			"type": "string"
+		},
 		"Source7.Preset": {
 			"description": "Set Source Preset",
 			"max": 5,
@@ -1963,6 +1889,11 @@
 				"No",
 				"Yes"
 			]
+		},
+		"Source8.Name": {
+			"description": "Get the source name",
+			"operators": "=?",
+			"type": "string"
 		},
 		"Source8.Preset": {
 			"description": "Set Source Preset",
@@ -2051,6 +1982,11 @@
 				"Yes"
 			]
 		},
+		"Source9.Name": {
+			"description": "Get the source name",
+			"operators": "=?",
+			"type": "string"
+		},
 		"Source9.Preset": {
 			"description": "Set Source Preset",
 			"max": 5,
@@ -2083,41 +2019,6 @@
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
-		},
-		"Tuner.AM.Frequency": null,
-		"Tuner.AMStep": {
-			"description": "Set Tuner AM Step Value",
-			"max": 10,
-			"min": 9,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Tuner.Band": {
-			"values": [
-				"FM",
-				"AM",
-				"DAB",
-				"XM"
-			]
-		},
-		"Tuner.DigitalMode": {
-			"description": "Set Digital Mode (AH Version)",
-			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"DAB",
-				"XM"
-			]
-		},
-		"Tuner.FM.Frequency": null,
-		"Tuner.FM.Mute": {
-			"description": "Set Tuner FM Mute On/Off",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
 		},
 		"UART.Version": {
 			"description": "Query UART Version",

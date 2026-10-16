@@ -18,11 +18,12 @@ over serial (RS-232) or Ethernet (telnet).
 
 - Asynchronous, built on [serialx](https://github.com/puddly/serialx).
 - Connects over serial (RS-232) or Ethernet (telnet).
-- Detects the device model and loads the matching configuration.
+- Detects the device model and build and loads the matching configuration.
 - Detects the device type for models without configuration.
+- Validates settings and values against the configuration before sending them.
 - Read, set, increment and decrement any supported setting.
 - Reads the source names on supported devices.
-- Supports zones on multi-zone receivers.
+- Supports zones on multi-zone amplifiers and receivers.
 
 ## Supported protocol
 
@@ -64,20 +65,25 @@ Additionally, NAD Serial includes untested configuration files for the following
 
 **Receivers:**
 
+- T758
 - T765
 - T775
 - T777
+- T778
 - T785
 - T787
 
 **Surround preamplifiers:**
 
 - M15HD
+- M17
 - T175
 - T187
 
 **Amplifiers:**
 
+- C328
+- C338
 - C356
 - C368
 - C388

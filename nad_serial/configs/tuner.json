@@ -9,6 +9,13 @@
 			"type": "number",
 			"unit": "kHz"
 		},
+		"Tuner.AMStep": {
+			"description": "Set Tuner AM Step Value",
+			"max": 10,
+			"min": 9,
+			"operators": "=+-?",
+			"type": "number"
+		},
 		"Tuner.Band": {
 			"description": "Select the tuner band",
 			"operators": "=+-?",
@@ -26,6 +33,25 @@
 			"step": 0.05,
 			"type": "number",
 			"unit": "MHz"
+		},
+		"Tuner.FM.Mute": {
+			"description": "Set Tuner FM Mute On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Tuner.FM.RDSName": {
+			"description": "FM RDS Name",
+			"operators": "?",
+			"type": "string"
+		},
+		"Tuner.FM.RDSText": {
+			"description": "FM RDS Text",
+			"operators": "?",
+			"type": "string"
 		},
 		"Tuner.Preset": {
 			"description": "Select the tuner preset",

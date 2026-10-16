@@ -1,0 +1,33 @@
+{
+	"settings": {
+		"Tuner.Band": {
+			"values": [
+				"FM",
+				"AM",
+				"XM"
+			]
+		},
+		"Tuner.XM.Channel": {
+			"description": "XM Channel Number",
+			"max": 255,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Tuner.XM.ChannelName": {
+			"description": "XM Channel Name",
+			"operators": "?",
+			"type": "string"
+		},
+		"Tuner.XM.Name": {
+			"description": "XM Song name",
+			"operators": "?",
+			"type": "string"
+		},
+		"Tuner.XM.Title": {
+			"description": "XM Song Title",
+			"operators": "?",
+			"type": "string"
+		}
+	}
+}

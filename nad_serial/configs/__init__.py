@@ -26,10 +26,7 @@ def _deep_merge(dict1: dict[str, Any], dict2: dict[str, Any]) -> dict[str, Any]:
 
 
 async def _async_read_config_file(config: str) -> dict[str, Any] | None:
-    config_file = (
-        "".join(c if c.isalnum() or c in "._-" else "_" for c in config.lower())
-        + ".json"
-    )
+    config_file = "".join(c if c.isalnum() else "" for c in config) + ".json"
 
     try:
         path = importlib.resources.files("nad_serial.configs").joinpath(config_file)
@@ -57,27 +54,44 @@ async def _async_read_config_file(config: str) -> dict[str, Any] | None:
 
 
 async def async_read_device_config(
-    model: str | None = None, detected_device_types: list[str] | None = None
+    build: str | None = None, detected_device_types: list[str] | None = None
 ) -> dict[str, Any]:
     """Reads the device configuration."""
+    build_config = None
     device_types = ["device"]
     device_config: dict[str, Any] = {}
 
-    model_config = None
-    if model:
-        model_config = await _async_read_config_file(model)
+    if build:
+        parts = build.casefold().split("_")
+        while "none" in parts:
+            parts.remove("none")
+        parts.reverse()
 
-    if model_config is not None:
-        device_types += model_config.get("device_types", [])
-    elif detected_device_types:
-        device_types += detected_device_types
+        for part in parts:
+            config = await _async_read_config_file(part)
+            if config is None:
+                continue
+
+            if build_config is None:
+                build_config = config
+            else:
+                _deep_merge(build_config, config)
+
+    if detected_device_types:
+        for item in detected_device_types:
+            if item not in device_types:
+                device_types.append(item)
+    if build_config is not None:
+        for item in build_config.get("device_types", []):
+            if item not in device_types:
+                device_types.append(item)
 
     for device_type in device_types:
         _deep_merge(device_config, await _async_read_config_file(device_type) or {})
 
-    if model_config is not None:
-        _deep_merge(device_config, model_config)
-    elif detected_device_types:
-        device_config["device_types"] = list(detected_device_types)
+    if build_config:
+        _deep_merge(device_config, build_config)
+    if len(device_types) > 1:
+        device_config["device_types"] = device_types[1:]
 
     return device_config

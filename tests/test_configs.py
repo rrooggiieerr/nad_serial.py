@@ -1,23 +1,76 @@
 """Tests the configuration file functions."""
 
-import importlib.resources
-
 import pytest
 
 from nad_serial import configs
 
 BASE_CONFIGS = ("device", "amplifier", "tuner", "zones")
-_CONFIG_DIR = importlib.resources.files("nad_serial.configs")
-CONFIG_FILES = sorted(p.name for p in _CONFIG_DIR.iterdir() if p.name.endswith(".json"))
-MODELS = tuple(
-    name.removesuffix(".json")
-    for name in CONFIG_FILES
-    if name.removesuffix(".json") not in BASE_CONFIGS
-)
+
+BUILDS = [
+    "C328",
+    "C338",
+    "C356",
+    "C368",
+    "C388",
+    "C427",
+    "M15HD_PG536",
+    "M15HD_PG536M",
+    "M15HD_VXP",
+    "M17_PG536M",
+    "T175_PG10_DAB",
+    "T175_PG10_XM",
+    "T175_PG536_DAB",
+    "T175_PG536_XM",
+    "T175_PG536M_DAB",
+    "T175_PG536M_XM",
+    "T175_VXP_DAB",
+    "T175_VXP_XM",
+    "T187_PG536M_DAB",
+    "T187_PG536M_XM",
+    "T755_TXX3_DAB",
+    "T755_TXX3_XM",
+    "T757_PG536_DAB",
+    "T757_PG536_XM",
+    "T757_PG536M_DAB",
+    "T757_PG536M_XM",
+    "T758_PG536M_DAB",
+    "T758_PG536M_NONE",
+    "T765_PG10_DAB",
+    "T765_PG10_XM",
+    "T765_PG536_DAB",
+    "T765_PG536_XM",
+    "T765_PG536M_DAB",
+    "T765_PG536M_XM",
+    "T765_TXX3_DAB",
+    "T765_TXX3_XM",
+    "T765_VXP_DAB",
+    "T765_VXP_XM",
+    "T775_PG10_DAB",
+    "T775_PG10_XM",
+    "T775_PG536_DAB",
+    "T775_PG536_XM",
+    "T775_PG536M_DAB",
+    "T775_PG536M_XM",
+    "T775_VXP_DAB",
+    "T775_VXP_XM",
+    "T777_PG536M_DAB",
+    "T777_PG536M_XM",
+    "T778_PG536M_NONE",
+    "T785_PG10_DAB",
+    "T785_PG10_XM",
+    "T785_PG536_DAB",
+    "T785_PG536_XM",
+    "T785_PG536M_DAB",
+    "T785_PG536M_XM",
+    "T785_VXP_DAB",
+    "T785_VXP_XM",
+    "T787_PG536M_DAB",
+    "T787_PG536M_XM",
+]
 
 
 async def test_async_read_device_config_amplifier():
-    """Test that an amplifier device type only loads the `device.json` and `amplifier.json` config."""
+    """Test that an amplifier device only loads the `device.json` and `amplifier.json` config."""
     device_config = await configs.async_read_device_config("C356")
     assert device_config["device_types"] == ["amplifier"]
     assert device_config["settings"]["Main.Power"]
@@ -26,8 +79,18 @@ async def test_async_read_device_config_amplifier():
     assert device_config["settings"]["Main.Source"]
 
 
+async def test_async_read_device_config_amplifier_zones():
+    """Test that an amplifier device only loads the `device.json` and `amplifier.json` config."""
+    device_config = await configs.async_read_device_config("T778")
+    assert device_config["device_types"] == ["amplifier", "zones"]
+    assert device_config["settings"]["Main.Power"]
+    assert device_config["settings"]["Main.Volume"]
+    assert "Tuner.Band" not in device_config["settings"]
+    assert device_config["settings"]["Main.Source"]
+
+
 async def test_async_read_device_config_tuner():
-    """Test that an amplifier device type only loads the `device.json` and `tuner.json` config."""
+    """Test that a tuner device only loads the `device.json` and `tuner.json` config."""
     device_config = await configs.async_read_device_config("C427")
     assert device_config["device_types"] == ["tuner"]
     assert device_config["settings"]["Main.Power"]
@@ -37,13 +100,40 @@ async def test_async_read_device_config_tuner():
 
 
 async def test_async_read_device_config_receiver():
-    """Test that an amplifier device type loads both the `device.json`, `amplifier.json` and `tuner.json` config."""
+    """Test that a receiver device loads both the `device.json`, `amplifier.json` and `tuner.json` config."""
     device_config = await configs.async_read_device_config("T755")
     assert device_config["device_types"] == ["amplifier", "tuner", "zones"]
     assert device_config["settings"]["Main.Power"]
     assert device_config["settings"]["Main.Volume"]
     assert device_config["settings"]["Tuner.Band"]
     assert device_config["settings"]["DSP.Version"]
+
+
+async def test_async_read_build_config_receiver_dab():
+    """Test that a receiver device with DAB loads the `device.json`, `tuner.json` and `dab.json` config."""
+    device_config = await configs.async_read_device_config("T755_TXX3_DAB")
+    assert device_config["device_types"] == ["amplifier", "tuner", "zones"]
+    assert device_config["settings"]["Main.Power"]
+    assert device_config["settings"]["Main.Volume"]
+    assert device_config["settings"]["Tuner.Band"]
+    assert device_config["settings"]["Tuner.Band"]["values"] == ["FM", "AM", "DAB"]
+    assert device_config["settings"]["Tuner.FM.Mute"]
+    assert device_config["settings"]["Tuner.DAB.DLS"]
+    assert device_config["settings"]["Tuner.DAB.Service"]
+
+
+async def test_async_read_build_config_receiver_xm():
+    """Test that a receiver device with XM loads the `device.json`, `tuner.json` and `xm.json` config."""
+    device_config = await configs.async_read_device_config("T755_TXX3_XM")
+    assert device_config["device_types"] == ["amplifier", "tuner", "zones"]
+    assert device_config["settings"]["Main.Power"]
+    assert device_config["settings"]["Tuner.Band"]
+    assert device_config["settings"]["Tuner.Band"]["values"] == ["FM", "AM", "XM"]
+    assert device_config["settings"]["Tuner.FM.Mute"]
+    assert device_config["settings"]["Tuner.XM.Channel"]
+    assert device_config["settings"]["Tuner.XM.ChannelName"]
+    assert device_config["settings"]["Tuner.XM.Name"]
+    assert device_config["settings"]["Tuner.XM.Title"]
 
 
 async def test_async_read_device_config_none_device():
@@ -98,23 +188,59 @@ async def test_async_read_device_config_unknown_device_detected_receiver():
     assert "DSP.Version" not in device_config["settings"]
 
 
+async def test_async_read_device_config_unknown_build_detected_receiver_dab():
+    """Test that an unknown device only loads the `device.json`, `amplifier.json` and `tuner.json` config."""
+    device_config = await configs.async_read_device_config(
+        "X000_TXX3_DAB", ["amplifier", "tuner"]
+    )
+    assert device_config["device_types"] == ["amplifier", "tuner"]
+    assert device_config["settings"]["Main.Power"]
+    assert device_config["settings"]["Main.Volume"]
+    assert device_config["settings"]["Tuner.Band"]
+    assert device_config["settings"]["Tuner.Band"]["values"] == ["FM", "AM", "DAB"]
+    assert device_config["settings"]["Tuner.FM.Mute"]
+    assert device_config["settings"]["Tuner.DAB.DLS"]
+    assert device_config["settings"]["Tuner.DAB.Service"]
+    assert "DSP.Version" not in device_config["settings"]
+
+
+async def test_async_read_device_config_unknown_build_detected_receiver_xm():
+    """Test that an unknown device only loads the `device.json`, `amplifier.json` and `tuner.json` config."""
+    device_config = await configs.async_read_device_config(
+        "X000_TXX3_XM", ["amplifier", "tuner"]
+    )
+    assert device_config["device_types"] == ["amplifier", "tuner"]
+    assert device_config["settings"]["Main.Power"]
+    assert device_config["settings"]["Main.Volume"]
+    assert device_config["settings"]["Tuner.Band"]
+    assert device_config["settings"]["Tuner.Band"]["values"] == ["FM", "AM", "XM"]
+    assert device_config["settings"]["Tuner.FM.Mute"]
+    assert device_config["settings"]["Tuner.XM.Channel"]
+    assert device_config["settings"]["Tuner.XM.ChannelName"]
+    assert device_config["settings"]["Tuner.XM.Name"]
+    assert device_config["settings"]["Tuner.XM.Title"]
+    assert "DSP.Version" not in device_config["settings"]
+
+
 @pytest.mark.parametrize(
-    "model",
-    MODELS,
+    "build",
+    BUILDS,
 )
-async def test_all_files(model: str):
+async def test_all_builds(build: str):
     """Tests if all configuration files follow the specification."""
-    device_config = await configs.async_read_device_config(model)
+    device_config = await configs.async_read_device_config(build)
     assert "device_types" in device_config
 
     for device_type in device_config["device_types"]:
         assert device_type in BASE_CONFIGS
 
+    assert "settings" in device_config
     settings = device_config["settings"]
+
     for setting in settings.values():
         assert setting["type"] in ("number", "enum", "boolean", "string")
         assert setting["operators"]
-        assert setting["operators"] in ("=+-?", "?", "=", "+-", "+-?")
+        assert setting["operators"] in ("=?", "=+-?", "?", "=", "+-", "+-?")
         if (
             setting["type"] == "number"
             and "?" in setting["operators"]
