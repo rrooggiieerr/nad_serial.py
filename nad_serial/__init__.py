@@ -37,7 +37,8 @@ TIMEOUT = 1.0
 SETUP_TIMEOUT = 0.5
 
 DEVICE_TYPE_DETECTION_SETTINGS: dict[str, str] = {
-    "device": "Main.Model",
+    "model": "Main.Model",
+    "build": "Main.Build",
     "amplifier": "Main.Volume",
     "tuner": "Tuner.Band",
     "zones": "Zone2.Power",
@@ -54,8 +55,8 @@ class NADDevice:
 
     # The connection to the device
     _connection: serialx.AsyncSerial
-    # The NAD model, e.g. T755
-    _model: str | None = None
+    # The NAD build, e.g. T755_
+    _build: str | None = None
     _device_type: str = "device"
     # The device configuration
     _device_config: dict[str, Any]
@@ -76,12 +77,12 @@ class NADDevice:
     def __init__(
         self,
         connection: serialx.AsyncSerial,
-        model: str | None,
+        build: str | None,
         device_config: dict[str, Any],
     ):
         """Initializes a NAD device."""
         self._connection = connection
-        self._model = model
+        self._build = build
         self._device_config = device_config
         self._setting_states = {}
         self._supported_settings = []
@@ -97,12 +98,17 @@ class NADDevice:
     @property
     def model(self) -> str | None:
         """The device model."""
-        return self._model
+        return self._build.split("_")[0] if self._build is not None else None
+
+    @property
+    def build(self) -> str | None:
+        """The device build."""
+        return self._build
 
     @property
     def name(self) -> str:
         """The device name."""
-        return f"NAD {self._model or self._device_type}"
+        return f"NAD {self.model or self._device_type}"
 
     @property
     def firmware_version(self) -> str | None:
@@ -114,6 +120,8 @@ class NADDevice:
     def serial_number(self) -> str | None:
         """The serial number."""
         value = self.get_setting_value("Main.Serial")
+        if not value:
+            value = self.get_setting_value("Main.SerialNumber")
         return str(value) if value else None
 
     @property
@@ -167,7 +175,7 @@ class NADDevice:
     async def async_connect(
         url: str,
         *,
-        model_hint: str | None = None,
+        build_hint: str | None = None,
     ) -> NADDevice:
         """Connects to the device and returns one of the NAD device classes."""
         try:
@@ -184,22 +192,23 @@ class NADDevice:
         except (OSError, SerialException, ValueError, RuntimeError) as ex:
             raise NADConnectionError(f"Unable to connect to {url}") from ex
 
-        detection_setting = DEVICE_TYPE_DETECTION_SETTINGS["device"]
-        model = await NADDevice._async_request_setting_value(
-            detection_setting, connection
+        build = await NADDevice._async_request_setting_value(
+            DEVICE_TYPE_DETECTION_SETTINGS["build"], connection
         )
+        if not build:
+            build = await NADDevice._async_request_setting_value(
+                DEVICE_TYPE_DETECTION_SETTINGS["model"], connection
+            )
 
-        if not isinstance(model, str):
-            model = model_hint
+        if not isinstance(build, str):
+            build = build_hint
 
-        if not model:
+        if not build:
             with contextlib.suppress(OSError, SerialException):
                 await connection.close()
             raise NADConnectionError(f"Unable to connect to {url}")
 
-        device_config = None
-        if model:
-            device_config = await async_read_device_config(model)
+        device_config = await async_read_device_config(build)
 
         detected_device_types = None
         if not device_config or "device_types" not in device_config:
@@ -208,7 +217,7 @@ class NADDevice:
                 device_type,
                 detection_setting,
             ) in DEVICE_TYPE_DETECTION_SETTINGS.items():
-                if device_type == "device":
+                if device_type in ["model", "build"]:
                     continue
 
                 value = await NADDevice._async_request_setting_value(
@@ -217,12 +226,12 @@ class NADDevice:
                 if value:
                     detected_device_types.append(device_type)
 
-            device_config = await async_read_device_config(model, detected_device_types)
+            device_config = await async_read_device_config(build, detected_device_types)
 
-        if model and detected_device_types is not None:
+        if detected_device_types is not None:
             logger.warning(
                 "No device configuration found for NAD %s with detected device types %s. %s",
-                model,
+                build,
                 detected_device_types,
                 REPORT_MESSAGE,
             )
@@ -234,17 +243,17 @@ class NADDevice:
             and "amplifier" in device_types
             and "tuner" in device_types
         ):
-            device = NADMultiZoneReceiver(connection, model, device_config)
+            device = NADMultiZoneReceiver(connection, build, device_config)
         elif "amplifier" in device_types and "tuner" in device_types:
-            device = NADReceiver(connection, model, device_config)
+            device = NADReceiver(connection, build, device_config)
         elif "zones" in device_types and "amplifier" in device_types:
-            device = NADMultiZoneAmplifier(connection, model, device_config)
+            device = NADMultiZoneAmplifier(connection, build, device_config)
         elif "amplifier" in device_types:
-            device = NADAmplifier(connection, model, device_config)
+            device = NADAmplifier(connection, build, device_config)
         elif "tuner" in device_types:
-            device = NADTuner(connection, model, device_config)
+            device = NADTuner(connection, build, device_config)
         else:
-            device = NADDevice(connection, model, device_config)
+            device = NADDevice(connection, build, device_config)
 
         try:
             await device._async_setup()

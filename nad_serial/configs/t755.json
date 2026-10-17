@@ -89,10 +89,18 @@
 				"Albums"
 			]
 		},
+		"Ipod.Time": {
+			"operators": "?",
+			"type": "string"
+		},
 		"Ipod.Title": {
 			"description": "Get the current playing track title",
 			"operators": "?",
 			"type": "string"
+		},
+		"Ipod.Track": {
+			"operators": "?",
+			"type": "number"
 		},
 		"Main.Audyssey": {
 			"description": "Set the Audyssey Curve",
@@ -139,8 +147,6 @@
 			"values": [
 				"Main",
 				"Zone2",
-				"Zone3",
-				"Zone4",
 				"All"
 			]
 		},
@@ -414,16 +420,14 @@
 			"type": "enum",
 			"values": [
 				"None",
-				"AnalogBypass",
-				"StereoDownmix",
-				"EnhancedStereo",
-				"EARS",
 				"ProLogic",
 				"PLIIMovie",
 				"PLIIMusic",
-				"SurroundEX",
 				"NEO6Cinema",
-				"NEO6Music"
+				"NEO6Music",
+				"EARS",
+				"EnhancedStereo",
+				"AnalogBypass"
 			]
 		},
 		"Main.ListeningMode.Analog": {
@@ -432,14 +436,79 @@
 			"type": "enum",
 			"values": [
 				"None",
-				"AnalogBypass",
-				"EnhancedStereo",
-				"EARS",
 				"ProLogic",
 				"PLIIMovie",
 				"PLIIMusic",
 				"NEO6Cinema",
+				"NEO6Music",
+				"EARS",
+				"EnhancedStereo",
+				"AnalogBypass"
+			]
+		},
+		"Main.ListeningMode.DTS.Stereo": {
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"NEO6Cinema",
 				"NEO6Music"
+			]
+		},
+		"Main.ListeningMode.DTS.Surround": {
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"NEO6Cinema",
+				"NEO6Music",
+				"StereoDownmix"
+			]
+		},
+		"Main.ListeningMode.Dolby.Stereo": {
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"ProLogic",
+				"PLIIMovie",
+				"PLIIMusic"
+			]
+		},
+		"Main.ListeningMode.Dolby.Surround": {
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"SurroundEX",
+				"PLIIMovie",
+				"PLIIMusic",
+				"StereoDownmix"
+			]
+		},
+		"Main.ListeningMode.PCM.Stereo": {
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"ProLogic",
+				"PLIIMovie",
+				"PLIIMusic",
+				"NEO6Music",
+				"EARS",
+				"EnhancedStereo"
+			]
+		},
+		"Main.ListeningMode.PCM.Surround": {
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"PLIIMovie",
+				"PLIIMusic",
+				"NEO6Cinema",
+				"NEO6Music",
+				"StereoDownmix"
 			]
 		},
 		"Main.Sleep": {
@@ -591,9 +660,6 @@
 			"values": [
 				"Main",
 				"Zone2",
-				"Zone3",
-				"Zone4",
-				"Zone234",
 				"Source"
 			]
 		},
@@ -612,9 +678,6 @@
 			"values": [
 				"Main",
 				"Zone2",
-				"Zone3",
-				"Zone4",
-				"Zone234",
 				"Source"
 			]
 		},
@@ -633,9 +696,6 @@
 			"values": [
 				"Main",
 				"Zone2",
-				"Zone3",
-				"Zone4",
-				"Zone234",
 				"Source"
 			]
 		},
@@ -678,13 +738,12 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"MainSource",
-				"Volume",
-				"ListeningMode",
+				"AudioCodec",
 				"AudioSourceFormat",
+				"ListeningMode",
+				"MainSource",
 				"Zone2Source",
-				"Zone3Source",
-				"Zone4Source"
+				"Volume"
 			]
 		},
 		"Main.VFD.Line2": {
@@ -693,14 +752,12 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"MainSource",
-				"Volume",
-				"ListeningMode",
 				"AudioCodec",
 				"AudioSourceFormat",
+				"ListeningMode",
+				"MainSource",
 				"Zone2Source",
-				"Zone3Source",
-				"Zone4Source"
+				"Volume"
 			]
 		},
 		"Main.VFD.TempLine": {
@@ -720,12 +777,17 @@
 			]
 		},
 		"Main.Volume": {
-			"min": -89,
+			"max": 15,
+			"min": -96,
 			"operators": "=+-?"
+		},
+		"Preset1.Name": {
+			"operators": "=?",
+			"type": "string"
 		},
 		"Preset1.Setup.DSPOptions": {
 			"description": "Set Preset to include DSP Options",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "boolean",
 			"values": [
 				"No",
@@ -734,7 +796,7 @@
 		},
 		"Preset1.Setup.Display": {
 			"description": "Set Preset to include Display settings",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "boolean",
 			"values": [
 				"No",
@@ -776,6 +838,10 @@
 				"No",
 				"Yes"
 			]
+		},
+		"Preset2.Name": {
+			"operators": "=?",
+			"type": "string"
 		},
 		"Preset2.Setup.DSPOptions": {
 			"description": "Set Preset to include DSP Options",
@@ -831,6 +897,10 @@
 				"Yes"
 			]
 		},
+		"Preset3.Name": {
+			"operators": "=?",
+			"type": "string"
+		},
 		"Preset3.Setup.DSPOptions": {
 			"description": "Set Preset to include DSP Options",
 			"operators": "=+-?",
@@ -885,6 +955,10 @@
 				"Yes"
 			]
 		},
+		"Preset4.Name": {
+			"operators": "=?",
+			"type": "string"
+		},
 		"Preset4.Setup.DSPOptions": {
 			"description": "Set Preset to not include DSP Options",
 			"operators": "=+-?",
@@ -938,6 +1012,10 @@
 				"No",
 				"Yes"
 			]
+		},
+		"Preset5.Name": {
+			"operators": "=?",
+			"type": "string"
 		},
 		"Preset5.Setup.DSPOptions": {
 			"description": "Set Preset to not include DSP Options",
@@ -1025,10 +1103,8 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"Coaxial",
 				"Optical",
-				"HDMI",
-				"ARC"
+				"Coaxial"
 			]
 		},
 		"Source1.DigitalAudioInput": {
@@ -1049,7 +1125,7 @@
 		},
 		"Source1.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source1.Preset": {
@@ -1080,53 +1156,18 @@
 		},
 		"Source1.VideoInput": {
 			"description": "Set Source Video Input",
-			"max": 8,
+			"max": 3,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
 		},
 		"Source10.AnalogAudioFormat": {
 			"description": "Set Analog Audio Format",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "enum",
 			"values": [
 				"Stereo"
 			]
-		},
-		"Source10.AnalogAudioInput": {
-			"description": "Set Analog Audio Format",
-			"max": 9,
-			"min": 9,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Source10.AnalogGain": {
-			"description": "Set Analog Audio Format",
-			"max": 12,
-			"min": -12,
-			"operators": "=+-?",
-			"step": 3,
-			"type": "number",
-			"unit": "dB"
-		},
-		"Source10.DigitalAudioFormat": {
-			"description": "Set source's digital audio to HDMI's audio return channel (ARC)",
-			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"Off",
-				"Coaxial",
-				"Optical",
-				"HDMI",
-				"ARC"
-			]
-		},
-		"Source10.DigitalAudioInput": {
-			"description": "Set Digital Audio Input",
-			"max": 8,
-			"min": 1,
-			"operators": "=+-?",
-			"type": "number"
 		},
 		"Source10.Enabled": {
 			"description": "Set Enabled Yes",
@@ -1153,25 +1194,6 @@
 			"description": "Set Source Trigger Out",
 			"max": 7,
 			"min": 0,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Source10.VideoFormat": {
-			"description": "Set Video Format",
-			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"Off",
-				"Video",
-				"SVideo",
-				"Component",
-				"HDMI"
-			]
-		},
-		"Source10.VideoInput": {
-			"description": "Set Video Input",
-			"max": 8,
-			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
 		},
@@ -1207,10 +1229,8 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"Coaxial",
 				"Optical",
-				"HDMI",
-				"ARC"
+				"Coaxial"
 			]
 		},
 		"Source2.DigitalAudioInput": {
@@ -1231,7 +1251,7 @@
 		},
 		"Source2.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source2.Preset": {
@@ -1299,10 +1319,8 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"Coaxial",
 				"Optical",
-				"HDMI",
-				"ARC"
+				"Coaxial"
 			]
 		},
 		"Source3.DigitalAudioInput": {
@@ -1323,7 +1341,7 @@
 		},
 		"Source3.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source3.Preset": {
@@ -1391,10 +1409,8 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"Coaxial",
 				"Optical",
-				"HDMI",
-				"ARC"
+				"Coaxial"
 			]
 		},
 		"Source4.DigitalAudioInput": {
@@ -1415,7 +1431,7 @@
 		},
 		"Source4.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source4.Preset": {
@@ -1453,20 +1469,11 @@
 		},
 		"Source5.AnalogAudioFormat": {
 			"description": "Set Analog Audio Format",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "enum",
 			"values": [
-				"Off",
-				"Stereo",
-				"7.1"
+				"Stereo"
 			]
-		},
-		"Source5.AnalogAudioInput": {
-			"description": "Set Analog Audio Input",
-			"max": 8,
-			"min": 1,
-			"operators": "=+-?",
-			"type": "number"
 		},
 		"Source5.AnalogGain": {
 			"description": "Set Analog Audio Gain",
@@ -1477,28 +1484,9 @@
 			"type": "number",
 			"unit": "dB"
 		},
-		"Source5.DigitalAudioFormat": {
-			"description": "Set Digital Audio Format",
-			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"Off",
-				"Coaxial",
-				"Optical",
-				"HDMI",
-				"ARC"
-			]
-		},
-		"Source5.DigitalAudioInput": {
-			"description": "Set Digital Audio Input",
-			"max": 8,
-			"min": 1,
-			"operators": "=+-?",
-			"type": "number"
-		},
 		"Source5.Enabled": {
 			"description": "Set Source Enabled No/Yes",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"No",
@@ -1526,22 +1514,11 @@
 		},
 		"Source5.VideoFormat": {
 			"description": "Set Source Video Format",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "enum",
 			"values": [
-				"Off",
-				"Video",
-				"SVideo",
-				"Component",
-				"HDMI"
+				"SVideo"
 			]
-		},
-		"Source5.VideoInput": {
-			"description": "Set Source Video Input",
-			"max": 8,
-			"min": 1,
-			"operators": "=+-?",
-			"type": "number"
 		},
 		"Source6.AnalogAudioFormat": {
 			"description": "Set Analog Audio Format",
@@ -1575,10 +1552,8 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"Coaxial",
 				"Optical",
-				"HDMI",
-				"ARC"
+				"Coaxial"
 			]
 		},
 		"Source6.DigitalAudioInput": {
@@ -1599,7 +1574,7 @@
 		},
 		"Source6.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source6.Preset": {
@@ -1667,10 +1642,8 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"Coaxial",
 				"Optical",
-				"HDMI",
-				"ARC"
+				"Coaxial"
 			]
 		},
 		"Source7.DigitalAudioInput": {
@@ -1691,7 +1664,7 @@
 		},
 		"Source7.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source7.Preset": {
@@ -1703,9 +1676,9 @@
 		},
 		"Source7.TriggerOut": {
 			"description": "Set Source Trigger Out",
-			"max": 7,
+			"max": 0,
 			"min": 0,
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "number"
 		},
 		"Source7.VideoFormat": {
@@ -1759,10 +1732,8 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"Coaxial",
 				"Optical",
-				"HDMI",
-				"ARC"
+				"Coaxial"
 			]
 		},
 		"Source8.DigitalAudioInput": {
@@ -1783,7 +1754,7 @@
 		},
 		"Source8.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source8.Preset": {
@@ -1851,10 +1822,8 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"Coaxial",
 				"Optical",
-				"HDMI",
-				"ARC"
+				"Coaxial"
 			]
 		},
 		"Source9.DigitalAudioInput": {
@@ -1875,7 +1844,7 @@
 		},
 		"Source9.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source9.Preset": {
@@ -1911,53 +1880,27 @@
 			"operators": "=+-?",
 			"type": "number"
 		},
-		"Tuner.AMStep": {
-			"description": "Set Tuner AM Step Value",
-			"max": 10,
-			"min": 9,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Tuner.FM.Mute": {
-			"description": "Set Tuner FM Mute On/Off",
+		"Terminal.OSD.Enabled": {
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"No",
+				"Yes"
 			]
 		},
-		"Tuner.FM.RDSName": {
-			"description": "FM RDS Name",
-			"operators": "?",
-			"type": "string"
-		},
-		"Tuner.FM.RDSText": {
-			"description": "FM RDS Text",
-			"operators": "?",
-			"type": "string"
-		},
-		"Tuner.XM.Channel": {
-			"description": "XM Channel Number",
-			"max": 255,
-			"min": 0,
+		"Terminal.Source": {
+			"max": 10,
+			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
 		},
-		"Tuner.XM.ChannelName": {
-			"description": "XM Channel Name",
-			"operators": "?",
-			"type": "string"
-		},
-		"Tuner.XM.Name": {
-			"description": "XM Song name",
-			"operators": "?",
-			"type": "string"
-		},
-		"Tuner.XM.Title": {
-			"description": "XM Song Title",
-			"operators": "?",
-			"type": "string"
+		"Terminal.VFD.Enabled": {
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
 		},
 		"UART.Version": {
 			"description": "Query UART Version",

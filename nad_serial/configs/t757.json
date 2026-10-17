@@ -101,9 +101,42 @@
 			"values": [
 				"Back",
 				"Front",
-				"Zone2",
-				"Zone3",
-				"Zone4"
+				"Zone2"
+			]
+		},
+		"Main.Audio.CODEC": {
+			"operators": "?",
+			"type": "string",
+			"values": [
+				"Analog",
+				"PCM"
+			]
+		},
+		"Main.Audio.Channels": {
+			"description": "3/4.1",
+			"operators": "?",
+			"type": "string",
+			"values": [
+				"2/0.0",
+				"3/4.1"
+			]
+		},
+		"Main.Audio.Lock": {
+			"description": "Whether the audio input is locked",
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Main.Audio.Rate": {
+			"description": "Audio Rate",
+			"operators": "?",
+			"type": "number",
+			"values": [
+				"44.1",
+				"48"
 			]
 		},
 		"Main.Audyssey": {
@@ -161,43 +194,6 @@
 			"step": 2,
 			"type": "number",
 			"unit": "dB"
-		},
-		"Main.CEC.Arc": {
-			"description": "Enables selection of ARC in Source Setup OSD Menu",
-			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"Off",
-				"Auto",
-				"SourceSetup"
-			]
-		},
-		"Main.CEC.Audio": {
-			"description": "Feature Disabled",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
-		},
-		"Main.CEC.Power": {
-			"description": "Allows receiver to be turned on and off via CEC (TXX5 series only turns off)",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
-		},
-		"Main.CEC.Switch": {
-			"description": "Allows CEC to change receiver's source",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
 		},
 		"Main.ControlStandby": {
 			"description": "Allow Ethernet control when in standby",
@@ -497,6 +493,71 @@
 				"NEO6Music"
 			]
 		},
+		"Main.ListeningMode.DTS.Stereo": {
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"NEO6Cinema",
+				"NEO6Music"
+			]
+		},
+		"Main.ListeningMode.DTS.Surround": {
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"NEO6Cinema",
+				"NEO6Music",
+				"StereoDownmix"
+			]
+		},
+		"Main.ListeningMode.Dolby.Stereo": {
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"ProLogic",
+				"PLIIMovie",
+				"PLIIMusic"
+			]
+		},
+		"Main.ListeningMode.Dolby.Surround": {
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"SurroundEX",
+				"PLIIMovie",
+				"PLIIMusic",
+				"StereoDownmix"
+			]
+		},
+		"Main.ListeningMode.PCM.Stereo": {
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"ProLogic",
+				"PLIIMovie",
+				"PLIIMusic",
+				"NEO6Music",
+				"EARS",
+				"EnhancedStereo"
+			]
+		},
+		"Main.ListeningMode.PCM.Surround": {
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"None",
+				"PLIIMovie",
+				"PLIIMusic",
+				"NEO6Cinema",
+				"NEO6Music",
+				"StereoDownmix"
+			]
+		},
 		"Main.OSD.TempDisplay": {
 			"description": "Set OSD Temp Display On/Off",
 			"operators": "=+-?",
@@ -621,9 +682,6 @@
 			"values": [
 				"Main",
 				"Zone2",
-				"Zone3",
-				"Zone4",
-				"Zone234",
 				"Source"
 			]
 		},
@@ -670,9 +728,7 @@
 				"Volume",
 				"ListeningMode",
 				"AudioSourceFormat",
-				"Zone2Source",
-				"Zone3Source",
-				"Zone4Source"
+				"Zone2Source"
 			]
 		},
 		"Main.VFD.Line2": {
@@ -684,10 +740,9 @@
 				"MainSource",
 				"Volume",
 				"ListeningMode",
+				"AudioCodec",
 				"AudioSourceFormat",
-				"Zone2Source",
-				"Zone3Source",
-				"Zone4Source"
+				"Zone2Source"
 			]
 		},
 		"Main.VFD.TempLine": {
@@ -697,18 +752,48 @@
 			"operators": "=+-?",
 			"type": "number"
 		},
+		"Main.Video.Bits": {
+			"operators": "?",
+			"type": "string",
+			"values": [
+				"24"
+			]
+		},
+		"Main.Video.Color": {
+			"operators": "?",
+			"type": "string",
+			"values": [
+				"YCC 4:4:4",
+				"RGB 4:4:4"
+			]
+		},
+		"Main.Video.HDR": {
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Main.Video.Lock": {
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
 		"Main.Video.Resolution": {
 			"description": "Video Resolution (Command Valid with VM200 Only)",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
-				"480i",
-				"480p",
-				"576i",
-				"576p",
-				"720p",
-				"1080i",
-				"1080p"
+				"720x576i50",
+				"720x576p50",
+				"1280x720p50",
+				"1280x720p60",
+				"1920x1080i60",
+				"1920x1080p60"
 			]
 		},
 		"Main.VideoMode": {
@@ -721,6 +806,7 @@
 			]
 		},
 		"Main.Volume": {
+			"min": -92,
 			"operators": "=+-?"
 		},
 		"Preset1.Setup.DSPOptions": {
@@ -1087,7 +1173,7 @@
 		},
 		"Source10.AnalogAudioFormat": {
 			"description": "Set Analog Audio Format",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "enum",
 			"values": [
 				"Stereo"
@@ -1097,21 +1183,21 @@
 			"description": "Set Analog Audio Format",
 			"max": 9,
 			"min": 9,
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "number"
 		},
 		"Source10.AnalogGain": {
 			"description": "Set Analog Audio Format",
 			"max": 12,
 			"min": -12,
-			"operators": "=+-?",
+			"operators": "?",
 			"step": 3,
 			"type": "number",
 			"unit": "dB"
 		},
 		"Source10.DigitalAudioFormat": {
 			"description": "Set source's digital audio to HDMI's audio return channel (ARC)",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "enum",
 			"values": [
 				"Off",
@@ -1125,7 +1211,7 @@
 			"description": "Set Digital Audio Input",
 			"max": 8,
 			"min": 1,
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "number"
 		},
 		"Source10.Enabled": {
@@ -1910,50 +1996,6 @@
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
-		},
-		"Tuner.AMStep": {
-			"description": "Set Tuner AM Step Value",
-			"max": 10,
-			"min": 9,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Tuner.Band": {
-			"values": [
-				"FM",
-				"AM",
-				"DAB",
-				"XM"
-			]
-		},
-		"Tuner.DAB.DLS": {
-			"description": "DAB DLS Text",
-			"operators": "?",
-			"type": "string"
-		},
-		"Tuner.DAB.Service": {
-			"description": "DAB Service Name",
-			"operators": "?",
-			"type": "string"
-		},
-		"Tuner.FM.Mute": {
-			"description": "Set Tuner FM Mute On/Off",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
-		},
-		"Tuner.FM.RDSName": {
-			"description": "FM RDS Name",
-			"operators": "?",
-			"type": "string"
-		},
-		"Tuner.FM.RDSText": {
-			"description": "FM RDS Text",
-			"operators": "?",
-			"type": "string"
 		}
 	}
 }

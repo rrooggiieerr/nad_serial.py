@@ -1,0 +1,76 @@
+{
+	"device_types": [
+		"amplifier"
+	],
+	"settings": {
+		"Main.AnalogGain": {
+			"description": "Analog gain",
+			"operators": "?",
+			"type": "number"
+		},
+		"Main.AutoSense": {
+			"description": "Set Auto Sense On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.AutoStandby": {
+			"description": "Set Auto Standby On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Bass": {
+			"description": "Set Bass EQ On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Brightness": {
+			"description": "Set VFD brightness",
+			"max": 3,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.ControlStandby": {
+			"description": "Set Control Standby On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Source": {
+			"max": null,
+			"min": null,
+			"type": "enum",
+			"values": [
+				"Stream",
+				"Wireless",
+				"TV",
+				"Phono",
+				"Coax1",
+				"Coax2",
+				"Opt1",
+				"Opt2"
+			]
+		},
+		"Main.Volume": {
+			"max": 12,
+			"min": -80,
+			"operators": "=+-?",
+			"step": 0.5
+		}
+	}
+}

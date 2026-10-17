@@ -1,0 +1,41 @@
+{
+	"settings": {
+		"Main.CEC.Arc": {
+			"description": "Enables selection of ARC in Source Setup OSD Menu",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Auto",
+				"SourceSetup"
+			]
+		},
+		"Main.CEC.Audio": {
+			"description": "Receiver broadcasts a CEC message indicating it is an active audio system",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.CEC.Power": {
+			"description": "Feature Disabled",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.CEC.Switch": {
+			"description": "Allows CEC to change receiver's source",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		}
+	}
+}

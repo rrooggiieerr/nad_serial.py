@@ -1,0 +1,60 @@
+{
+	"device_types": [
+		"amplifier"
+	],
+	"settings": {
+		"Main.AutoSense": {
+			"description": "Set Auto Sense On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.AutoStandby": {
+			"description": "Set Auto Standby On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Brightness": {
+			"description": "Set VFD brightness",
+			"max": 3,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.EQ": {
+			"description": "Set Bass EQ On/Off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Source": {
+			"max": null,
+			"min": null,
+			"type": "enum",
+			"values": [
+				"TV",
+				"PHONO",
+				"COAX1",
+				"COAX2",
+				"OPT1",
+				"OPT2",
+				"STREAM",
+				"BT"
+			]
+		},
+		"Main.Volume": {
+			"max": 12,
+			"min": -80
+		}
+	}
+}

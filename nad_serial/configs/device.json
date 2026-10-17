@@ -23,6 +23,11 @@
 			"operators": "?",
 			"type": "string"
 		},
+		"Main.SerialNumber": {
+			"description": "Query the serial number",
+			"operators": "?",
+			"type": "string"
+		},
 		"Main.Version": {
 			"description": "Query the firmware version",
 			"operators": "?",

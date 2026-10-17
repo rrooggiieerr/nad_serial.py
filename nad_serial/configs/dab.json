@@ -1,0 +1,21 @@
+{
+	"settings": {
+		"Tuner.Band": {
+			"values": [
+				"FM",
+				"AM",
+				"DAB"
+			]
+		},
+		"Tuner.DAB.DLS": {
+			"description": "DAB DLS Text",
+			"operators": "?",
+			"type": "string"
+		},
+		"Tuner.DAB.Service": {
+			"description": "DAB Service Name",
+			"operators": "?",
+			"type": "string"
+		}
+	}
+}

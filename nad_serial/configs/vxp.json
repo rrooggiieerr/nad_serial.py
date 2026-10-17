@@ -1,0 +1,89 @@
+{
+	"settings": {
+		"Main.Video.Aspect.Mode": {
+			"description": "Zoom the video output",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Stretch",
+				"Zoom",
+				"LetterBox"
+			]
+		},
+		"Main.Video.Aspect.Ratio": {
+			"description": "Aspect Ratio",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"4:3",
+				"16:9"
+			]
+		},
+		"Main.Video.Brightness": {
+			"description": "Brightness",
+			"max": 100,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Video.Contrast": {
+			"description": "Contrast",
+			"max": 100,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Video.EdgeEnhancement.Level": {
+			"description": "Edge Enhancement Level",
+			"max": 100,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Video.EdgeEnhancement.Threshold": {
+			"description": "Edge Enhancement Threshold",
+			"max": 100,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Video.NoiseReduction": {
+			"description": "Noise Reduction",
+			"max": 50,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Video.Rate": {
+			"description": "Video Rate",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"50",
+				"60"
+			]
+		},
+		"Main.Video.Resolution": {
+			"description": "Video Resolution",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"480i",
+				"480p",
+				"576i",
+				"576p",
+				"720p",
+				"1080i",
+				"1080p"
+			]
+		},
+		"Video.Version.MCU": {
+			"operators": "?",
+			"type": "string"
+		},
+		"Video.Version.VXP": {
+			"operators": "?",
+			"type": "string"
+		}
+	}
+}
