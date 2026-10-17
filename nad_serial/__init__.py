@@ -518,10 +518,10 @@ class NADDevice:
                 ):
                     self._pending_request = None
 
-    async def async_send_command(
+    async def async_request(
         self, setting: str, operator: str, value: str | None = None
     ) -> ValueType | None:
-        """Send a command to the device, also for settings without configuration."""
+        """Send a request to the device, also for settings without configuration."""
         return await self._async_request(
             setting,
             operator,
