@@ -335,12 +335,30 @@
 				"On"
 			]
 		},
+		"Main.IR": {
+			"description": "Send IR Commands via RS232 where <VALUE> is decimal IR code",
+			"min": 0,
+			"operators": "=",
+			"type": "number"
+		},
 		"Main.IR.Channel": {
 			"description": "Set the Main IR Channel (allows for two NADs to be controlled separately)",
 			"max": 1,
 			"min": 0,
 			"operators": "=+-?",
 			"type": "number"
+		},
+		"Main.IR1": {
+			"description": "String showing the HEX value of a supported IR command (0x877C customer code)",
+			"operators": "=",
+			"regex": "0x([0-9A-Fa-f]{2})+",
+			"type": "string"
+		},
+		"Main.IR2": {
+			"description": "String showing the HEX value of a supported IR command (0x860F customer code)",
+			"operators": "=",
+			"regex": "0x([0-9A-Fa-f]{2})+",
+			"type": "string"
 		},
 		"Main.Level.BackLeft": {
 			"description": "Set Speaker Level",
