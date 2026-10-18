@@ -431,6 +431,7 @@
 		},
 		"Main.IR": {
 			"description": "Send IR Commands via RS232 where <VALUE> is decimal IR code",
+			"max": 255,
 			"min": 0,
 			"operators": "=",
 			"type": "number"
@@ -443,16 +444,18 @@
 			"type": "number"
 		},
 		"Main.IR1": {
-			"description": "String showing the HEX value of a supported IR command (0x877C customer code)",
+			"description": "Send IR Commands via RS232 where <VALUE> is decimal IR code (0x877C customer code)",
+			"max": 255,
+			"min": 0,
 			"operators": "=",
-			"regex": "0x([0-9A-Fa-f]{2})+",
-			"type": "string"
+			"type": "number"
 		},
 		"Main.IR2": {
-			"description": "String showing the HEX value of a supported IR command (0x860F customer code)",
+			"description": "Send IR Commands via RS232 where <VALUE> is decimal IR code (0x860F customer code, alternate code set)",
+			"max": 255,
+			"min": 0,
 			"operators": "=",
-			"regex": "0x([0-9A-Fa-f]{2})+",
-			"type": "string"
+			"type": "number"
 		},
 		"Main.Language": {
 			"description": "Set the menu language",
