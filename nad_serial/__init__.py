@@ -478,13 +478,15 @@ class NADDevice:
             raise NADConnectionError("Not connected")
 
         if not setting_config:
-            if not self.supports_setting(setting):
-                return None
-
             setting_config = self.get_setting_config(setting)
+            if not setting_config:
+                return None
 
         command = build_command(setting, operator, value, setting_config)
         request = f"\r{command}\r"
+
+        # The device doesn't respond to settings that can't be queried
+        wait_for_response = "?" in setting_config["operators"]
 
         async with self._request_lock:
             loop = asyncio.get_running_loop()
@@ -495,6 +497,9 @@ class NADDevice:
                 # The connection can be lost while waiting for the lock.
                 if not self.connected:
                     raise NADConnectionError("Not connected")
+                if not wait_for_response:
+                    await self._connection.write(request.encode("ascii"))
+                    return None
                 self._pending_request = (setting.lower(), future)
                 await self._connection.write(request.encode("ascii"))
                 return await asyncio.wait_for(future, TIMEOUT)
@@ -617,6 +622,9 @@ class NADDevice:
                     break
         else:
             current_value = await self._async_request(setting, "=", value)
+            if "?" not in setting_config["operators"]:
+                # The device doesn't respond, the change can't be verified
+                return True
 
         self._setting_states[setting.lower()] = current_value
 
@@ -634,6 +642,11 @@ class NADDevice:
     async def _async_step(self, setting: str, operator: str) -> bool:
         current_value = self.get_setting_value(setting)
         new_value = await self._async_request(setting, operator)
+
+        setting_config = self.get_setting_config(setting)
+        if setting_config and "?" not in setting_config["operators"]:
+            # The device doesn't respond, the change can't be verified
+            return True
 
         self._setting_states[setting.lower()] = new_value
 
