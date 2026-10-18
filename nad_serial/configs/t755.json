@@ -1880,28 +1880,6 @@
 			"operators": "=+-?",
 			"type": "number"
 		},
-		"Terminal.OSD.Enabled": {
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"No",
-				"Yes"
-			]
-		},
-		"Terminal.Source": {
-			"max": 10,
-			"min": 1,
-			"operators": "=+-?",
-			"type": "number"
-		},
-		"Terminal.VFD.Enabled": {
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"No",
-				"Yes"
-			]
-		},
 		"UART.Version": {
 			"description": "Query UART Version",
 			"operators": "?",
