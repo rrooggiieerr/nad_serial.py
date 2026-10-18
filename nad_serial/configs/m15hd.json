@@ -2028,6 +2028,48 @@
 			"operators": "?",
 			"type": "string"
 		},
+		"Zone2.IR": {
+			"description": "Send Zone 2 IR Commands via RS232 where <VALUE> is decimal IR code",
+			"max": 255,
+			"min": 0,
+			"operators": "=",
+			"type": "number"
+		},
+		"Zone2.IR1": {
+			"description": "Send Zone 2 IR Commands via RS232 where <VALUE> is decimal IR code (0x877C customer code)",
+			"max": 255,
+			"min": 0,
+			"operators": "=",
+			"type": "number"
+		},
+		"Zone2.IR2": {
+			"description": "Send Zone 2 IR Commands via RS232 where <VALUE> is decimal IR code (0x860F customer code, alternate code set)",
+			"max": 255,
+			"min": 0,
+			"operators": "=",
+			"type": "number"
+		},
+		"Zone3.IR": {
+			"description": "Send Zone 3 IR Commands via RS232 where <VALUE> is decimal IR code",
+			"max": 255,
+			"min": 0,
+			"operators": "=",
+			"type": "number"
+		},
+		"Zone3.IR1": {
+			"description": "Send Zone 3 IR Commands via RS232 where <VALUE> is decimal IR code (0x877C customer code)",
+			"max": 255,
+			"min": 0,
+			"operators": "=",
+			"type": "number"
+		},
+		"Zone3.IR2": {
+			"description": "Send Zone 3 IR Commands via RS232 where <VALUE> is decimal IR code (0x860F customer code, alternate code set)",
+			"max": 255,
+			"min": 0,
+			"operators": "=",
+			"type": "number"
+		},
 		"Zone3.Mode": {
 			"description": "Set Zone Mode Zone/Record",
 			"operators": "=+-?",
@@ -2060,6 +2102,27 @@
 			"max": 11,
 			"min": 1,
 			"operators": "=+-?",
+			"type": "number"
+		},
+		"Zone4.IR": {
+			"description": "Send Zone 4 IR Commands via RS232 where <VALUE> is decimal IR code",
+			"max": 255,
+			"min": 0,
+			"operators": "=",
+			"type": "number"
+		},
+		"Zone4.IR1": {
+			"description": "Send Zone 4 IR Commands via RS232 where <VALUE> is decimal IR code (0x877C customer code)",
+			"max": 255,
+			"min": 0,
+			"operators": "=",
+			"type": "number"
+		},
+		"Zone4.IR2": {
+			"description": "Send Zone 4 IR Commands via RS232 where <VALUE> is decimal IR code (0x860F customer code, alternate code set)",
+			"max": 255,
+			"min": 0,
+			"operators": "=",
 			"type": "number"
 		},
 		"Zone4.Mode": {
