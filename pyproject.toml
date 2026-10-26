@@ -356,6 +356,7 @@ max-line-length-suggestions = 72
 [tool.mypy]
 python_version = "3.14"
 packages = ["nad_serial"]
+strict = true
 
 [[tool.mypy.overrides]]
 module = ["serialx.*", "*._version"]
