@@ -74,10 +74,10 @@ A setting can have the following keys:
 | Key | Description |
 | --- | ----------- |
 | `description` | What the setting does, e.g. from the NAD command list. |
-| `max`, `min` | `number` only. The highest and lowest value. Either a number, or the name of a setting that reports it, e.g. `"max": "Main.Sources"`. That setting is then used. |
+| `max`, `min` | `number` only. The highest and lowest value. Either a number, the name of a setting that reports it, e.g. `"max": "Main.Sources"`, or a list of these, e.g. `"max": ["Main.Volume.Max", 19]`. See [Values from the device](#values-from-the-device). |
 | `operators` | The operators the setting accepts: `=+-?`, `=?`, `+-?`, `+-`, `=` or `?`. |
 | `regex` | `string` only, optional. A regular expression the whole value must match, e.g. `"0x([0-9A-Fa-f]{2})+"` for a hex code with the `0x` prefix, in pairs of digits. |
-| `step` | `number` only. The value changes in steps of this size, e.g. `0.5`. Either a number, or the name of a setting that reports it, e.g. `"step": "Tuner.AMStep"`. That setting is then used. Default `1`. |
+| `step` | `number` only. The value changes in steps of this size, e.g. `0.5`. Either a number, the name of a setting that reports it, e.g. `"step": "Tuner.AMStep"`, or a list of these. See [Values from the device](#values-from-the-device). Default `1`. |
 | `type` | `number`, `boolean`, `enum` or `string`, see below. |
 | `unit` | Optional. The unit of the value, e.g. `dB`, `Hz`. |
 | `values` | `enum`: the accepted values. `boolean`: the values the device uses for false and true, in that order, e.g. `["Off", "On"]` or `["No", "Yes"]`. |
@@ -92,6 +92,19 @@ A setting can have the following keys:
 Setting names and values should be spelled exactly as the device reports them, including case and
 spaces. The keys are sorted and the files are indented with tabs, as enforced by the pre-commit
 hooks.
+
+### Values from the device
+
+`max`, `min` and `step` can take their value from the device. Each is one of:
+
+- A number, which is used as is.
+- The name of a setting, e.g. `"max": "Main.Sources"`, which gives the value that setting reports.
+- A list of these, which are tried in order, e.g. `"max": ["Main.Volume.Max", 19]`. Only the last
+  item may be a number. It is the fallback for devices or firmware versions that don't support the
+  settings before it.
+
+A setting that is referred to must be a `number` setting of the device. Without a value from the
+device or a fallback, `max` and `min` give no limit and `step` is `1`.
 
 ### `Main.Volume`
 

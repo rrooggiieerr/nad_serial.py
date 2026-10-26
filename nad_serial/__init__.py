@@ -345,23 +345,55 @@ class NADDevice:
         # Read base settings from the device
         await self.async_request_settings(_BASE_SETTINGS)
 
-        # Resolve links to setting states in _device_settings
+        # Choose which option of max, min and step is used
         for config in self._device_config["settings"].values():
             for key in ("min", "max", "step"):
-                if isinstance(config.get(key), str):
-                    if (value := self.get_setting_value(config.get(key))) is None:
-                        with contextlib.suppress(TimeoutError, NADTimeoutError):
-                            async with asyncio.timeout(SETUP_TIMEOUT):
-                                value = await self.async_request_setting(config[key])
-                    if isinstance(value, (int, float)) and not isinstance(value, bool):
-                        config[key] = value
-                    else:
-                        del config[key]
+                if (reference := config.get(key)) is None:
+                    continue
+                if (choice := await self._async_choose_reference(reference)) is None:
+                    del config[key]
+                else:
+                    config[key] = choice
+
+    async def _async_choose_reference(
+        self, reference: float | str | list[int | float | str]
+    ) -> int | float | str | None:
+        """Returns the first option that gives a number: a number, or the name of a setting."""
+        for item in reference if isinstance(reference, list) else [reference]:
+            if not isinstance(item, str):
+                return item
+            if (value := self.get_setting_value(item)) is None:
+                with contextlib.suppress(TimeoutError, NADTimeoutError):
+                    async with asyncio.timeout(SETUP_TIMEOUT):
+                        value = await self.async_request_setting(item)
+            if isinstance(value, (int, float)) and not isinstance(value, bool):
+                return item  # the name, so later changes are followed
+        return None
 
     def get_setting_config(self, setting: str) -> dict[str, Any] | None:
-        """Gets the configuration for a setting."""
+        """Gets the configuration for a setting, with min, max and step resolved to numbers.
+
+        A min, max or step that refers to another setting takes that setting's current value. It is
+        left out when that setting has no number value.
+        """
         settings: dict[str, dict[str, Any]] = self._device_config["settings"]
-        return settings.get(setting.lower())
+        if (config := settings.get(setting.lower())) is None:
+            return None
+
+        references = [
+            key for key in ("min", "max", "step") if isinstance(config.get(key), str)
+        ]
+        if not references:
+            return config
+
+        resolved = dict(config)
+        for key in references:
+            value = self.get_setting_value(config[key])
+            if isinstance(value, (int, float)) and not isinstance(value, bool):
+                resolved[key] = value
+            else:
+                del resolved[key]
+        return resolved
 
     def get_setting_value(self, setting: str) -> ValueType | None:
         """Gets the value of a setting from the setting state dict."""
