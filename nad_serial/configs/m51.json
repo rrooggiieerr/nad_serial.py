@@ -1,0 +1,35 @@
+{
+	"device_types": [
+		"amplifier"
+	],
+	"settings": {
+		"Main.Polarity": {
+			"description": "Set the polarity",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Positive",
+				"Reversed"
+			]
+		},
+		"Main.Source": {
+			"max": null,
+			"min": null,
+			"type": "enum",
+			"values": [
+				"AES",
+				"COAX",
+				"OPT",
+				"USB",
+				"HDMI 1",
+				"HDMI 2",
+				"PC LINK"
+			]
+		},
+		"Main.Volume": {
+			"max": 10,
+			"min": -90,
+			"operators": "=+-?"
+		}
+	}
+}
