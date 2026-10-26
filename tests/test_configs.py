@@ -254,9 +254,25 @@ async def test_all_builds(build: str):
             lowered = [v.lower() for v in setting["values"]]
             assert len(lowered) == len(set(lowered))
         for key in ("min", "max", "step"):
-            reference = setting.get(key)
-            if isinstance(reference, str):
-                assert settings.get(reference, {}).get("type") == "number"
+            if (reference := setting.get(key)) is None:
+                continue
+            items = reference if isinstance(reference, list) else [reference]
+            assert items, f"{key} is an empty list"
+            for index, item in enumerate(items):
+                if isinstance(item, str):
+                    assert settings.get(item, {}).get("type") == "number", (
+                        f"{key} refers to {item!r}, which is not a number setting"
+                    )
+                else:
+                    assert not isinstance(item, bool), (
+                        f"{key} item {item!r} is a boolean, not a number"
+                    )
+                    assert isinstance(item, (int, float)), (
+                        f"{key} item {item!r} is not a number or a setting name"
+                    )
+                    assert index == len(items) - 1, (
+                        f"{key} item {item!r}: only the last item may be a number"
+                    )
 
 
 def test_deep_merge():
