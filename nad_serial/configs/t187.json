@@ -915,7 +915,27 @@
 			]
 		},
 		"Main.Volume": {
+			"max": [
+				"Main.Volume.Max",
+				19
+			],
+			"min": [
+				"Main.Volume.Min",
+				-99
+			],
 			"operators": "=+-?"
+		},
+		"Main.Volume.Max": {
+			"description": "The Main maximum volume in dB",
+			"operators": "?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Volume.Min": {
+			"description": "The Main minimum volume in dB",
+			"operators": "?",
+			"type": "number",
+			"unit": "dB"
 		},
 		"Preset1.Setup.DSPOptions": {
 			"description": "Set Preset to include DSP Options",
@@ -2131,6 +2151,28 @@
 			"operators": "=",
 			"type": "number"
 		},
+		"Zone2.Volume": {
+			"max": [
+				"Zone2.Volume.Max",
+				19
+			],
+			"min": [
+				"Zone2.Volume.Min",
+				-99
+			]
+		},
+		"Zone2.Volume.Max": {
+			"description": "The Zone 2 maximum volume in dB",
+			"operators": "?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Zone2.Volume.Min": {
+			"description": "The Zone 2 minimum volume in dB",
+			"operators": "?",
+			"type": "number",
+			"unit": "dB"
+		},
 		"Zone3.IR": {
 			"description": "Send Zone 3 IR Commands via RS232 where <VALUE> is decimal IR code",
 			"max": 255,
@@ -2188,9 +2230,27 @@
 		},
 		"Zone3.Volume": {
 			"description": "Set Zone Volume",
-			"max": 19,
-			"min": -99,
+			"max": [
+				"Zone3.Volume.Max",
+				19
+			],
+			"min": [
+				"Zone3.Volume.Min",
+				-99
+			],
 			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Zone3.Volume.Max": {
+			"description": "The Zone 3 maximum volume in dB",
+			"operators": "?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Zone3.Volume.Min": {
+			"description": "The Zone 3 minimum volume in dB",
+			"operators": "?",
 			"type": "number",
 			"unit": "dB"
 		},
@@ -2268,9 +2328,27 @@
 		},
 		"Zone4.Volume": {
 			"description": "Set Zone Volume",
-			"max": 19,
-			"min": -99,
+			"max": [
+				"Zone4.Volume.Max",
+				19
+			],
+			"min": [
+				"Zone4.Volume.Min",
+				-99
+			],
 			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Zone4.Volume.Max": {
+			"description": "The Zone 4 maximum volume in dB",
+			"operators": "?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Zone4.Volume.Min": {
+			"description": "The Zone 4 minimum volume in dB",
+			"operators": "?",
 			"type": "number",
 			"unit": "dB"
 		},

@@ -827,8 +827,27 @@
 			]
 		},
 		"Main.Volume": {
-			"min": -92,
+			"max": [
+				"Main.Volume.Max",
+				19
+			],
+			"min": [
+				"Main.Volume.Min",
+				-92
+			],
 			"operators": "=+-?"
+		},
+		"Main.Volume.Max": {
+			"description": "The Main maximum volume in dB",
+			"operators": "?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Volume.Min": {
+			"description": "The Main minimum volume in dB",
+			"operators": "?",
+			"type": "number",
+			"unit": "dB"
 		},
 		"Preset1.Setup.DSPOptions": {
 			"description": "Set Preset to include DSP Options",
@@ -2038,6 +2057,28 @@
 			"min": 0,
 			"operators": "=",
 			"type": "number"
+		},
+		"Zone2.Volume": {
+			"max": [
+				"Zone2.Volume.Max",
+				19
+			],
+			"min": [
+				"Zone2.Volume.Min",
+				-99
+			]
+		},
+		"Zone2.Volume.Max": {
+			"description": "The Zone 2 maximum volume in dB",
+			"operators": "?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Zone2.Volume.Min": {
+			"description": "The Zone 2 minimum volume in dB",
+			"operators": "?",
+			"type": "number",
+			"unit": "dB"
 		}
 	}
 }
