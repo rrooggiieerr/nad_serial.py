@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.29", "hatch-vcs"]
+requires = ["hatchling>=1.32.4", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.hooks.vcs]
@@ -44,7 +44,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "serialx>=1.10.0"
+    "serialx>=1.15.0"
 ]
 
 [project.urls]
@@ -359,7 +359,7 @@ packages = ["nad_serial"]
 strict = true
 
 [[tool.mypy.overrides]]
-module = ["serialx.*", "*._version"]
+module = ["*._version"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
@@ -525,6 +525,7 @@ split-on-trailing-comma = false
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["D", "SLF", "TID251", "TID252"]
+"nad_serial/__main__.py" = ["T201"]
 
 [tool.ruff.lint.mccabe]
 max-complexity = 25
