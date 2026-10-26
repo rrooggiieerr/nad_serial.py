@@ -360,7 +360,8 @@ class NADDevice:
 
     def get_setting_config(self, setting: str) -> dict[str, Any] | None:
         """Gets the configuration for a setting."""
-        return self._device_config["settings"].get(setting.lower())
+        settings: dict[str, dict[str, Any]] = self._device_config["settings"]
+        return settings.get(setting.lower())
 
     def get_setting_value(self, setting: str) -> ValueType | None:
         """Gets the value of a setting from the setting state dict."""
@@ -626,8 +627,6 @@ class NADDevice:
                 # The device doesn't respond, the change can't be verified
                 return True
 
-        self._setting_states[setting.lower()] = current_value
-
         if setting_config["type"] == "number":
             return isinstance(current_value, (int, float)) and math.isclose(
                 current_value, number, abs_tol=1e-9
@@ -647,8 +646,6 @@ class NADDevice:
         if setting_config and "?" not in setting_config["operators"]:
             # The device doesn't respond, the change can't be verified
             return True
-
-        self._setting_states[setting.lower()] = new_value
 
         return current_value != new_value
 
@@ -904,15 +901,6 @@ class NADZone(NADAmplifier):
         self._parent_device = parent_device
         self._zone_number = zone_number
         self._prefix = f"Zone{zone_number}"
-
-    @property
-    @override
-    def _setting_states(self):
-        return {
-            setting: state
-            for setting, state in self._parent_device._setting_states.items()  # noqa: SLF001
-            if setting.startswith(f"{self._prefix.lower()}.")
-        }
 
     @property
     @override
