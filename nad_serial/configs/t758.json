@@ -104,7 +104,18 @@
 				"Zone2"
 			]
 		},
+		"Main.Amp.Overheat": {
+			"description": "Whether the amplifier is overheated",
+			"firmware": ">=v2.20",
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
 		"Main.Audio.CODEC": {
+			"firmware": ">=v2.20",
 			"operators": "?",
 			"type": "string",
 			"values": [
@@ -114,6 +125,7 @@
 		},
 		"Main.Audio.Channels": {
 			"description": "3/4.1",
+			"firmware": ">=v2.20",
 			"operators": "?",
 			"type": "string",
 			"values": [
@@ -121,8 +133,19 @@
 				"3/4.1"
 			]
 		},
+		"Main.Audio.Delay": {
+			"description": "Whether an audio delay is applied to the input",
+			"firmware": ">=v2.20",
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
 		"Main.Audio.Lock": {
 			"description": "Whether the audio input is locked",
+			"firmware": ">=v2.20",
 			"operators": "?",
 			"type": "boolean",
 			"values": [
@@ -132,6 +155,7 @@
 		},
 		"Main.Audio.Rate": {
 			"description": "Audio Rate",
+			"firmware": ">=v2.20",
 			"operators": "?",
 			"type": "number",
 			"values": [
@@ -221,6 +245,14 @@
 			"type": "number",
 			"unit": "%"
 		},
+		"Main.DTS.DialogControl": {
+			"description": "Set the DTS:X dialog control level",
+			"firmware": ">=v2.20",
+			"max": 6,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
 		"Main.Dimmer": {
 			"description": "Front VFD Dimmer",
 			"operators": "=+-?",
@@ -229,6 +261,14 @@
 				"Off",
 				"On"
 			]
+		},
+		"Main.Dirac": {
+			"description": "Select the Dirac Live filter (0 is off)",
+			"firmware": ">=v2.20",
+			"max": 3,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
 		},
 		"Main.Distance.BackLeft": {
 			"description": "Set the speaker distance in Feet",
@@ -303,6 +343,52 @@
 				"Feet"
 			]
 		},
+		"Main.Distance.User1Left": {
+			"description": "Set the speaker distance in Feet",
+			"firmware": ">=v2.20",
+			"max": 30,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "ft"
+		},
+		"Main.Distance.User1Right": {
+			"description": "Set the speaker distance in Feet",
+			"firmware": ">=v2.20",
+			"max": 30,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "ft"
+		},
+		"Main.Distance.User2Left": {
+			"description": "Set the speaker distance in Feet",
+			"firmware": ">=v2.20",
+			"max": 30,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "ft"
+		},
+		"Main.Distance.User2Right": {
+			"description": "Set the speaker distance in Feet",
+			"firmware": ">=v2.20",
+			"max": 30,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "ft"
+		},
+		"Main.Dolby.CenterSpread": {
+			"description": "Turn Dolby Center Spread on or off",
+			"firmware": ">=v2.20",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
 		"Main.Dolby.CenterWidth": {
 			"description": "Dolby Center Width",
 			"max": 7,
@@ -373,6 +459,26 @@
 		},
 		"Main.EnhancedStereo.Surround": {
 			"description": "Set Enhanced Stereo Speakers",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.EnhancedStereo.User1": {
+			"description": "Set Enhanced Stereo Speakers",
+			"firmware": ">=v2.20",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.EnhancedStereo.User2": {
+			"description": "Set Enhanced Stereo Speakers",
+			"firmware": ">=v2.20",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": [
@@ -466,6 +572,42 @@
 		},
 		"Main.Level.SurroundRight": {
 			"description": "Set Speaker Level",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Level.User1Left": {
+			"description": "Set Speaker Level",
+			"firmware": ">=v2.20",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Level.User1Right": {
+			"description": "Set Speaker Level",
+			"firmware": ">=v2.20",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Level.User2Left": {
+			"description": "Set Speaker Level",
+			"firmware": ">=v2.20",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "dB"
+		},
+		"Main.Level.User2Right": {
+			"description": "Set Speaker Level",
+			"firmware": ">=v2.20",
 			"max": 12,
 			"min": -12,
 			"operators": "=+-?",
@@ -596,6 +738,16 @@
 			"type": "number",
 			"unit": "minutes"
 		},
+		"Main.Speaker.Back.Config": {
+			"description": "Turn the back speakers on or off",
+			"firmware": ">=v2.20",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
 		"Main.Speaker.Back.Frequency": {
 			"description": "Set Speaker Crossover",
 			"max": 200,
@@ -604,6 +756,16 @@
 			"step": 10,
 			"type": "number",
 			"unit": "Hz"
+		},
+		"Main.Speaker.Back.Mode": {
+			"description": "Set the back speakers to stereo (two speakers) or mono (one speaker)",
+			"firmware": ">=v2.20",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Stereo",
+				"Mono"
+			]
 		},
 		"Main.Speaker.Center.Config": {
 			"description": "Set Speaker Size or Turn Speaker Off",
@@ -669,6 +831,74 @@
 			"step": 10,
 			"type": "number",
 			"unit": "Hz"
+		},
+		"Main.Speaker.User1.Config": {
+			"description": "Set Speaker Size or Turn Speaker Off",
+			"firmware": ">=v2.20",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Small",
+				"Large"
+			]
+		},
+		"Main.Speaker.User1.Frequency": {
+			"description": "Set Speaker Crossover",
+			"firmware": ">=v2.20",
+			"max": 200,
+			"min": 40,
+			"operators": "=+-?",
+			"step": 10,
+			"type": "number",
+			"unit": "Hz"
+		},
+		"Main.Speaker.User1.Mode": {
+			"description": "Set the role of the User1 speakers",
+			"firmware": ">=v2.20",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"DolbySurround",
+				"TopFront",
+				"TopMid",
+				"TopRear",
+				"DolbyFront"
+			]
+		},
+		"Main.Speaker.User2.Config": {
+			"description": "Set Speaker Size or Turn Speaker Off",
+			"firmware": ">=v2.20",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Small",
+				"Large"
+			]
+		},
+		"Main.Speaker.User2.Frequency": {
+			"description": "Set Speaker Crossover",
+			"firmware": ">=v2.20",
+			"max": 200,
+			"min": 40,
+			"operators": "=+-?",
+			"step": 10,
+			"type": "number",
+			"unit": "Hz"
+		},
+		"Main.Speaker.User2.Mode": {
+			"description": "Set the role of the User2 speakers",
+			"firmware": ">=v2.20",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"DolbySurround",
+				"TopFront",
+				"TopMid",
+				"TopRear",
+				"DolbyFront"
+			]
 		},
 		"Main.ToneDefeat": {
 			"description": "Set Tone Defeat On/Off",
@@ -773,7 +1003,31 @@
 			"operators": "=+-?",
 			"type": "number"
 		},
+		"Main.Version": {
+			"latest": "v2.20"
+		},
+		"Main.Video.3D": {
+			"description": "Whether the video input is 3D",
+			"firmware": ">=v2.20",
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
+		"Main.Video.ARC": {
+			"description": "Whether HDMI ARC is active",
+			"firmware": ">=v2.20",
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},
 		"Main.Video.Bits": {
+			"firmware": ">=v2.20",
 			"operators": "?",
 			"type": "string",
 			"values": [
@@ -781,6 +1035,7 @@
 			]
 		},
 		"Main.Video.Color": {
+			"firmware": ">=v2.20",
 			"operators": "?",
 			"type": "string",
 			"values": [
@@ -789,6 +1044,7 @@
 			]
 		},
 		"Main.Video.HDR": {
+			"firmware": ">=v2.20",
 			"operators": "?",
 			"type": "boolean",
 			"values": [
@@ -797,6 +1053,7 @@
 			]
 		},
 		"Main.Video.Lock": {
+			"firmware": ">=v2.20",
 			"operators": "?",
 			"type": "boolean",
 			"values": [
@@ -806,6 +1063,7 @@
 		},
 		"Main.Video.Resolution": {
 			"description": "Video Resolution (Command Valid with VM200 Only)",
+			"firmware": ">=v2.20",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": [
@@ -839,12 +1097,14 @@
 		},
 		"Main.Volume.Max": {
 			"description": "The Main maximum volume in dB",
+			"firmware": ">=v2.20",
 			"operators": "?",
 			"type": "number",
 			"unit": "dB"
 		},
 		"Main.Volume.Min": {
 			"description": "The Main minimum volume in dB",
+			"firmware": ">=v2.20",
 			"operators": "?",
 			"type": "number",
 			"unit": "dB"
@@ -2070,12 +2330,14 @@
 		},
 		"Zone2.Volume.Max": {
 			"description": "The Zone 2 maximum volume in dB",
+			"firmware": ">=v2.20",
 			"operators": "?",
 			"type": "number",
 			"unit": "dB"
 		},
 		"Zone2.Volume.Min": {
 			"description": "The Zone 2 minimum volume in dB",
+			"firmware": ">=v2.20",
 			"operators": "?",
 			"type": "number",
 			"unit": "dB"

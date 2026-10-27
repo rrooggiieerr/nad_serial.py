@@ -8,6 +8,9 @@ from json.decoder import JSONDecodeError
 import logging
 from typing import Any
 
+from packaging.specifiers import SpecifierSet
+from packaging.version import InvalidVersion, Version
+
 logger = logging.getLogger(__name__)
 
 
@@ -54,7 +57,9 @@ async def _async_read_config_file(config: str) -> dict[str, Any] | None:
 
 
 async def async_read_device_config(
-    build: str | None = None, detected_device_types: list[str] | None = None
+    build: str | None = None,
+    detected_device_types: list[str] | None = None,
+    version: str | None = None,
 ) -> dict[str, Any]:
     """Reads the device configuration."""
     build_config = None
@@ -93,5 +98,18 @@ async def async_read_device_config(
         _deep_merge(device_config, build_config)
     if len(device_types) > 1:
         device_config["device_types"] = device_types[1:]
+
+    if version:
+        try:
+            firmware_version = Version(version)
+        except InvalidVersion:
+            logger.debug("Unknown firmware version %s, keeping all settings", version)
+        else:
+            device_config["settings"] = {
+                name: setting
+                for name, setting in device_config.get("settings", {}).items()
+                if "firmware" not in setting
+                or firmware_version in SpecifierSet(setting["firmware"])
+            }
 
     return device_config

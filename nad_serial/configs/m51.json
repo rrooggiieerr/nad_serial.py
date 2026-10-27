@@ -26,6 +26,9 @@
 				"PC LINK"
 			]
 		},
+		"Main.Version": {
+			"latest": "V1.50"
+		},
 		"Main.Volume": {
 			"max": 10,
 			"min": -90,
