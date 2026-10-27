@@ -1,5 +1,7 @@
 """Tests the configuration file functions."""
 
+from packaging.specifiers import SpecifierSet
+from packaging.version import Version
 import pytest
 
 from nad_serial import configs
@@ -273,6 +275,35 @@ async def test_all_builds(build: str):
                     assert index == len(items) - 1, (
                         f"{key} item {item!r}: only the last item may be a number"
                     )
+
+    # The latest known version of each version setting, e.g. Main.Version or DSP.Version
+    for name, setting in settings.items():
+        if (latest := setting.get("latest")) is None:
+            continue
+        assert "Version" in name.split("."), (
+            f"{name}: latest is only for version settings"
+        )
+        assert isinstance(latest, str), f"{name}: latest {latest!r} is not a string"
+        Version(latest)  # Raises InvalidVersion when invalid
+
+    # Firmware conditions refer to the main firmware version
+    latest = settings.get("Main.Version", {}).get("latest")
+    latest_version = Version(latest) if latest is not None else None
+
+    # The firmware versions that support a setting
+    for name, setting in settings.items():
+        if (condition := setting.get("firmware")) is None:
+            continue
+        assert isinstance(condition, str), (
+            f"{name}: firmware {condition!r} is not a string"
+        )
+        specifiers = SpecifierSet(condition)  # Raises InvalidSpecifier when invalid
+        assert len(specifiers) > 0, f"{name}: firmware is empty"
+        if latest_version is not None:
+            for specifier in specifiers:
+                assert Version(specifier.version) <= latest_version, (
+                    f"{name}: firmware {condition!r} refers to a version after latest {latest!r}"
+                )
 
 
 def test_deep_merge():

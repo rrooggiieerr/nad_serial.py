@@ -835,6 +835,9 @@
 			"operators": "=+-?",
 			"type": "number"
 		},
+		"Main.Version": {
+			"latest": "v1.39"
+		},
 		"Main.VideoMode": {
 			"description": "Set Main Video Mode",
 			"operators": "=+-?",

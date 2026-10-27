@@ -39,6 +39,7 @@ SETUP_TIMEOUT = 0.5
 _DEVICE_TYPE_DETECTION_SETTINGS: Final = {
     "model": "Main.Model",
     "build": "Main.Build",
+    "version": "Main.Version",
     "amplifier": "Main.Volume",
     "tuner": "Tuner.Band",
     "zones": "Zone2.Power",
@@ -216,7 +217,12 @@ class NADDevice:
                 await connection.close()
             raise NADConnectionError(f"Unable to connect to {url}")
 
-        device_config = await async_read_device_config(build)
+        value = await NADDevice._async_request_setting_value(
+            _DEVICE_TYPE_DETECTION_SETTINGS["version"], connection
+        )
+        version = value if isinstance(value, str) else None
+
+        device_config = await async_read_device_config(build, version=version)
 
         detected_device_types = None
         if not device_config or "device_types" not in device_config:
@@ -225,7 +231,7 @@ class NADDevice:
                 device_type,
                 detection_setting,
             ) in _DEVICE_TYPE_DETECTION_SETTINGS.items():
-                if device_type in ["model", "build"]:
+                if device_type in ["model", "build", "version"]:
                     continue
 
                 value = await NADDevice._async_request_setting_value(
@@ -234,7 +240,9 @@ class NADDevice:
                 if value:
                     detected_device_types.append(device_type)
 
-            device_config = await async_read_device_config(build, detected_device_types)
+            device_config = await async_read_device_config(
+                build, detected_device_types, version
+            )
 
         if detected_device_types is not None:
             logger.warning(
