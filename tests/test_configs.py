@@ -19,6 +19,7 @@ BUILDS = [
     "M15HD_PG536M",
     "M15HD_VXP",
     "M17_PG536M",
+    "M51",
     "T175_PG10_DAB",
     "T175_PG10_XM",
     "T175_PG536_DAB",
