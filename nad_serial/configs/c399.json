@@ -3,16 +3,56 @@
 		"amplifier"
 	],
 	"settings": {
-		"DiracX.Name": {
+		"Dirac1.Name": {
 			"description": "Query Dirac filter name.",
 			"operators": "?",
 			"type": "string"
 		},
-		"DiracX.State": {
+		"Dirac1.State": {
 			"description": "Query Dirac filter state.",
 			"operators": "?",
 			"type": "string"
 		},
+		"Dirac2.Name": {
+			"description": "Query Dirac filter name.",
+			"operators": "?",
+			"type": "string"
+		},
+		"Dirac2.State": {
+			"description": "Query Dirac filter state.",
+			"operators": "?",
+			"type": "string"
+		},
+		"Dirac3.Name": {
+			"description": "Query Dirac filter name.",
+			"operators": "?",
+			"type": "string"
+		},
+		"Dirac3.State": {
+			"description": "Query Dirac filter state.",
+			"operators": "?",
+			"type": "string"
+		},
+		"Dirac4.Name": {
+			"description": "Query Dirac filter name.",
+			"operators": "?",
+			"type": "string"
+		},
+		"Dirac4.State": {
+			"description": "Query Dirac filter state.",
+			"operators": "?",
+			"type": "string"
+		},
+		"Dirac5.Name": {
+			"description": "Query Dirac filter name.",
+			"operators": "?",
+			"type": "string"
+		},
+		"Dirac5.State": {
+			"description": "Query Dirac filter state.",
+			"operators": "?",
+			"type": "string"
+		},                        
 		"Main.AutoStandby": {
 			"description": "Enable or disable auto standby.",
 			"operators": "=+-?",
@@ -106,13 +146,6 @@
 			"operators": "?",
 			"type": "string"
 		},
-		"Main.Source": {
-			"description": "Select audio source. The value range is from 1 to X where X is the value returned by Main.Sources?",
-			"operators": "=+-?",
-			"type": "number",
-			"min": 1,
-			"max": "Main.Sources"
-		},
 		"Main.Sources": {
 			"description": "Returns the total number of sources available on the unit.",
 			"operators": "?",
@@ -144,20 +177,6 @@
 			"min": -7,
 			"max": 7
 		},
-		"Main.Version": {
-			"description": "Firmware version.",
-            "latest": "v0.25",
-            "operators": "?",
-			"type": "string"
-		},
-		"Main.Volume": {
-			"description": "Volume unit is dB. The minimum and maximum depends on the volume limits (Main.VolumeLimits?).",
-			"operators": "=+-?",
-			"type": "number",
-			"min": -80,
-			"max": 12,
-			"unit": "dB"
-		},
 		"Main.VolumeDisplayMode": {
 			"description": "Volume display mode.",
 			"operators": "=+-?",
@@ -177,13 +196,13 @@
 			"max": 100,
 			"unit": "%"
 		},
-		"SourceX.AnalogBypass": {
+		"Source1.AnalogBypass": {
 			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": ["Off", "On"]
 		},
-		"SourceX.AnalogGain": {
+		"Source1.AnalogGain": {
 			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
 			"type": "number",
@@ -191,46 +210,541 @@
 			"max": 5,
 			"unit": "dB"
 		},
-		"SourceX.AutoSense": {
+		"Source1.AutoSense": {
 			"description": "When it is On, the source will wake up when an active signal is detected on that specific source. It will switch to the source automatically and start playback. This does not apply to Phono Source. 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": ["Off", "On"]
 		},
-		"SourceX.Enabled": {
+		"Source1.Enabled": {
 			"description": "Enable/disable the source. Example: Source5.Enabled 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
 			"type": "boolean",
 			"values": ["No", "Yes"]
 		},
-		"SourceX.Input": {
-			"description": "Default source name. This can be used to identify the source after SourceX.Name had changed. Example: Source5.Input 1 <= X <= Main.Sources?",
+		"Source1.Input": {
+			"description": "Default source name. This can be used to identify the source after Source1.Name had changed. Example: Source5.Input 1 <= X <= Main.Sources?",
 			"operators": "?",
 			"type": "string"
 		},
-		"SourceX.Name": {
+		"Source1.Name": {
 			"description": "Name of the source as displayed on the front panel LCD. 1 <= X <= Main.Sources?.",
 			"operators": "=?",
 			"type": "string"
 		},
-		"SourceX.Slot": {
+		"Source1.Slot": {
 			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source5.Slot 1 <= X <= Main.Sources?",
 			"operators": "?",
 			"type": "number"
 		},
-		"SourceX.VolumeControl": {
-			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from SourceX.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
+		"Source1.VolumeControl": {
+			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source1.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
 			"type": "enum",
 			"values": ["Variable", "Fixed"]
 		},
-		"SourceX.VolumeFixed": {
-			"description": "Source volume when SourceX.VolumeControl=Fixed is selected. 1 <= X <= Main.Sources?",
+		"Source1.VolumeFixed": {
+			"description": "Source volume when Source1.VolumeControl=Fixed is selected. 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
 			"type": "number",
 			"min": -80,
 			"max": 12,
 			"unit": "dB"
-		}
+		},
+        "Source2.AnalogBypass": {
+			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source2.AnalogGain": {
+			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -12,
+			"max": 5,
+			"unit": "dB"
+		},
+		"Source2.AutoSense": {
+			"description": "When it is On, the source will wake up when an active signal is detected on that specific source. It will switch to the source automatically and start playback. This does not apply to Phono Source. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source2.Enabled": {
+			"description": "Enable/disable the source. Example: Source5.Enabled 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["No", "Yes"]
+		},
+		"Source2.Input": {
+			"description": "Default source name. This can be used to identify the source after Source2.Name had changed. Example: Source5.Input 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "string"
+		},
+		"Source2.Name": {
+			"description": "Name of the source as displayed on the front panel LCD. 1 <= X <= Main.Sources?.",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source2.Slot": {
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source5.Slot 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "number"
+		},
+		"Source2.VolumeControl": {
+			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source2.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": ["Variable", "Fixed"]
+		},
+		"Source2.VolumeFixed": {
+			"description": "Source volume when Source2.VolumeControl=Fixed is selected. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -80,
+			"max": 12,
+			"unit": "dB"
+		},
+        "Source3.AnalogBypass": {
+			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source3.AnalogGain": {
+			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -12,
+			"max": 5,
+			"unit": "dB"
+		},
+		"Source3.AutoSense": {
+			"description": "When it is On, the source will wake up when an active signal is detected on that specific source. It will switch to the source automatically and start playback. This does not apply to Phono Source. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source3.Enabled": {
+			"description": "Enable/disable the source. Example: Source5.Enabled 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["No", "Yes"]
+		},
+		"Source3.Input": {
+			"description": "Default source name. This can be used to identify the source after Source3.Name had changed. Example: Source5.Input 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "string"
+		},
+		"Source3.Name": {
+			"description": "Name of the source as displayed on the front panel LCD. 1 <= X <= Main.Sources?.",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source3.Slot": {
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source5.Slot 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "number"
+		},
+		"Source3.VolumeControl": {
+			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source3.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": ["Variable", "Fixed"]
+		},
+		"Source3.VolumeFixed": {
+			"description": "Source volume when Source3.VolumeControl=Fixed is selected. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -80,
+			"max": 12,
+			"unit": "dB"
+		},
+		"Source4.AnalogBypass": {
+			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source4.AnalogGain": {
+			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -12,
+			"max": 5,
+			"unit": "dB"
+		},
+		"Source4.AutoSense": {
+			"description": "When it is On, the source will wake up when an active signal is detected on that specific source. It will switch to the source automatically and start playback. This does not apply to Phono Source. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source4.Enabled": {
+			"description": "Enable/disable the source. Example: Source5.Enabled 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["No", "Yes"]
+		},
+		"Source4.Input": {
+			"description": "Default source name. This can be used to identify the source after Source4.Name had changed. Example: Source5.Input 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "string"
+		},
+		"Source4.Name": {
+			"description": "Name of the source as displayed on the front panel LCD. 1 <= X <= Main.Sources?.",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source4.Slot": {
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source5.Slot 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "number"
+		},
+		"Source4.VolumeControl": {
+			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source4.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": ["Variable", "Fixed"]
+		},
+		"Source4.VolumeFixed": {
+			"description": "Source volume when Source4.VolumeControl=Fixed is selected. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -80,
+			"max": 12,
+			"unit": "dB"
+		},
+		"Source5.AnalogBypass": {
+			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source5.AnalogGain": {
+			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -12,
+			"max": 5,
+			"unit": "dB"
+		},
+		"Source5.AutoSense": {
+			"description": "When it is On, the source will wake up when an active signal is detected on that specific source. It will switch to the source automatically and start playback. This does not apply to Phono Source. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source5.Enabled": {
+			"description": "Enable/disable the source. Example: Source5.Enabled 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["No", "Yes"]
+		},
+		"Source5.Input": {
+			"description": "Default source name. This can be used to identify the source after Source5.Name had changed. Example: Source5.Input 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "string"
+		},
+		"Source5.Name": {
+			"description": "Name of the source as displayed on the front panel LCD. 1 <= X <= Main.Sources?.",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source5.Slot": {
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source5.Slot 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "number"
+		},
+		"Source5.VolumeControl": {
+			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source5.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": ["Variable", "Fixed"]
+		},
+		"Source5.VolumeFixed": {
+			"description": "Source volume when Source5.VolumeControl=Fixed is selected. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -80,
+			"max": 12,
+			"unit": "dB"
+		},
+		"Source6.AnalogBypass": {
+			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source6.AnalogGain": {
+			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -12,
+			"max": 5,
+			"unit": "dB"
+		},
+		"Source6.AutoSense": {
+			"description": "When it is On, the source will wake up when an active signal is detected on that specific source. It will switch to the source automatically and start playback. This does not apply to Phono Source. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source6.Enabled": {
+			"description": "Enable/disable the source. Example: Source6.Enabled 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["No", "Yes"]
+		},
+		"Source6.Input": {
+			"description": "Default source name. This can be used to identify the source after Source6.Name had changed. Example: Source6.Input 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "string"
+		},
+		"Source6.Name": {
+			"description": "Name of the source as displayed on the front panel LCD. 1 <= X <= Main.Sources?.",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source6.Slot": {
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source6.Slot 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "number"
+		},
+		"Source6.VolumeControl": {
+			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source6.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": ["Variable", "Fixed"]
+		},
+		"Source6.VolumeFixed": {
+			"description": "Source volume when Source6.VolumeControl=Fixed is selected. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -80,
+			"max": 12,
+			"unit": "dB"
+		},
+		"Source7.AnalogBypass": {
+			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source7.AnalogGain": {
+			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -12,
+			"max": 5,
+			"unit": "dB"
+		},
+		"Source7.AutoSense": {
+			"description": "When it is On, the source will wake up when an active signal is detected on that specific source. It will switch to the source automatically and start playback. This does not apply to Phono Source. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source7.Enabled": {
+			"description": "Enable/disable the source. Example: Source7.Enabled 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["No", "Yes"]
+		},
+		"Source7.Input": {
+			"description": "Default source name. This can be used to identify the source after Source7.Name had changed. Example: Source7.Input 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "string"
+		},
+		"Source7.Name": {
+			"description": "Name of the source as displayed on the front panel LCD. 1 <= X <= Main.Sources?.",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source7.Slot": {
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source7.Slot 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "number"
+		},
+		"Source7.VolumeControl": {
+			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source7.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": ["Variable", "Fixed"]
+		},
+		"Source7.VolumeFixed": {
+			"description": "Source volume when Source7.VolumeControl=Fixed is selected. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -80,
+			"max": 12,
+			"unit": "dB"
+		},
+		"Source8.AnalogBypass": {
+			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source8.AnalogGain": {
+			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -12,
+			"max": 5,
+			"unit": "dB"
+		},
+		"Source8.AutoSense": {
+			"description": "When it is On, the source will wake up when an active signal is detected on that specific source. It will switch to the source automatically and start playback. This does not apply to Phono Source. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source8.Enabled": {
+			"description": "Enable/disable the source. Example: Source8.Enabled 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["No", "Yes"]
+		},
+		"Source8.Input": {
+			"description": "Default source name. This can be used to identify the source after Source8.Name had changed. Example: Source8.Input 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "string"
+		},
+		"Source8.Name": {
+			"description": "Name of the source as displayed on the front panel LCD. 1 <= X <= Main.Sources?.",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source8.Slot": {
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source8.Slot 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "number"
+		},
+		"Source8.VolumeControl": {
+			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source8.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": ["Variable", "Fixed"]
+		},
+		"Source8.VolumeFixed": {
+			"description": "Source volume when Source8.VolumeControl=Fixed is selected. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -80,
+			"max": 12,
+			"unit": "dB"
+		},
+		"Source9.AnalogBypass": {
+			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source9.AnalogGain": {
+			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -12,
+			"max": 5,
+			"unit": "dB"
+		},
+		"Source9.AutoSense": {
+			"description": "When it is On, the source will wake up when an active signal is detected on that specific source. It will switch to the source automatically and start playback. This does not apply to Phono Source. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source9.Enabled": {
+			"description": "Enable/disable the source. Example: Source9.Enabled 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["No", "Yes"]
+		},
+		"Source9.Input": {
+			"description": "Default source name. This can be used to identify the source after Source9.Name had changed. Example: Source9.Input 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "string"
+		},
+		"Source9.Name": {
+			"description": "Name of the source as displayed on the front panel LCD. 1 <= X <= Main.Sources?.",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source9.Slot": {
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source9.Slot 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "number"
+		},
+		"Source9.VolumeControl": {
+			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source9.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": ["Variable", "Fixed"]
+		},
+		"Source9.VolumeFixed": {
+			"description": "Source volume when Source9.VolumeControl=Fixed is selected. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -80,
+			"max": 12,
+			"unit": "dB"
+		},
+		"Source10.AnalogBypass": {
+			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source10.AnalogGain": {
+			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -12,
+			"max": 5,
+			"unit": "dB"
+		},
+		"Source10.AutoSense": {
+			"description": "When it is On, the source will wake up when an active signal is detected on that specific source. It will switch to the source automatically and start playback. This does not apply to Phono Source. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Source10.Enabled": {
+			"description": "Enable/disable the source. Example: Source10.Enabled 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["No", "Yes"]
+		},
+		"Source10.Input": {
+			"description": "Default source name. This can be used to identify the source after Source10.Name had changed. Example: Source10.Input 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "string"
+		},
+		"Source10.Name": {
+			"description": "Name of the source as displayed on the front panel LCD. 1 <= X <= Main.Sources?.",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source10.Slot": {
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source10.Slot 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "number"
+		},
+		"Source10.VolumeControl": {
+			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source10.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": ["Variable", "Fixed"]
+		},
+		"Source10.VolumeFixed": {
+			"description": "Source volume when Source10.VolumeControl=Fixed is selected. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -80,
+			"max": 12,
+			"unit": "dB"
+		}                                                        
 	}
 }
