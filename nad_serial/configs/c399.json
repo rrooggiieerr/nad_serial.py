@@ -1,0 +1,236 @@
+{
+	"device_types": [
+		"amplifier"
+	],
+	"settings": {
+		"DiracX.Name": {
+			"description": "Query Dirac filter name.",
+			"operators": "?",
+			"type": "string"
+		},
+		"DiracX.State": {
+			"description": "Query Dirac filter state.",
+			"operators": "?",
+			"type": "string"
+		},
+		"Main.AutoStandby": {
+			"description": "Enable or disable auto standby.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+        "Main.Balance": {
+          "description": "Range -7R -6R .. 0 .. -6L -7L. Set audio balance. -7R means right channel is attenuated by 7 db compared to left channel, which leads to a balance on the left.",
+          "operators": "=+-?",
+          "type": "enum",
+          "values": [
+            "-7R",
+            "-6R",
+            "-5R",
+            "-4R",
+            "-3R",
+            "-2R",
+            "-1R",
+            "0",
+            "-1L",
+            "-2L",
+            "-3L",
+            "-4L",
+            "-5L",
+            "-6L",
+            "-7L"
+          ]
+        },
+		"Main.Bass": {
+			"description": "Set bass.",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -7,
+			"max": 7
+		},
+		"Main.Brightness": {
+			"description": "Set LCD brightness.",
+			"operators": "=+-?",
+            "type": "number",
+            "min": 1,
+            "max": 3
+		},
+		"Main.BT.Name": {
+			"description": "Set Bluetooth device name.",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Main.CEC.Power": {
+			"description": "Allow HDMI CEC to change power state.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Main.ControlStandby": {
+			"description": "Allow MDC2 cards to remain powered.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Main.CrossOver": {
+			"description": "Set the crossover frequency (in Hz) between main and subwoofer output. This feature is only available when a compatible MDC2 card is present (i.e. MDC2 BluOS-D).",
+			"operators": "=+-?",
+			"type": "number",
+			"min": 40,
+			"max": 200,
+			"step": 10,
+			"unit": "Hz"
+		},
+		"Main.Dirac": {
+			"description": "Set the selected Dirac filter. 0 means no filter selected. If a filter is Enabled (see DiracX.State), it can be selected by issuing a Main.Dirac=X command, where X is a number between 1 and 5.",
+			"operators": "=+-?",
+			"type": "number",
+			"min": 0,
+			"max": 5
+		},
+		"Main.Display": {
+			"description": "A value of On will always keep the display on. if Temp is selected, the LCD display (and backlight) will be turned off along with the front panel LED. As soon as the player is interacted with, both will turn on temporarily.",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": ["Temp", "On"]
+		},
+		"Main.IR.Channel": {
+			"description": "IR channel.",
+			"operators": "=+-?",
+			"type": "number",
+			"min": 0,
+			"max": 7
+		},
+		"Main.ModelName": {
+			"description": "Return the current unit friendly name.",
+			"operators": "?",
+			"type": "string"
+		},
+		"Main.Source": {
+			"description": "Select audio source. The value range is from 1 to X where X is the value returned by Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": 1,
+			"max": "Main.Sources"
+		},
+		"Main.Sources": {
+			"description": "Returns the total number of sources available on the unit.",
+			"operators": "?",
+			"type": "number"
+		},
+		"Main.Speaker": {
+			"description": "Turn on/off speaker output.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Main.Subwoofer": {
+			"description": "Select the number of subwoofers connected. This feature is only available when a compatible MDC2 card is present (i.e. MDC2 BluOS-D)",
+			"operators": "=+-?",
+			"type": "number",
+			"min": 0,
+			"max": 2
+		},
+		"Main.ToneDefeat": {
+			"description": "Turn tone controls on/off. If On is selected, Main.Bass and Main.Treble won't have any effect.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"Main.Treble": {
+			"description": "Set treble level.",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -7,
+			"max": 7
+		},
+		"Main.Version": {
+			"description": "Firmware version.",
+            "latest": "v0.25",
+            "operators": "?",
+			"type": "string"
+		},
+		"Main.Volume": {
+			"description": "Volume unit is dB. The minimum and maximum depends on the volume limits (Main.VolumeLimits?).",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -80,
+			"max": 12,
+			"unit": "dB"
+		},
+		"Main.VolumeDisplayMode": {
+			"description": "Volume display mode.",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": ["Decibel", "Percent"]
+		},
+		"Main.VolumeLimits": {
+			"description": "Minimum and maximum volume limits.",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Main.VolumePercent": {
+			"description": "Volume of the unit in percent.",
+			"operators": "=+-?",
+			"type": "number",
+			"min": 0,
+			"max": 100,
+			"unit": "%"
+		},
+		"SourceX.AnalogBypass": {
+			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"SourceX.AnalogGain": {
+			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -12,
+			"max": 5,
+			"unit": "dB"
+		},
+		"SourceX.AutoSense": {
+			"description": "When it is On, the source will wake up when an active signal is detected on that specific source. It will switch to the source automatically and start playback. This does not apply to Phono Source. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["Off", "On"]
+		},
+		"SourceX.Enabled": {
+			"description": "Enable/disable the source. Example: Source5.Enabled 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": ["No", "Yes"]
+		},
+		"SourceX.Input": {
+			"description": "Default source name. This can be used to identify the source after SourceX.Name had changed. Example: Source5.Input 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "string"
+		},
+		"SourceX.Name": {
+			"description": "Name of the source as displayed on the front panel LCD. 1 <= X <= Main.Sources?.",
+			"operators": "=?",
+			"type": "string"
+		},
+		"SourceX.Slot": {
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source5.Slot 1 <= X <= Main.Sources?",
+			"operators": "?",
+			"type": "number"
+		},
+		"SourceX.VolumeControl": {
+			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from SourceX.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": ["Variable", "Fixed"]
+		},
+		"SourceX.VolumeFixed": {
+			"description": "Source volume when SourceX.VolumeControl=Fixed is selected. 1 <= X <= Main.Sources?",
+			"operators": "=+-?",
+			"type": "number",
+			"min": -80,
+			"max": 12,
+			"unit": "dB"
+		}
+	}
+}
