@@ -5,9 +5,7 @@
 [![License][license-shield]][license]
 [![Maintainer][maintainer-shield]][maintainer]  
 [![GitHub Sponsors][github-shield]][github]
-[![PayPal][paypal-shield]][paypal]
 [![BuyMeCoffee][buymecoffee-shield]][buymecoffee]
-[![Patreon][patreon-shield]][patreon]
 
 ## Introduction
 
@@ -155,9 +153,7 @@ Please consider supporting my work through one of the following platforms. Your 
 greatly appreciated and keeps me motivated:
 
 [![GitHub Sponsors][github-shield]][github]
-[![PayPal][paypal-shield]][paypal]
 [![BuyMeCoffee][buymecoffee-shield]][buymecoffee]
-[![Patreon][patreon-shield]][patreon]
 
 ### Hire me
 
@@ -171,11 +167,7 @@ my email address on [my GitHub profile](https://github.com/rrooggiieerr).
 [license-shield]: https://img.shields.io/github/license/rrooggiieerr/nad_serial.py?style=for-the-badge
 [maintainer]: https://github.com/rrooggiieerr
 [maintainer-shield]: https://img.shields.io/badge/MAINTAINER-%40rrooggiieerr-41BDF5?style=for-the-badge
-[paypal]: https://paypal.me/seekingtheedge
-[paypal-shield]: https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white
 [buymecoffee]: https://www.buymeacoffee.com/rrooggiieerr
 [buymecoffee-shield]: https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black
 [github]: https://github.com/sponsors/rrooggiieerr
 [github-shield]: https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=ea4aaa
-[patreon]: https://www.patreon.com/seekingtheedge/creators
-[patreon-shield]: https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white
