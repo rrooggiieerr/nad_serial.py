@@ -58,6 +58,7 @@ The following devices are known to work:
 
 **Receivers:**
 
+- C399
 - T755
 - T757
 
