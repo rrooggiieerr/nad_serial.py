@@ -56,9 +56,12 @@ The device responds with the `=` operator and the resulting value, e.g. `Main.Vo
 
 The following devices are known to work:
 
-**Receivers:**
+**Amplifiers:**
 
 - C399
+
+**Receivers:**
+
 - T755
 - T757
 
