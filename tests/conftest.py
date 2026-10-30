@@ -1,8 +1,12 @@
 """Shared fixtures for the NAD Serial tests."""
 
 from collections.abc import AsyncGenerator
+import copy
+from typing import Any
 
 import pytest
+
+from nad_serial import configs
 
 from .simulation import (
     SimulatedDevice,
@@ -10,6 +14,33 @@ from .simulation import (
     serial_simulation,
     tcp_simulation,
 )
+
+
+@pytest.fixture(autouse=True)
+def config_files(
+    request: pytest.FixtureRequest, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Reads the configuration files in the test module's CONFIGS instead of the real ones.
+
+    CONFIGS maps a file name without `.json`, e.g. "x100", to its content. Files that aren't in
+    CONFIGS, e.g. "device" or "amplifier", are read as usual.
+    """
+    dummies: dict[str, dict[str, Any]] = {
+        name.lower(): config
+        for name, config in getattr(request.module, "CONFIGS", {}).items()
+    }
+    if not dummies:
+        return
+
+    read_config_file = configs._async_read_config_file
+
+    async def read_dummy_config_file(config: str) -> dict[str, Any] | None:
+        name = "".join(c for c in config if c.isalnum()).lower()
+        if name in dummies:
+            return copy.deepcopy(dummies[name])  # Merging changes the configuration
+        return await read_config_file(config)
+
+    monkeypatch.setattr(configs, "_async_read_config_file", read_dummy_config_file)
 
 
 @pytest.fixture(autouse=True)

@@ -21,6 +21,7 @@ from .exceptions import (
 )
 from .helpers import (
     REPORT_MESSAGE,
+    ScalarType,
     ValueType,
     build_command,
     parse_response,
@@ -370,10 +371,22 @@ class NADDevice:
         for item in reference if isinstance(reference, list) else [reference]:
             if not isinstance(item, str):
                 return item
-            if (value := self.get_setting_value(item)) is None:
+
+            index: Any
+            setting, _, index = item.partition("[")
+            if (value := self.get_setting_value(setting)) is None:
                 with contextlib.suppress(TimeoutError, NADTimeoutError):
                     async with asyncio.timeout(SETUP_TIMEOUT):
-                        value = await self.async_request_setting(item)
+                        value = await self.async_request_setting(setting)
+
+            if index:
+                index = int(index.rstrip("]"))
+                value = (
+                    value[index]
+                    if isinstance(value, list) and index < len(value)
+                    else None
+                )
+
             if isinstance(value, (int, float)) and not isinstance(value, bool):
                 return item  # the name, so later changes are followed
         return None
@@ -388,15 +401,28 @@ class NADDevice:
         if (config := settings.get(setting.lower())) is None:
             return None
 
-        references = [
-            key for key in ("min", "max", "step") if isinstance(config.get(key), str)
-        ]
+        references = {
+            key: reference
+            for key in ("min", "max", "step")
+            if isinstance(reference := config.get(key), str)
+        }
         if not references:
             return config
 
         resolved = dict(config)
-        for key in references:
-            value = self.get_setting_value(config[key])
+        for key, reference in references.items():
+            index: Any
+            setting, _, index = reference.partition("[")
+            value: Any = self.get_setting_value(setting)
+
+            if index:
+                index = int(index.rstrip("]"))
+                value = (
+                    value[index]
+                    if isinstance(value, list) and index < len(value)
+                    else None
+                )
+
             if isinstance(value, (int, float)) and not isinstance(value, bool):
                 resolved[key] = value
             else:
@@ -511,7 +537,7 @@ class NADDevice:
         self,
         setting: str,
         operator: str,
-        value: ValueType | None = None,
+        value: ScalarType | None = None,
         setting_config: dict[str, Any] | None = None,
     ) -> ValueType | None:
         """Sends a request and waits for the response."""
@@ -599,27 +625,30 @@ class NADDevice:
 
         return values
 
-    async def async_change_setting(self, setting: str, value: ValueType) -> bool:
+    async def async_change_setting(self, setting: str, value: ScalarType) -> bool:
         """Change a setting."""
         if not (setting_config := self.get_setting_config(setting)):
             raise NADCommandError(
                 f"Setting {setting} is not supported by NAD {self.model}"
             )
         if (
-            setting_config["type"] != "number"
+            not setting_config["type"].startswith("number")
             and "=" not in setting_config["operators"]
         ):
             raise NADCommandError(f"Changing {setting} not allowed")
-        if setting_config["type"] == "number" and setting_config["operators"] == "?":
+        if (
+            setting_config["type"].startswith("number")
+            and setting_config["operators"] == "?"
+        ):
             raise NADCommandError(f"Changing {setting} not allowed")
         if (
-            setting_config["type"] == "number"
+            setting_config["type"].startswith("number")
             and "=" not in setting_config["operators"]
             and "?" not in setting_config["operators"]
         ):
             # We can't step to the value if we can't know the current value.
             raise NADCommandError(f"Changing {setting} not possible")
-        if setting_config["type"] == "number":
+        if setting_config["type"].startswith("number"):
             minimum = setting_config.get("min")
             maximum = setting_config.get("max")
             if isinstance(value, bool) or not isinstance(value, (int, float)):
@@ -630,11 +659,17 @@ class NADDevice:
                 or (maximum is not None and number > maximum)
             ):
                 raise NADCommandError(f"{value} out of range {minimum} - {maximum}")
-        if setting_config["type"] == "boolean" and not isinstance(value, bool):
+            step = setting_config.get("step", 1)
+            base = minimum if isinstance(minimum, (int, float)) else 0
+            if not math.isclose(
+                (number - base) / step, round((number - base) / step), abs_tol=1e-9
+            ):
+                raise NADCommandError(f"{value} is not a multiple of step {step}")
+        if setting_config["type"].startswith("boolean") and not isinstance(value, bool):
             raise NADCommandError(f"{value} not a boolean")
 
         if (
-            setting_config["type"] == "number"
+            setting_config["type"].startswith("number")
             and "=" not in setting_config["operators"]
         ):
             # Numerical can not directly be set but needs to be stepped to.
@@ -667,7 +702,7 @@ class NADDevice:
                 # The device doesn't respond, the change can't be verified
                 return True
 
-        if setting_config["type"] == "number":
+        if setting_config["type"].startswith("number"):
             return isinstance(current_value, (int, float)) and math.isclose(
                 current_value, number, abs_tol=1e-9
             )
@@ -749,18 +784,24 @@ class NADAmplifier(NADDevice):
         if not source_config or source_config["type"] != "number":
             return
 
+        # Only the sources the device has, up to Main.Sources on devices that report it
+        maximum = source_config.get("max")
+        if not isinstance(maximum, (int, float)) or isinstance(maximum, bool):
+            maximum = 10
+        sources = range(1, int(maximum) + 1)
+
         if self.supports_setting("Source1.Name"):
             # The device configuration defines the source names, request them
             with contextlib.suppress(NADConnectionError):
                 await self.async_request_settings(
                     setting
-                    for i in range(1, 11)
+                    for i in sources
                     for setting in (f"Source{i}.Enabled", f"Source{i}.Name")
                 )
             return
 
         # Try to get the source names, even though the device does not specify the needed settings.
-        for i in range(1, 11):
+        for i in sources:
             try:
                 setting = f"Source{i}.Name"
                 name_config = {"operators": "?", "type": "string"}
@@ -798,15 +839,23 @@ class NADAmplifier(NADDevice):
                 break
 
     @property
-    def volume(self) -> int | None:
+    def volume(self) -> float | None:
         """Gets the amplifier volume in dB."""
         value = self.get_setting_value(f"{self._prefix}.Volume")
-        return value if isinstance(value, int) and not isinstance(value, bool) else None
+        return (
+            float(value)
+            if isinstance(value, (int, float)) and not isinstance(value, bool)
+            else None
+        )
 
-    async def async_request_volume(self) -> int | None:
+    async def async_request_volume(self) -> float | None:
         """Gets the value of a setting from the device."""
         value = await self.async_request_setting(f"{self._prefix}.Volume")
-        return value if isinstance(value, int) and not isinstance(value, bool) else None
+        return (
+            float(value)
+            if isinstance(value, (int, float)) and not isinstance(value, bool)
+            else None
+        )
 
     @property
     def muted(self) -> bool | None:
@@ -847,7 +896,7 @@ class NADAmplifier(NADDevice):
 
         if (
             isinstance(source, int)
-            and source_config["type"] == "number"
+            and source_config["type"].startswith("number")
             and self.source_names
         ):
             return self.source_names.get(source)
@@ -871,7 +920,7 @@ class NADAmplifier(NADDevice):
 
         if (
             isinstance(source, int)
-            and source_config["type"] == "number"
+            and source_config["type"].startswith("number")
             and self.source_names
         ):
             return self.source_names.get(source)
@@ -881,7 +930,7 @@ class NADAmplifier(NADDevice):
 
         return None
 
-    async def async_set_volume(self, volume: int) -> bool:
+    async def async_set_volume(self, volume: float) -> bool:
         """Sets the amplifier volume."""
         return await self.async_change_setting(f"{self._prefix}.Volume", volume)
 
@@ -1012,7 +1061,7 @@ class NADZone(NADAmplifier):
         self,
         setting: str,
         operator: str,
-        value: ValueType | None = None,
+        value: ScalarType | None = None,
         setting_config: dict[str, Any] | None = None,
     ) -> ValueType | None:
         """Sends a request and waits for the response."""
@@ -1052,7 +1101,7 @@ class NADTuner(NADDevice):
     def get_am_frequency(self) -> int | None:
         """Gets the AM frequency."""
         value = self.get_setting_value("Tuner.AM.Frequency")
-        return int(value) if value is not None else None
+        return value if isinstance(value, int) and not isinstance(value, bool) else None
 
     async def async_set_am_frequency(self, frequency: int) -> bool:
         """Tunes to an AM frequency."""
@@ -1061,7 +1110,11 @@ class NADTuner(NADDevice):
     def get_fm_frequency(self) -> float | None:
         """Gets the FM frequency."""
         value = self.get_setting_value("Tuner.FM.Frequency")
-        return float(value) if value is not None else None
+        return (
+            float(value)
+            if isinstance(value, (int, float)) and not isinstance(value, bool)
+            else None
+        )
 
     async def async_set_fm_frequency(self, frequency: float) -> bool:
         """Tunes to an FM frequency."""
@@ -1070,7 +1123,7 @@ class NADTuner(NADDevice):
     def get_preset(self) -> int | None:
         """Gets the current preset."""
         value = self.get_setting_value("Tuner.Preset")
-        return int(value) if value is not None else None
+        return value if isinstance(value, int) and not isinstance(value, bool) else None
 
     async def async_set_preset(self, preset: int) -> bool:
         """Selects a tuner preset."""

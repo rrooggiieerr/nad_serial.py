@@ -62,6 +62,69 @@ def test_parse_response_boolean():
     assert value is True
 
 
+_BOOLEAN = {"operators": "=?", "type": "boolean", "values": ["Off", "On"]}
+_BOOLEAN_LIST = {"operators": "?", "type": "boolean[]", "values": ["Off", "On"]}
+_ENUM = {"operators": "=?", "type": "enum", "values": ["None", "PLIIMovie"]}
+_NUMBER = {"operators": "=?", "type": "number"}
+_NUMBER_LIST = {"operators": "=?", "type": "number[]"}
+_STRING = {"operators": "?", "type": "string"}
+
+
+@pytest.mark.parametrize(
+    ("value", "config", "expected"),
+    [
+        ("-30", _NUMBER, -30),
+        ("87.5", _NUMBER, 87.5),
+        ("None", _NUMBER, None),
+        ("Unknown", _NUMBER, None),
+        ("-60,12", _NUMBER_LIST, [-60, 12]),
+        ("-60", _NUMBER_LIST, [-60]),
+        ("1.5,2", _NUMBER_LIST, [1.5, 2.0]),
+        ("None", _NUMBER_LIST, None),
+        ("Unknown", _NUMBER_LIST, None),
+        ("On", _BOOLEAN, True),
+        ("Off", _BOOLEAN, False),
+        ("None", _BOOLEAN, None),
+        ("Unknown", _BOOLEAN, None),
+        ("On,Off", _BOOLEAN_LIST, [True, False]),
+        ("On", _BOOLEAN_LIST, [True]),
+        ("None", _BOOLEAN_LIST, None),
+        ("Unknown", _BOOLEAN_LIST, None),
+        ("PLIIMovie", _ENUM, "PLIIMovie"),
+        ("None", _ENUM, "None"),  # A value of the enum, not a missing value
+        ("T755", _STRING, "T755"),
+        ("None", _STRING, "None"),
+        ("Unknown", _STRING, "Unknown"),
+        ("", _STRING, ""),
+    ],
+)
+def test_parse_value(value, config, expected, caplog):
+    """A value is converted to the type of its setting, without warnings."""
+    result = parse_value("Main.Setting", value, config)
+
+    assert result == expected
+    assert type(result) is type(expected)
+    if isinstance(expected, list):
+        assert [type(item) for item in result] == [type(item) for item in expected]
+    assert not caplog.records
+
+
+@pytest.mark.parametrize(
+    ("value", "config", "expected"),
+    [
+        ("Loud", _NUMBER, None),
+        ("-60,twelve", _NUMBER_LIST, None),
+        # The list of values in the config may be incomplete, so the value is kept
+        ("PLIIMusic", _ENUM, "PLIIMusic"),
+        ("Unknown", _ENUM, "Unknown"),
+    ],
+)
+def test_parse_value_unexpected(value, config, expected, caplog):
+    """An unexpected value is reported."""
+    assert parse_value("Main.Setting", value, config) == expected
+    assert "Please report this" in caplog.text
+
+
 @pytest.mark.parametrize(
     ("setting", "config"),
     [

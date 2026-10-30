@@ -77,22 +77,30 @@ A setting can have the following keys:
 | `firmware` | Optional. The firmware versions that support the setting: `>=`, `>`, `=`, `<=`, or `<` and a version, e.g. `">=v2.20"` for a setting added in v2.20, `"<v2.20"` for a setting removed in v2.20, or `"=v1.44"` for a setting of a single version. Without it, the setting applies to all firmware versions. |
 | `latest` | Optional, for a setting that reports a version, e.g. `Main.Version` or `DSP.Version`. The latest known version, e.g. `"v2.20"`. |
 | `max`, `min` | `number` only. The highest and lowest value. Either a number, the name of a setting that reports it, e.g. `"max": "Main.Sources"`, or a list of these, e.g. `"max": ["Main.Volume.Max", 19]`. See [Values from the device](#values-from-the-device). |
-| `operators` | The operators the setting accepts: `=+-?`, `=?`, `+-?`, `+-`, `=` or `?`. |
+| `operators` | The operators the setting accepts: `=+-?`, `=?`, `+-?`, `+-`, `=` or `?`. A list type can't be stepped, so it only accepts `=?`, `=` or `?`. |
 | `regex` | `string` only, optional. A regular expression the whole value must match, e.g. `"0x([0-9A-Fa-f]{2})+"` for a hex code with the `0x` prefix, in pairs of digits. |
 | `step` | `number` only. The value changes in steps of this size, e.g. `0.5`. Either a number, the name of a setting that reports it, e.g. `"step": "Tuner.AMStep"`, or a list of these. See [Values from the device](#values-from-the-device). Default `1`. |
-| `type` | `number`, `boolean`, `enum` or `string`, see below. |
+| `type` | `number`, `boolean`, `enum`, `string`, or a list: `number[]` or `boolean[]`, see below. |
 | `unit` | Optional. The unit of the value, e.g. `dB`, `Hz`. |
-| `values` | `enum`: the accepted values. `boolean`: the values the device uses for false and true, in that order, e.g. `["Off", "On"]` or `["No", "Yes"]`. |
+| `values` | `enum`: the accepted values. `boolean` and `boolean[]`: the two values the device uses for false and true, in that order, e.g. `["Off", "On"]` or `["No", "Yes"]`. |
 
 | Type | Values |
 | ---- | ------ |
-| `boolean` | `True` or `False`, sent and read as the two `values`, e.g. `On` and `Off`. |
-| `enum` | One of `values`. |
+| `boolean` | `True` or `False`, sent and read as the two `values`, e.g. `On` and `Off`. `None` or `Unknown` are read as no value. |
+| `boolean[]` | A list of booleans, read from comma separated `values`, e.g. `On,Off` as `[True, False]`. |
+| `enum` | One of `values`. A value that isn't in `values` is still read, and reported, as the list may be incomplete. |
 | `number` | A number, e.g. `-30` or `0.5`. `None` or `Unknown` are read as no value. |
+| `number[]` | A list of numbers, read from comma separated numbers, e.g. `-60,12` as `[-60, 12]`. `None`, `Unknown`, or an item that isn't a number are read as no value. |
 | `string` | Any text. |
 
+The list types can only be read: the library doesn't change them, and they can't be stepped with
+`+` or `-`. The NAD command list may describe such a setting as a `String` with `=/+/-/?`, e.g.
+`Main.VolumeLimits` of the C399, which reports `-60,12`. Configure it by the values the device
+reports, as `"operators": "=?"` or `"?"`.
+
 Setting names and values should be spelled exactly as the device reports them, including case and
-spaces. The keys are sorted and the files are indented with tabs, as enforced by the pre-commit
+spaces. A name is always literal: a numbered setting, e.g. `SourceX.Name` with `1 <= X <= 10` in the
+NAD command list, is configured once for every number, `Source1.Name` to `Source10.Name`. The keys are sorted and the files are indented with tabs, as enforced by the pre-commit
 hooks.
 
 ### Values from the device
@@ -101,12 +109,16 @@ hooks.
 
 - A number, which is used as is.
 - The name of a setting, e.g. `"max": "Main.Sources"`, which gives the value that setting reports.
+- An item of a `number[]` setting, by its index from 0, e.g. `"min": "Main.VolumeLimits[0]"` and
+  `"max": "Main.VolumeLimits[1]"`.
 - A list of these, which are tried in order, e.g. `"max": ["Main.Volume.Max", 19]`. Only the last
   item may be a number. It is the fallback for devices or firmware versions that don't support the
   settings before it.
 
-A setting that is referred to must be a `number` setting of the device. Without a value from the
-device or a fallback, `max` and `min` give no limit and `step` is `1`.
+A setting that is referred to must be a `number` setting of the device, or a `number[]` setting
+when it has an index. Without a value from the device or a fallback, `max` and `min` give no limit
+and `step` is `1`. A list that is too short, e.g. `-60` for `Main.VolumeLimits[1]`, gives no value,
+so the fallback is used.
 
 ### `Main.Volume`
 

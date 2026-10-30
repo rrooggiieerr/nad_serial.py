@@ -12,7 +12,8 @@ on that url answers the library the way a NAD device of a given build does:
 Without a SimulatedDevice, a simulated connection never answers.
 
 The configuration file of the build is assumed to be correct: the device answers every setting
-in it. A device of a model without a configuration file answers only the given values.
+in it. A device of a model without a configuration file answers only the given values. Like a real
+device, a device with Main.Sources only answers the SourceX settings of its own sources.
 """
 
 import asyncio
@@ -29,6 +30,7 @@ _COMMAND_RE = re.compile(
     r"(?P<setting>[A-Za-z0-9.]+)(?P<operator>[=+\-?])(?P<value>.*)"
 )
 _LINE_RE = re.compile(r"[\r\n]")
+_SOURCE_RE = re.compile(r"source(?P<number>\d+)\.")
 
 # Run a test over a serial and over a network connection
 both_transports = pytest.mark.parametrize("url", ["serial", "network"], indirect=True)
@@ -375,6 +377,10 @@ class SimulatedDevice:
         match = _COMMAND_RE.fullmatch(command)
         if not match or (key := match["setting"].lower()) not in self._values:
             return None  # A device ignores what it doesn't know
+        if (source := _SOURCE_RE.match(key)) and not self._has_source(
+            int(source["number"])
+        ):
+            return None  # Nor the settings of sources it doesn't have
 
         name, value = self._values[key]
         if match["operator"] == "=":
@@ -383,6 +389,15 @@ class SimulatedDevice:
             value = self._step(self._settings.get(key, {}), value, match["operator"])
         self._values[key] = (name, value)
         return f"{name}={value}"
+
+    def _has_source(self, number: int) -> bool:
+        """If the device has the source, when it reports its number of sources."""
+        if (sources := self._values.get("main.sources")) is None:
+            return True
+        try:
+            return number <= int(sources[1])
+        except ValueError:
+            return True
 
     @staticmethod
     def _step(config: dict[str, Any], value: str, operator: str) -> str:
