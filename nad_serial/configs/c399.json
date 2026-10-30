@@ -921,6 +921,15 @@
 			"operators": "=+-?",
 			"type": "number",
 			"unit": "dB"
-		}
+		},
+		"UI.UpgradeAvailable": {
+			"description": "Firmware upgrade available",
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+			}
 	}
 }
