@@ -7,7 +7,8 @@ from typing import Any
 
 from .exceptions import NADCommandError
 
-ValueType = str | int | float | bool
+ScalarType = str | int | float | bool
+ValueType = ScalarType | list[ScalarType]
 REPORT_MESSAGE = "Please report this to the NAD Serial library maintainers on https://github.com/rrooggiieerr/nad_serial.py/issues"
 
 SETTING_RE = re.compile(r"[A-Za-z0-9]+(\.[A-Za-z0-9]+)*")
@@ -31,14 +32,15 @@ def parse_response(response: bytes) -> tuple[str | None, str | None]:
 
 def parse_value(setting: str, value: str, config: dict[str, Any]) -> ValueType | None:
     """Convert a raw NAD device value using the setting's config."""
+    if config["type"] not in ["string", "enum"] and value in ["None", "Unknown"]:
+        return None
+
     if config["type"] in ["boolean", "enum"] and value not in config["values"]:
         logger.warning(
             "%s returned an unsupported value %s. %s", setting, value, REPORT_MESSAGE
         )
 
     if config["type"] == "number":
-        if value in ["None", "Unknown"]:
-            return None
         try:
             return int(value)
         except ValueError:
@@ -51,10 +53,30 @@ def parse_value(setting: str, value: str, config: dict[str, Any]) -> ValueType |
                     value,
                     REPORT_MESSAGE,
                 )
-                return None
+        return None
+    if config["type"] == "number[]":
+        items = value.split(",")
+        try:
+            return [int(v) for v in items]
+        except ValueError:
+            try:
+                return [float(v) for v in items]
+            except ValueError:
+                logger.warning(
+                    "%s returned an invalid number %s. %s",
+                    setting,
+                    value,
+                    REPORT_MESSAGE,
+                )
+        return None
     if config["type"] == "boolean":
         if value in config["values"]:
             return bool(config["values"].index(value))
+        return None
+    if config["type"] == "boolean[]":
+        items = value.split(",")
+        if all(item in config["values"] for item in items):
+            return [bool(config["values"].index(item)) for item in items]
         return None
 
     return value
@@ -63,7 +85,7 @@ def parse_value(setting: str, value: str, config: dict[str, Any]) -> ValueType |
 def build_command(
     setting: str,
     operator: str,
-    value: ValueType | None = None,
+    value: ScalarType | None = None,
     config: dict[str, Any] | None = None,
 ) -> str:
     """Builds a command for the NAD device."""

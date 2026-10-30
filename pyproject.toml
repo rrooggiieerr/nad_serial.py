@@ -369,6 +369,9 @@ asyncio_default_fixture_loop_scope = "function"
 # Import nad_serial from the project without installing it first.
 pythonpath = ["."]
 testpaths = ["tests"]
+markers = [
+    "simulated_device(build, values, firmware): the simulated device of a test",
+]
 
 [tool.codespell]
 skip = "*.pdf"

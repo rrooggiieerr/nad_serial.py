@@ -46,6 +46,7 @@ The command list gives, per setting, a name, `Operators`, `Possible Values` and 
 | In the document | In the configuration |
 | --- | --- |
 | Setting name, e.g. `Main.Dolby.DRC` | The key, spelled exactly as in the document, including case |
+| Setting name with a placeholder, e.g. `SourceX.Enabled` with `1 <= X <= Main.Sources?` | One key per number, e.g. `Source1.Enabled` to `Source10.Enabled`, never `SourceX.Enabled`. See [Numbered settings](#numbered-settings) |
 | `Operators: =/+/-/?` | `"operators": "=+-?"`: the operators without slashes, in the order `=+-?`. Allowed: `=+-?`, `=?`, `+-?`, `+-`, `=` or `?` |
 | `Range 25 - 100 Step 25` | `"type": "number"`, `"min": 25`, `"max": 100`, `"step": 25`. Leave out `step` when it is 1 |
 | Two values that mean off and on, e.g. `On`/`Off` or `Yes`/`No` | `"type": "boolean"`, `"values"` with the false value first: `["Off", "On"]`, `["No", "Yes"]` |
@@ -68,6 +69,39 @@ More rules:
   documented value as the last item, the fallback: `"max": ["Main.Volume.Max", 19]`. Only the last
   item may be a number, and every name must be a `number` setting in the same configuration.
 - A `regex` is only for `string` settings whose value must have a fixed format, e.g. an IR code.
+
+### Numbered settings
+
+Some names in the document contain a placeholder for a number, usually `X`, with its range below the
+description:
+
+```
+SourceX.Enabled                                    Operators: =/+/-/?
+Possible Values:
+Yes
+No
+Description: Enable/disable the source. Example: Source5.Enabled
+1 <= X <= Main.Sources?
+Example: <CR>SourceX.Enabled=Yes<CR>
+```
+
+The device doesn't know `SourceX.Enabled`: `X` stands for a number, and the device only answers to
+`Source1.Enabled`, `Source2.Enabled` and so on. So:
+
+- Never write the placeholder in a key. Add one setting for every number in the range, each with the
+  same type, operators, values and description, e.g. `Source1.Enabled` to `Source10.Enabled`.
+- A fixed range, e.g. `1 <= X <= 5` for `DiracX.Name`, gives exactly those numbers: `Dirac1.Name` to
+  `Dirac5.Name`.
+- A range that ends in a setting, e.g. `1 <= X <= Main.Sources?`, depends on the device. Use the
+  highest value that setting can report: the fallback the configuration already uses for it, e.g.
+  the `10` of `"max": ["Main.Sources", 10]` for `Main.Source`. When it isn't known, ask the user.
+  The device simply doesn't answer for numbers above its own count.
+- Do the same for every setting with that placeholder, e.g. all `SourceX.*` settings, so each number
+  has the same set of settings.
+- The placeholder also appears in descriptions and examples, e.g. `(see DiracX.State)`. Keep the
+  description as in the document.
+- Not every `X` is a placeholder: `Tuner.XM.Channel` and the value `SurroundEX` are literal. A
+  placeholder is a capital letter directly after a word, in a name with a range like `1 <= X <= 5`.
 
 ## 5. Firmware versions
 
@@ -93,14 +127,29 @@ More rules:
 2. Run `pytest tests/test_configs.py`. It checks types, operators, ranges, value lists, references,
    firmware conditions and `latest` on the merged configuration of every build.
 3. Run `pre-commit run --all-files` to format the files.
-4. Add the model to the list of supported devices in the main [README](../../README.md), under
-   "untested configuration files" unless the user has tested it on a device.
 
-## 8. Report back
+## 8. Add the model to the supported devices
+
+Every model with a configuration file is listed under
+[Supported devices](../../README.md#supported-devices) in the main README. Always do this for a new
+model, it's part of adding the configuration:
+
+- List the model once, by its model name, e.g. `T758`, not per build, and never a module such as
+  `PG536M` or `DAB`.
+- Put it under "untested configuration files", unless the user confirms it works on their device.
+  Then it goes under "The following devices are known to work". When the user later confirms an
+  untested model works, move it.
+- Put it under the heading of its kind of device as NAD describes it: **Amplifiers**,
+  **Receivers**, **Surround preamplifiers** or **Tuners**. Add a heading when none fits, e.g.
+  **DACs**. A model is listed under one heading only.
+- Keep each list in alphabetical order.
+- When updating an existing model, check that it is listed, and add it if not.
+
+## 9. Report back
 
 Summarise for the user:
 
-- which files you created or changed;
+- which files you created or changed, including where you listed the model in the main README;
 - which settings you left out, and why;
 - any assumptions, e.g. the order of enum values or a unit you derived from a description;
 - any differences between the document and what the user observed on the device.
