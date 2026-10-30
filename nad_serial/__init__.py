@@ -659,6 +659,12 @@ class NADDevice:
                 or (maximum is not None and number > maximum)
             ):
                 raise NADCommandError(f"{value} out of range {minimum} - {maximum}")
+            step = setting_config.get("step", 1)
+            base = minimum if isinstance(minimum, (int, float)) else 0
+            if not math.isclose(
+                (number - base) / step, round((number - base) / step), abs_tol=1e-9
+            ):
+                raise NADCommandError(f"{value} is not a multiple of step {step}")
         if setting_config["type"].startswith("boolean") and not isinstance(value, bool):
             raise NADCommandError(f"{value} not a boolean")
 
@@ -827,15 +833,23 @@ class NADAmplifier(NADDevice):
                 break
 
     @property
-    def volume(self) -> int | None:
+    def volume(self) -> float | None:
         """Gets the amplifier volume in dB."""
         value = self.get_setting_value(f"{self._prefix}.Volume")
-        return value if isinstance(value, int) and not isinstance(value, bool) else None
+        return (
+            float(value)
+            if isinstance(value, (int, float)) and not isinstance(value, bool)
+            else None
+        )
 
-    async def async_request_volume(self) -> int | None:
+    async def async_request_volume(self) -> float | None:
         """Gets the value of a setting from the device."""
         value = await self.async_request_setting(f"{self._prefix}.Volume")
-        return value if isinstance(value, int) and not isinstance(value, bool) else None
+        return (
+            float(value)
+            if isinstance(value, (int, float)) and not isinstance(value, bool)
+            else None
+        )
 
     @property
     def muted(self) -> bool | None:
@@ -910,7 +924,7 @@ class NADAmplifier(NADDevice):
 
         return None
 
-    async def async_set_volume(self, volume: int) -> bool:
+    async def async_set_volume(self, volume: float) -> bool:
         """Sets the amplifier volume."""
         return await self.async_change_setting(f"{self._prefix}.Volume", volume)
 
