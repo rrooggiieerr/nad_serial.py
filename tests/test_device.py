@@ -1,5 +1,9 @@
 """Tests the NADDevice classes against a simulated device.
 
+The tests use X100, a dummy multi-zone receiver whose configuration is defined in CONFIGS, so a
+change to a real configuration file doesn't affect them. The base files, e.g. amplifier.json,
+are the real ones.
+
 Tests that are about the connection run over a serial and over a network connection, with
 `@both_transports`. Other tests use a serial connection.
 """
@@ -21,9 +25,67 @@ from nad_serial.helpers import ValueType
 
 from .simulation import SimulatedDevice, async_stop_simulation, both_transports
 
-# A multi-zone receiver with a configuration file
-BUILD = "T755_TXX3_DAB"
-VALUES = {"Main.Volume": "-30"}
+_BOOLEAN = {"operators": "=+-?", "type": "boolean", "values": ["Off", "On"]}
+
+# A dummy multi-zone receiver, and a dummy module
+BUILD = "X100"
+VALUES = {"Main.Volume": "-30", "Main.Sources": "6"}
+CONFIGS = {
+    "x100": {
+        "device_types": ["amplifier", "tuner", "zones"],
+        "settings": {
+            "Main.Version": {"latest": "v2.00"},
+            "Main.Volume": {"max": 10, "min": -80, "operators": "=+-?"},
+            # A setting in steps of 0.1
+            "Main.Gain": {
+                "max": 0.5,
+                "min": 0,
+                "operators": "=+-?",
+                "step": 0.1,
+                "type": "number",
+            },
+            # Settings of one firmware version
+            "Main.Before": {"firmware": "<v2.00", "operators": "?", "type": "string"},
+            "Main.Since": {"firmware": ">=v2.00", "operators": "?", "type": "string"},
+            # The number of sources comes from the device
+            "Main.Source": {"max": ["Main.Sources", 10]},
+            "Main.Sources": {"operators": "?", "type": "number"},
+            **{
+                f"Source{number}.Enabled": {
+                    "operators": "=?",
+                    "type": "boolean",
+                    "values": ["No", "Yes"],
+                }
+                for number in range(1, 11)
+            },
+            **{
+                f"Source{number}.Name": {"operators": "=?", "type": "string"}
+                for number in range(1, 11)
+            },
+            # A second extra zone
+            "Zone3.Mute": _BOOLEAN,
+            "Zone3.Power": _BOOLEAN,
+            "Zone3.Source": {
+                "max": 10,
+                "min": 1,
+                "operators": "=+-?",
+                "type": "number",
+            },
+            "Zone3.Volume": {
+                "max": 10,
+                "min": -80,
+                "operators": "=+-?",
+                "type": "number",
+            },
+        },
+    },
+    "dummymodule": {
+        "settings": {
+            "Tuner.Band": {"values": ["FM", "AM", "DAB"]},
+            "Tuner.DAB.Service": {"operators": "?", "type": "string"},
+        }
+    },
+}
 
 
 async def _settle() -> None:
@@ -38,6 +100,7 @@ async def _settle() -> None:
 @pytest.mark.parametrize(
     ("device_simulation", "device_class"),
     [
+        ({"build": "X100"}, NADMultiZoneReceiver),
         ({"build": "T755_TXX3_DAB"}, NADMultiZoneReceiver),
         ({"build": "T778_PG536M_NONE"}, NADMultiZoneAmplifier),
         ({"build": "M15HD_VXP"}, NADMultiZoneAmplifier),
@@ -61,6 +124,23 @@ async def test_connect(
 
     await device.async_disconnect()
     assert not device.connected
+
+
+async def test_connect_requests_own_sources(
+    url: str, device_simulation: SimulatedDevice
+):
+    """Connecting only requests the settings of the sources the device has."""
+    device = await NADDevice.async_connect(url)
+    assert isinstance(device, NADAmplifier)
+
+    requested = {
+        command.split(".")[0]
+        for command in device_simulation.commands
+        if command.startswith("Source")
+    }
+    assert requested == {f"Source{number}" for number in range(1, 7)}
+
+    await device.async_disconnect()
 
 
 # A device of an unknown model that doesn't report its build or model
@@ -189,9 +269,9 @@ async def test_connect_unknown_device(
 
 
 @pytest.mark.simulated_device(
-    build="X000_TXX3_DAB",
+    build="X000_DUMMYMODULE",
     values={
-        "Main.Build": "X000_TXX3_DAB",
+        "Main.Build": "X000_DUMMYMODULE",
         "Main.Model": "X000",
         "Main.Volume": "-30",
         "Tuner.Band": "DAB",
@@ -204,7 +284,7 @@ async def test_connect_unknown_device_with_module(
     device = await NADDevice.async_connect(url)
 
     assert type(device) is NADReceiver
-    assert device.supports_setting("Tuner.DAB.Service")  # From dab.json
+    assert device.supports_setting("Tuner.DAB.Service")  # From the module
     tuner_band = device.get_setting_config("Tuner.Band")
     assert tuner_band is not None
     assert tuner_band["values"] == ["FM", "AM", "DAB"]
@@ -214,22 +294,22 @@ async def test_connect_unknown_device_with_module(
 
 
 @pytest.mark.parametrize(
-    ("device_simulation", "has_volume_max"),
+    ("device_simulation", "latest"),
     [
-        ({"build": "T777_PG536M_DAB"}, True),  # The latest firmware, v2.20
-        ({"build": "T777_PG536M_DAB", "firmware": "v1.39"}, False),
+        ({}, True),  # The latest firmware, v2.00
+        ({"firmware": "v1.00"}, False),
     ],
     indirect=["device_simulation"],
 )
 async def test_connect_firmware_version(
-    url: str, device_simulation: SimulatedDevice, has_volume_max: bool
+    url: str, device_simulation: SimulatedDevice, latest: bool
 ):
     """Settings that the firmware version doesn't support are left out."""
     device = await NADDevice.async_connect(url)
 
     assert device.firmware_version == device_simulation.firmware
-    assert device.supports_setting("Main.Volume.Max") is has_volume_max
-    assert (device_simulation.get("Main.Volume.Max") is not None) is has_volume_max
+    assert device.supports_setting("Main.Since") is latest
+    assert device.supports_setting("Main.Before") is not latest
 
     await device.async_disconnect()
 
@@ -305,6 +385,26 @@ async def test_change_invalid_value(url: str, device_simulation: SimulatedDevice
     with pytest.raises(NADCommandError):
         await device.async_change_setting("Main.Mute", "Maybe")
     assert len(device_simulation.commands) == sent
+
+    await device.async_disconnect()
+
+
+async def test_change_setting_between_steps(
+    url: str, device_simulation: SimulatedDevice
+):
+    """A value between the steps of a setting is refused, and nothing is sent."""
+    device = await NADDevice.async_connect(url)
+    assert isinstance(device, NADAmplifier)
+    sent = len(device_simulation.commands)
+
+    with pytest.raises(NADCommandError):
+        await device.async_set_volume(-30.5)  # Steps of 1 dB
+    with pytest.raises(NADCommandError):
+        await device.async_change_setting("Main.Gain", 0.25)  # Steps of 0.1
+    assert len(device_simulation.commands) == sent
+
+    assert await device.async_change_setting("Main.Gain", 0.3)
+    assert "Main.Gain=0.3" in device_simulation.commands
 
     await device.async_disconnect()
 
@@ -393,13 +493,12 @@ async def test_unknown_setting_from_device(
 # Zones
 
 
-@pytest.mark.simulated_device(build="T777_PG536M_DAB")
 async def test_zones(url: str, device_simulation: SimulatedDevice):
     """A zone controls its own settings on the parent device."""
     device = await NADDevice.async_connect(url)
     assert isinstance(device, NADMultiZoneReceiver)
     assert device.zones is not None
-    assert [zone.zone_number for zone in device.zones] == [2, 3, 4]
+    assert [zone.zone_number for zone in device.zones] == [2, 3]
 
     zone = device.zones[0]
     assert await zone.async_turn_on()
