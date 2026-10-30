@@ -3,6 +3,11 @@
 		"amplifier"
 	],
 	"settings": {
+		"BluOS.Action": {
+			"description": "BluOS.Action",
+			"operators": "?",
+			"type": "string"
+		},
 		"Dirac1.Name": {
 			"description": "Query Dirac filter name.",
 			"operators": "?",
@@ -53,6 +58,34 @@
 			"operators": "?",
 			"type": "string"
 		},
+		"FPGA.Version": {
+			"description": "FPGA.Version",
+			"operators": "?",
+			"type": "string"
+		},
+		"LCD.Initialized": {
+            "description": "LCD.Initialized.",
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		},        
+		"Main.Audio.CODEC": {
+			"description": "Main.Audio.CODEC",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Main.Audio.Lock": {
+            "description": "Main.Audio.Lock.",
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"No",
+				"Yes"
+			]
+		}, 
 		"Main.Audio.Rate": {
 			"description": "Audio Rate",
 			"operators": "?",
@@ -67,11 +100,41 @@
 				"On"
 			]
 		},
+		"Main.BT.Codec": {
+			"description": "Bluetooth codec.",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Main.BT.Device": {
+			"description": "Bluetooth device.",
+			"operators": "=+-?",
+			"type": "string"
+		},        
 		"Main.BT.Name": {
 			"description": "Set Bluetooth device name.",
 			"operators": "=+-?",
 			"type": "string"
 		},
+		"Main.BT.SinkDevice": {
+			"description": "Bluetooth SinkDevice",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Main.BT.Status": {
+			"description": "Bluetooth Status",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Main.BT.Version": {
+			"description": "Bluetooth Version",
+			"operators": "=+-?",
+			"type": "string"
+		},
+		"Main.BT.WorkMode": {
+			"description": "Bluetooth WorkMode.",
+			"operators": "=+-?",
+			"type": "string"
+		},                                
 		"Main.Balance": {
 			"description": "Range -7R -6R .. 0 .. -6L -7L. Set audio balance. -7R means right channel is attenuated by 7 db compared to left channel, which leads to a balance on the left.",
 			"operators": "=+-?",
@@ -151,6 +214,123 @@
 				"On"
 			]
 		},
+		"Main.Error.Amp": {
+			"description": "Main.Error.Amp",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Error.MiscLeft": {
+			"description": "Main.Error.MiscLeft",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Error.MiscRight": {
+			"description": "Main.Error.MiscRight",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Error.OverloadLeft": {
+			"description": "Main.Error.OverloadLeft.",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Error.OverloadRight": {
+			"description": "Main.Error.OverloadRight",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Error.TempLeft": {
+			"description": "Main.Error.TempLeft",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Error.TempRight": {
+			"description": "Main.Error.TempRight",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Error.Voltage": {
+			"description": "Main.Error.Voltage",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Fatal.ACDetect": {
+			"description": "Main.Fatal.ACDetect",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Fatal.AmpProtectLeft": {
+			"description": "Main.Fatal.AmpProtectLeft",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Fatal.AmpProtectRight": {
+			"description": "Main.Fatal.AmpProtectRight",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Fatal.PowerSupplyBad": {
+			"description": "Main.Fatal.PowerSupplyBad",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Headphone": {
+			"description": "Main.Headphone",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},                                                                                                        
 		"Main.IR.Channel": {
 			"description": "IR channel.",
 			"max": 7,
@@ -166,11 +346,44 @@
 				"Yes"
 			]
 		},
+		"Main.Internal.Mute": {
+			"description": "Main.Internal.Mute",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},         
+		"Main.Internal.VolumeOffset": {
+			"description": "Main.Internal.VolumeOffset",
+			"operators": "?",
+			"type": "number"
+		},
+		"Main.LCD.Display": {
+			"description": "Main.LCD.Display",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},         
 		"Main.ModelName": {
 			"description": "Return the current unit friendly name.",
 			"operators": "?",
 			"type": "string"
 		},
+		"Main.Revision": {
+			"description": "Main.Revision",
+			"operators": "?",
+			"type": "string"
+		},    
+		"Main.Serial": {
+			"description": "Main.Serial",
+			"operators": "?",
+			"type": "string"
+		},             
 		"Main.Source": {
 			"max": "Main.Sources"
 		},
@@ -303,11 +516,26 @@
 			"operators": "=?",
 			"type": "string"
 		},
+		"Source1.Output": {
+			"description": "Source1.Output",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source1.SRC.Rate": {
+			"description": "Source1.SRC.Rate",
+			"operators": "?",
+			"type": "number"
+		},      
 		"Source1.Slot": {
 			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source5.Slot 1 <= X <= Main.Sources?",
 			"operators": "?",
 			"type": "number"
 		},
+		"Source1.Type": {
+			"description": "Source1.Type",
+			"operators": "=?",
+			"type": "string"
+		},        
 		"Source1.VolumeControl": {
 			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source1.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
@@ -370,11 +598,26 @@
 			"operators": "=?",
 			"type": "string"
 		},
+		"Source10.Output": {
+			"description": "Source10.Output",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source10.SRC.Rate": {
+			"description": "Source10.SRC.Rate",
+			"operators": "?",
+			"type": "number"
+		},      
 		"Source10.Slot": {
-			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source10.Slot 1 <= X <= Main.Sources?",
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 10. Example: Source5.Slot 1 <= X <= Main.Sources?",
 			"operators": "?",
 			"type": "number"
 		},
+		"Source10.Type": {
+			"description": "Source1.Type",
+			"operators": "=?",
+			"type": "string"
+		}, 
 		"Source10.VolumeControl": {
 			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source10.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
@@ -437,11 +680,26 @@
 			"operators": "=?",
 			"type": "string"
 		},
+		"Source2.Output": {
+			"description": "Source2.Output",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source2.SRC.Rate": {
+			"description": "Source2.SRC.Rate",
+			"operators": "?",
+			"type": "number"
+		},      
 		"Source2.Slot": {
-			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source5.Slot 1 <= X <= Main.Sources?",
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 2 is MDC slot 2. Example: Source5.Slot 1 <= X <= Main.Sources?",
 			"operators": "?",
 			"type": "number"
 		},
+		"Source2.Type": {
+			"description": "Source2.Type",
+			"operators": "=?",
+			"type": "string"
+		}, 
 		"Source2.VolumeControl": {
 			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source2.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
@@ -504,11 +762,26 @@
 			"operators": "=?",
 			"type": "string"
 		},
+		"Source3.Output": {
+			"description": "Source3.Output",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source3.SRC.Rate": {
+			"description": "Source3.SRC.Rate",
+			"operators": "?",
+			"type": "number"
+		},      
 		"Source3.Slot": {
-			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source5.Slot 1 <= X <= Main.Sources?",
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 3 is MDC slot 3. Example: Source5.Slot 1 <= X <= Main.Sources?",
 			"operators": "?",
 			"type": "number"
 		},
+		"Source3.Type": {
+			"description": "Source3.Type",
+			"operators": "=?",
+			"type": "string"
+		}, 
 		"Source3.VolumeControl": {
 			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source3.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
@@ -571,11 +844,26 @@
 			"operators": "=?",
 			"type": "string"
 		},
+		"Source4.Output": {
+			"description": "Source4.Output",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source4.SRC.Rate": {
+			"description": "Source4.SRC.Rate",
+			"operators": "?",
+			"type": "number"
+		},      
 		"Source4.Slot": {
-			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source5.Slot 1 <= X <= Main.Sources?",
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 4 is MDC slot 4. Example: Source5.Slot 1 <= X <= Main.Sources?",
 			"operators": "?",
 			"type": "number"
 		},
+		"Source4.Type": {
+			"description": "Source4.Type",
+			"operators": "=?",
+			"type": "string"
+		}, 
 		"Source4.VolumeControl": {
 			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source4.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
@@ -638,11 +926,26 @@
 			"operators": "=?",
 			"type": "string"
 		},
+		"Source5.Output": {
+			"description": "Source5.Output",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source5.SRC.Rate": {
+			"description": "Source5.SRC.Rate",
+			"operators": "?",
+			"type": "number"
+		},      
 		"Source5.Slot": {
-			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source5.Slot 1 <= X <= Main.Sources?",
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 5 is MDC slot 5. Example: Source5.Slot 1 <= X <= Main.Sources?",
 			"operators": "?",
 			"type": "number"
 		},
+		"Source5.Type": {
+			"description": "Source5.Type",
+			"operators": "=?",
+			"type": "string"
+		}, 
 		"Source5.VolumeControl": {
 			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source5.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
@@ -705,11 +1008,26 @@
 			"operators": "=?",
 			"type": "string"
 		},
+		"Source6.Output": {
+			"description": "Source6.Output",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source6.SRC.Rate": {
+			"description": "Source61.SRC.Rate",
+			"operators": "?",
+			"type": "number"
+		},      
 		"Source6.Slot": {
-			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source6.Slot 1 <= X <= Main.Sources?",
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 6 is MDC slot 6. Example: Source5.Slot 1 <= X <= Main.Sources?",
 			"operators": "?",
 			"type": "number"
 		},
+		"Source6.Type": {
+			"description": "Source6.Type",
+			"operators": "=?",
+			"type": "string"
+		}, 
 		"Source6.VolumeControl": {
 			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source6.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
@@ -772,11 +1090,26 @@
 			"operators": "=?",
 			"type": "string"
 		},
+		"Source7.Output": {
+			"description": "Source7.Output",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source7.SRC.Rate": {
+			"description": "Source7.SRC.Rate",
+			"operators": "?",
+			"type": "number"
+		},      
 		"Source7.Slot": {
-			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source7.Slot 1 <= X <= Main.Sources?",
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 7 is MDC slot 7. Example: Source5.Slot 1 <= X <= Main.Sources?",
 			"operators": "?",
 			"type": "number"
 		},
+		"Source7.Type": {
+			"description": "Source7.Type",
+			"operators": "=?",
+			"type": "string"
+		}, 
 		"Source7.VolumeControl": {
 			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source7.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
@@ -839,11 +1172,26 @@
 			"operators": "=?",
 			"type": "string"
 		},
+		"Source8.Output": {
+			"description": "Source8.Output",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source8.SRC.Rate": {
+			"description": "Source8.SRC.Rate",
+			"operators": "?",
+			"type": "number"
+		},      
 		"Source8.Slot": {
-			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source8.Slot 1 <= X <= Main.Sources?",
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 8 is MDC slot 8. Example: Source5.Slot 1 <= X <= Main.Sources?",
 			"operators": "?",
 			"type": "number"
 		},
+		"Source8.Type": {
+			"description": "Source8.Type",
+			"operators": "=?",
+			"type": "string"
+		}, 
 		"Source8.VolumeControl": {
 			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source8.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
@@ -906,11 +1254,26 @@
 			"operators": "=?",
 			"type": "string"
 		},
+		"Source9.Output": {
+			"description": "Source9.Output",
+			"operators": "=?",
+			"type": "string"
+		},
+		"Source9.SRC.Rate": {
+			"description": "Source9.SRC.Rate",
+			"operators": "?",
+			"type": "number"
+		},      
 		"Source9.Slot": {
-			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 1 is MDC slot 1. Example: Source9.Slot 1 <= X <= Main.Sources?",
+			"description": "Represent the MDC slot number the source is associated with. 0 means internal source. 9 is MDC slot 9. Example: Source5.Slot 1 <= X <= Main.Sources?",
 			"operators": "?",
 			"type": "number"
 		},
+		"Source9.Type": {
+			"description": "Source9.Type",
+			"operators": "=?",
+			"type": "string"
+		}, 
 		"Source9.VolumeControl": {
 			"description": "Set a variable/fixed volume control on the source. When Fixed is selected, the volume used for this source will be taken from Source9.VolumeFixed. When Variable is selected the volume used for this source is from Main.Volume 1 <= X <= Main.Sources?",
 			"operators": "=+-?",
@@ -928,6 +1291,89 @@
 			"type": "number",
 			"unit": "dB"
 		},
+		"UI.Album": {
+			"description": "Album",
+			"operators": "?",
+			"type": "string"
+		},
+		"UI.Artist": {
+			"description": "Artist",
+			"operators": "?",
+			"type": "string"
+		},
+		"UI.Display": {
+			"description": "UI.Display",
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"UI.IP": {
+			"description": "IP address",
+			"operators": "?",
+			"type": "string"
+		},                        
+		"UI.LCDVersion": {
+			"description": "UI.LCDVersion",
+			"operators": "?",
+			"type": "string"
+		},
+		"UI.MAC.eth0": {
+			"description": "Ethernet MAC address",
+			"operators": "?",
+			"type": "string"
+		}, 
+		"UI.MAC.wlan0": {
+			"description": "Wifi MAC address",
+			"operators": "?",
+			"type": "string"
+		},  
+		"UI.PlayState": {
+			"description": "UI.PlayState",
+			"operators": "?",
+			"type": "string"
+		},      
+		"UI.PlayTime": {
+			"description": "UI.PlayTime",
+			"operators": "?",
+			"type": "number"
+		},                            
+		"UI.Quality": {
+			"description": "UI.Quality",
+			"operators": "?",
+			"type": "number"
+		},  
+		"UI.RandomState": {
+			"description": "UI.RandomState",
+			"operators": "?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},    
+		"UI.RepeatState": {
+			"description": "UI.RepeatState",
+			"operators": "?",
+			"type": "string"
+		},             
+		"UI.Service": {
+			"description": "UI.Service",
+			"operators": "?",
+			"type": "string"
+		},     
+		"UI.Title": {
+			"description": "UI.Title",
+			"operators": "?",
+			"type": "string"
+		},  
+		"UI.TotalTime": {
+			"description": "UI.TotalTime",
+			"operators": "?",
+			"type": "number"
+		},                    
 		"UI.UpgradeAvailable": {
 			"description": "Firmware upgrade available",
 			"operators": "?",
@@ -936,6 +1382,11 @@
 				"No",
 				"Yes"
 			]
-		}
+		},
+		"UI.VERSION": {
+			"description": "UI.VERSION",
+			"operators": "?",
+			"type": "string"
+		}               
 	}
 }
