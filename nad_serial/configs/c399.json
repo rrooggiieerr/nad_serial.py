@@ -386,8 +386,8 @@
 		},
 		"Main.Source": {
 			"description": "Main.Source",
-            "operators": "?",
-            "type": "number"
+			"operators": "?",
+			"type": "number"
 		},
 		"Main.Sources": {
 			"description": "Returns the total number of sources available on the unit.",
@@ -411,13 +411,13 @@
 			"type": "number"
 		},
 		"Main.Temp.Amp.Left": {
-            "description": "Main.Temp.Amp.Left",
+			"description": "Main.Temp.Amp.Left",
 			"operators": "?",
 			"type": "number"
 		},
 		"Main.Temp.Amp.Right": {
 			"description": "Main.Temp.Amp.Right",
-            "operators": "?",
+			"operators": "?",
 			"type": "number"
 		},
 		"Main.ToneDefeat": {
@@ -473,7 +473,7 @@
 		},
 		"Media.Action": {
 			"description": "Media.Action.",
-            "operators": "?",
+			"operators": "?",
 			"type": "string"
 		},
 		"Source1.AnalogBypass": {
