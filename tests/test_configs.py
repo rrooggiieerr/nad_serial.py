@@ -1,5 +1,8 @@
 """Tests the configuration file functions."""
 
+import importlib.resources
+from typing import Any
+
 from packaging.specifiers import SpecifierSet
 from packaging.version import Version
 import pytest
@@ -226,6 +229,97 @@ async def test_async_read_device_config_unknown_build_detected_receiver_xm():
     assert "DSP.Version" not in device_config["settings"]
 
 
+_CONFIG_KEYS = {"device_types", "sends_updates", "settings"}
+_SETTING_KEYS = {
+    "description",
+    "firmware",
+    "latest",
+    "max",
+    "min",
+    "operators",
+    "regex",
+    "step",
+    "type",
+    "unit",
+    "values",
+}
+_TYPES = ("boolean", "boolean[]", "enum", "number", "number[]", "string")
+_OPERATORS = ("=?", "=+-?", "?", "=", "+-", "+-?")
+# Modules have no configuration file of their own, or extend a model
+_MODULES = {"dab", "none", "pg10", "pg536", "pg536m", "txx3", "vxp", "xm"}
+
+
+def _validate_setting(
+    name: str, setting: dict[str, Any], settings: dict[str, dict[str, Any]]
+) -> None:
+    """Validates a setting against the specification in the configs README."""
+    assert set(setting) <= _SETTING_KEYS, f"{name}: unknown keys"
+    assert setting["type"] in _TYPES, f"{name}: unknown type {setting['type']}"
+    assert setting["operators"] in _OPERATORS, f"{name}: invalid operators"
+
+    if setting["type"].endswith("[]"):
+        assert "+" not in setting["operators"], f"{name}: a list can't be stepped"
+
+    if setting["type"] in ("boolean", "boolean[]", "enum"):
+        values = setting.get("values")
+        assert values, f"{name}: no values"
+        assert all(isinstance(value, str) for value in values), (
+            f"{name}: values must be strings"
+        )
+        lowered = [value.lower() for value in values]
+        assert len(lowered) == len(set(lowered)), f"{name}: values not unique"
+    if setting["type"] in ("boolean", "boolean[]"):
+        assert len(setting["values"]) == 2, (
+            f"{name}: a boolean has an off and an on value"
+        )
+
+    if any(key in setting for key in ("min", "max", "step")):
+        assert setting["type"] == "number", f"{name}: min, max and step are for numbers"
+    if (
+        setting["type"] == "number"
+        and "?" in setting["operators"]
+        and "+" in setting["operators"]
+    ):
+        assert "min" in setting, f"{name}: no min"
+        assert "max" in setting, f"{name}: no max"
+
+    for key in ("min", "max", "step"):
+        if (reference := setting.get(key)) is None:
+            continue
+        items = reference if isinstance(reference, list) else [reference]
+        assert items, f"{name}: {key} is an empty list"
+        for position, item in enumerate(items):
+            if isinstance(item, str):
+                _validate_reference(name, key, item, settings)
+            else:
+                assert not isinstance(item, bool), (
+                    f"{name}: {key} {item!r} is a boolean"
+                )
+                assert isinstance(item, (int, float)), (
+                    f"{name}: {key} {item!r} is not a number or a setting name"
+                )
+                assert position == len(items) - 1, (
+                    f"{name}: {key} {item!r}, only the last item may be a number"
+                )
+
+
+def _validate_reference(
+    name: str, key: str, reference: str, settings: dict[str, dict[str, Any]]
+) -> None:
+    """Validates a reference to a setting, optionally indexed: Main.VolumeLimits[0]."""
+    setting_name, _, index = reference.partition("[")
+    if index:
+        assert index.endswith("]"), f"{name}: {key} {reference!r} has no closing ]"
+        assert index[:-1].isdecimal(), (
+            f"{name}: {key} {reference!r} has an invalid index"
+        )
+    assert setting_name in settings, f"{name}: {key} refers to unknown {setting_name}"
+    type_ = settings[setting_name]["type"]
+    assert type_ == ("number[]" if index else "number"), (
+        f"{name}: {key} {reference!r} refers to a {type_}"
+    )
+
+
 @pytest.mark.parametrize(
     "build",
     BUILDS,
@@ -241,47 +335,11 @@ async def test_all_builds(build: str):
     assert "settings" in device_config
     settings = device_config["settings"]
 
-    for setting in settings.values():
-        assert setting["type"] in ("enum", "boolean", "string") or setting[
-            "type"
-        ].startswith("number")
-        assert setting["operators"]
-        assert setting["operators"] in ("=?", "=+-?", "?", "=", "+-", "+-?")
-        if (
-            setting["type"] == "number"
-            and "?" in setting["operators"]
-            and "+-" in setting["operators"]
-        ):
-            assert "min" in setting
-            assert "max" in setting
-        if setting["type"] in ("enum", "boolean"):
-            assert setting["values"]
-            # Validate that all values are case-insensitive unique
-            lowered = [v.lower() for v in setting["values"]]
-            assert len(lowered) == len(set(lowered))
-        for key in ("min", "max", "step"):
-            if (reference := setting.get(key)) is None:
-                continue
-            items = reference if isinstance(reference, list) else [reference]
-            assert items, f"{key} is an empty list"
-            for index, item in enumerate(items):
-                if isinstance(item, str):
-                    reference = item.split("[")[0]
-                    type_ = settings.get(reference, {}).get("type")
-                    assert type_ is not None
-                    assert type_.startswith("number"), (
-                        f"{key} refers to {item!r}, which is not a number setting"
-                    )
-                else:
-                    assert not isinstance(item, bool), (
-                        f"{key} item {item!r} is a boolean, not a number"
-                    )
-                    assert isinstance(item, (int, float)), (
-                        f"{key} item {item!r} is not a number or a setting name"
-                    )
-                    assert index == len(items) - 1, (
-                        f"{key} item {item!r}: only the last item may be a number"
-                    )
+    assert set(device_config) <= _CONFIG_KEYS
+    assert isinstance(device_config.get("sends_updates", False), bool)
+
+    for name, setting in settings.items():
+        _validate_setting(name, setting, settings)
 
     # The latest known version of each version setting, e.g. Main.Version or DSP.Version
     for name, setting in settings.items():
@@ -311,6 +369,21 @@ async def test_all_builds(build: str):
                 assert Version(specifier.version) <= latest_version, (
                     f"{name}: firmware {condition!r} refers to a version after latest {latest!r}"
                 )
+
+
+def test_all_models_tested():
+    """Every model configuration file is used by at least one build in BUILDS."""
+    models = (
+        {
+            resource.name.removesuffix(".json")
+            for resource in importlib.resources.files("nad_serial.configs").iterdir()
+            if resource.name.endswith(".json")
+        }
+        - set(BASE_CONFIGS)
+        - _MODULES
+    )
+    tested = {build.split("_")[0].lower() for build in BUILDS}
+    assert models <= tested, f"Add a build for {sorted(models - tested)} to BUILDS"
 
 
 def test_deep_merge():

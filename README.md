@@ -67,8 +67,6 @@ Additionally, NAD Serial includes untested configuration files for the following
 
 **Receivers:**
 
-- T175
-- T187
 - T758
 - T765
 - T775
