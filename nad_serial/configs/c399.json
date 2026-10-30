@@ -74,7 +74,7 @@
 		},
 		"Main.Audio.CODEC": {
 			"description": "Main.Audio.CODEC",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "string"
 		},
 		"Main.Audio.Lock": {
@@ -102,12 +102,12 @@
 		},
 		"Main.BT.Codec": {
 			"description": "Bluetooth codec.",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "string"
 		},
 		"Main.BT.Device": {
 			"description": "Bluetooth device.",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "string"
 		},
 		"Main.BT.Name": {
@@ -117,22 +117,22 @@
 		},
 		"Main.BT.SinkDevice": {
 			"description": "Bluetooth SinkDevice",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "string"
 		},
 		"Main.BT.Status": {
 			"description": "Bluetooth Status",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "string"
 		},
 		"Main.BT.Version": {
 			"description": "Bluetooth Version",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "string"
 		},
 		"Main.BT.WorkMode": {
 			"description": "Bluetooth WorkMode.",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "string"
 		},
 		"Main.Balance": {
@@ -216,7 +216,7 @@
 		},
 		"Main.Error.Amp": {
 			"description": "Main.Error.Amp",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -225,7 +225,7 @@
 		},
 		"Main.Error.MiscLeft": {
 			"description": "Main.Error.MiscLeft",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -234,7 +234,7 @@
 		},
 		"Main.Error.MiscRight": {
 			"description": "Main.Error.MiscRight",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -243,7 +243,7 @@
 		},
 		"Main.Error.OverloadLeft": {
 			"description": "Main.Error.OverloadLeft.",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -252,7 +252,7 @@
 		},
 		"Main.Error.OverloadRight": {
 			"description": "Main.Error.OverloadRight",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -261,7 +261,7 @@
 		},
 		"Main.Error.TempLeft": {
 			"description": "Main.Error.TempLeft",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -270,7 +270,7 @@
 		},
 		"Main.Error.TempRight": {
 			"description": "Main.Error.TempRight",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -279,7 +279,7 @@
 		},
 		"Main.Error.Voltage": {
 			"description": "Main.Error.Voltage",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -288,7 +288,7 @@
 		},
 		"Main.Fatal.ACDetect": {
 			"description": "Main.Fatal.ACDetect",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -297,7 +297,7 @@
 		},
 		"Main.Fatal.AmpProtectLeft": {
 			"description": "Main.Fatal.AmpProtectLeft",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -306,7 +306,7 @@
 		},
 		"Main.Fatal.AmpProtectRight": {
 			"description": "Main.Fatal.AmpProtectRight",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -315,7 +315,7 @@
 		},
 		"Main.Fatal.PowerSupplyBad": {
 			"description": "Main.Fatal.PowerSupplyBad",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -324,7 +324,7 @@
 		},
 		"Main.Headphone": {
 			"description": "Main.Headphone",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -335,7 +335,7 @@
 			"description": "IR channel.",
 			"max": 7,
 			"min": 0,
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "number"
 		},
 		"Main.Initialized": {
@@ -348,7 +348,7 @@
 		},
 		"Main.Internal.Mute": {
 			"description": "Main.Internal.Mute",
-			"operators": "=+-?",
+			"operators": "?",
 			"type": "boolean",
 			"values": [
 				"Off",
@@ -385,7 +385,9 @@
 			"type": "string"
 		},
 		"Main.Source": {
-			"max": "Main.Sources"
+			"description": "Main.Source",
+            "operators": "?",
+            "type": "number"
 		},
 		"Main.Sources": {
 			"description": "Returns the total number of sources available on the unit.",
@@ -409,11 +411,13 @@
 			"type": "number"
 		},
 		"Main.Temp.Amp.Left": {
+            "description": "Main.Temp.Amp.Left",
 			"operators": "?",
 			"type": "number"
 		},
 		"Main.Temp.Amp.Right": {
-			"operators": "?",
+			"description": "Main.Temp.Amp.Right",
+            "operators": "?",
 			"type": "number"
 		},
 		"Main.ToneDefeat": {
@@ -426,7 +430,7 @@
 			]
 		},
 		"Main.Treble": {
-			"description": "Set treble level.",
+			"description": "Set treble.",
 			"max": 7,
 			"min": -7,
 			"operators": "=+-?",
@@ -468,7 +472,8 @@
 			"unit": "%"
 		},
 		"Media.Action": {
-			"operators": "?",
+			"description": "Media.Action.",
+            "operators": "?",
 			"type": "string"
 		},
 		"Source1.AnalogBypass": {
