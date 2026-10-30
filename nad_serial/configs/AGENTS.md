@@ -55,6 +55,8 @@ The command list gives, per setting, a name, `Operators`, `Possible Values` and 
 | Two values that mean off and on, e.g. `On`/`Off` or `Yes`/`No` | `"type": "boolean"`, `"values"` with the false value first: `["Off", "On"]`, `["No", "Yes"]` |
 | Any other list of values | `"type": "enum"`, `"values"` with every value spelled exactly as in the document |
 | Free text, e.g. a name or a model | `"type": "string"` |
+| Comma separated numbers, e.g. `-60,12`, even when the document says `String` | `"type": "number[]"`. See [List settings](#list-settings) |
+| Comma separated off/on values, e.g. `On,Off` | `"type": "boolean[]"`. See [List settings](#list-settings) |
 | `Description: ...` | `"description"`: the document's description, without changes |
 | A unit in the description, e.g. dB, %, Hz | `"unit"`: `"dB"`, `"%"`, `"Hz"`, `"kHz"`, `"MHz"` |
 
@@ -72,6 +74,17 @@ More rules:
   documented value as the last item, the fallback: `"max": ["Main.Volume.Max", 19]`. Only the last
   item may be a number, and every name must be a `number` setting in the same configuration.
 - A `regex` is only for `string` settings whose value must have a fixed format, e.g. an IR code.
+
+### List settings
+
+Some settings report a list, e.g. `Main.VolumeLimits=-60,12`. The document doesn't say so: it
+describes them as `Possible Values: String`, often with `Operators: =/+/-/?`. Don't copy that.
+
+- Recognise a list by the value the device reports, or by the example or description in the
+  document. Ask the user when it's unclear.
+- Give it a list type, and only the operators a list allows, as described under
+  [Types in README.md](README.md#format) and [Values from the device](README.md#values-from-the-device).
+- Mention in your summary that the type and operators differ from the document, and why.
 
 ### Numbered settings
 
