@@ -4,6 +4,9 @@ These instructions are for an AI agent that creates or updates a device configur
 directory. Read [README.md](README.md) first: it defines the file format, the merge order and the
 meaning of every key. This file explains how to get from NAD's documentation to a correct file.
 
+A new or changed configuration also needs device specific tests: write them as described in
+[tests/AGENTS.md](../../tests/AGENTS.md).
+
 ## 1. Gather the facts
 
 - Use the official NAD command list for the model as the only source of settings and values. The
@@ -126,7 +129,9 @@ The device doesn't know `SourceX.Enabled`: `X` stands for a number, and the devi
    Without it the new file isn't tested.
 2. Run `pytest tests/test_configs.py`. It checks types, operators, ranges, value lists, references,
    firmware conditions and `latest` on the merged configuration of every build.
-3. Run `pre-commit run --all-files` to format the files.
+3. Add device specific tests for what the model does differently, as described in
+   [tests/AGENTS.md](../../tests/AGENTS.md).
+4. Run `pre-commit run --all-files` to format the files.
 
 ## 8. Add the model to the supported devices
 
