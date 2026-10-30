@@ -1026,6 +1026,20 @@ class NADTuner(NADDevice):
 
     _device_type: str = "tuner"
 
+    async def _async_setup(self) -> None:
+        """Setup the NAD tuner."""
+        await super()._async_setup()
+
+        with contextlib.suppress(NADConnectionError):
+            await self.async_request_settings(
+                (
+                    "Tuner.Band",
+                    "Tuner.AM.Frequency",
+                    "Tuner.FM.Frequency",
+                    "Tuner.Preset",
+                )
+            )
+
     def get_band(self) -> str | None:
         """Gets the tuner band."""
         value = self.get_setting_value("Tuner.Band")
