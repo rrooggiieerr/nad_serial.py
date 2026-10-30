@@ -223,8 +223,14 @@
 			"latest": "v0.25"
 		},
 		"Main.Volume": {
-			"max": 12,
-			"min": -80
+			"max": [
+				"Main.VolumeLimits[1]",
+				12
+			],
+			"min": [
+				"Main.VolumeLimits[0]",
+				-80
+			]
 		},
 		"Main.VolumeDisplayMode": {
 			"description": "Volume display mode.",
@@ -238,7 +244,7 @@
 		"Main.VolumeLimits": {
 			"description": "Minimum and maximum volume limits.",
 			"operators": "=+-?",
-			"type": "string"
+			"type": "number[]"
 		},
 		"Main.VolumePercent": {
 			"description": "Volume of the unit in percent.",
