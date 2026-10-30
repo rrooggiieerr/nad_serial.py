@@ -784,18 +784,24 @@ class NADAmplifier(NADDevice):
         if not source_config or source_config["type"] != "number":
             return
 
+        # Only the sources the device has, up to Main.Sources on devices that report it
+        maximum = source_config.get("max")
+        if not isinstance(maximum, (int, float)) or isinstance(maximum, bool):
+            maximum = 10
+        sources = range(1, int(maximum) + 1)
+
         if self.supports_setting("Source1.Name"):
             # The device configuration defines the source names, request them
             with contextlib.suppress(NADConnectionError):
                 await self.async_request_settings(
                     setting
-                    for i in range(1, 11)
+                    for i in sources
                     for setting in (f"Source{i}.Enabled", f"Source{i}.Name")
                 )
             return
 
         # Try to get the source names, even though the device does not specify the needed settings.
-        for i in range(1, 11):
+        for i in sources:
             try:
                 setting = f"Source{i}.Name"
                 name_config = {"operators": "?", "type": "string"}
