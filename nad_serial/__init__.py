@@ -467,7 +467,6 @@ class NADDevice:
                         setting_lc not in self._device_config["settings"]
                         and setting_lc not in self._setting_states
                     ):
-                        self._setting_states[setting_lc] = value
                         logger.warning(
                             "The NAD %s reported a new setting %s = %s that is not in its configuration. %s",
                             self.model,
@@ -475,6 +474,7 @@ class NADDevice:
                             value,
                             REPORT_MESSAGE,
                         )
+                    self._setting_states[setting_lc] = value
 
                 self._update_callbacks(setting, value)
         except asyncio.CancelledError:
