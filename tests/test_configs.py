@@ -242,7 +242,9 @@ async def test_all_builds(build: str):
     settings = device_config["settings"]
 
     for setting in settings.values():
-        assert setting["type"] in ("number", "enum", "boolean", "string")
+        assert setting["type"] in ("enum", "boolean", "string") or setting[
+            "type"
+        ].startswith("number")
         assert setting["operators"]
         assert setting["operators"] in ("=?", "=+-?", "?", "=", "+-", "+-?")
         if (
@@ -264,7 +266,10 @@ async def test_all_builds(build: str):
             assert items, f"{key} is an empty list"
             for index, item in enumerate(items):
                 if isinstance(item, str):
-                    assert settings.get(item, {}).get("type") == "number", (
+                    reference = item.split("[")[0]
+                    type_ = settings.get(reference, {}).get("type")
+                    assert type_ is not None
+                    assert type_.startswith("number"), (
                         f"{key} refers to {item!r}, which is not a number setting"
                     )
                 else:
