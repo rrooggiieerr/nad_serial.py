@@ -514,6 +514,15 @@
 			"operators": "=",
 			"type": "number"
 		},
+		"Main.Language": {
+			"description": "Language",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"English",
+				"Chinese"
+			]
+		},
 		"Main.Level.BackLeft": {
 			"description": "Set Speaker Level",
 			"max": 12,
