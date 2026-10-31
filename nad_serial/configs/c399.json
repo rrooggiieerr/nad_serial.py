@@ -2,6 +2,7 @@
 	"device_types": [
 		"amplifier"
 	],
+	"sends_updates": true,
 	"settings": {
 		"BluOS.Action": {
 			"description": "BluOS.Action",
