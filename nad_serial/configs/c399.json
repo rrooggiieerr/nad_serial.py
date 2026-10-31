@@ -385,9 +385,10 @@
 			"type": "string"
 		},
 		"Main.Source": {
-			"description": "Main.Source",
-			"operators": "?",
-			"type": "number"
+			"max": [
+				"Main.Sources",
+				10
+			]
 		},
 		"Main.Sources": {
 			"description": "Returns the total number of sources available on the unit.",
