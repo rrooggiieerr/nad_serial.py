@@ -51,7 +51,7 @@ def parse_value(setting: str, value: str, config: dict[str, Any]) -> ValueType |
                 return float(value)
             except ValueError:
                 logger.warning(
-                    "%s returned an invalid number %s. %s",
+                    '%s returned an invalid number "%s". %s',
                     setting,
                     value,
                     REPORT_MESSAGE,
@@ -66,7 +66,7 @@ def parse_value(setting: str, value: str, config: dict[str, Any]) -> ValueType |
                 return [float(v) for v in items]
             except ValueError:
                 logger.warning(
-                    "%s returned an invalid number %s. %s",
+                    '%s returned an invalid number "%s". %s',
                     setting,
                     value,
                     REPORT_MESSAGE,
