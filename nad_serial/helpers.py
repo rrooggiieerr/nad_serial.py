@@ -32,6 +32,9 @@ def parse_response(response: bytes) -> tuple[str | None, str | None]:
 
 def parse_value(setting: str, value: str, config: dict[str, Any]) -> ValueType | None:
     """Convert a raw NAD device value using the setting's config."""
+    # An empty value means no value, except for a string
+    if value == "" and config["type"] != "string":
+        return None
     if config["type"] not in ["string", "enum"] and value in ["None", "Unknown"]:
         return None
 
