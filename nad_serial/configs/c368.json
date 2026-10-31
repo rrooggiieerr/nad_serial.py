@@ -139,7 +139,10 @@
 			]
 		},
 		"Main.Source": {
-			"max": "Main.Sources"
+			"max": [
+				"Main.Sources",
+				10
+			]
 		},
 		"Main.Sources": {
 			"description": "Returns the total number of sources depending on what MDC cards are installed.",

@@ -2,6 +2,7 @@
 	"device_types": [
 		"amplifier"
 	],
+	"sends_updates": true,
 	"settings": {
 		"Dirac1.Name": {
 			"description": "Query Dirac filter name.",
