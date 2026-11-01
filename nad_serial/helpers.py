@@ -40,7 +40,10 @@ def parse_value(setting: str, value: str, config: dict[str, Any]) -> ValueType |
 
     if config["type"] in ["boolean", "enum"] and value not in config["values"]:
         logger.warning(
-            "%s returned an unsupported value %s. %s", setting, value, REPORT_MESSAGE
+            "%s returned an unsupported value \"%s|'. %s",
+            setting,
+            value,
+            REPORT_MESSAGE,
         )
 
     if config["type"] == "number":
