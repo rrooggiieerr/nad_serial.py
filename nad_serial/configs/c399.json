@@ -219,8 +219,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"Yes",
+				"No"
 			]
 		},
 		"Main.Error.MiscLeft": {
@@ -228,8 +228,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"Yes",
+				"No"
 			]
 		},
 		"Main.Error.MiscRight": {
@@ -237,8 +237,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"Yes",
+				"No"
 			]
 		},
 		"Main.Error.OverloadLeft": {
@@ -273,8 +273,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"Yes",
+				"No"
 			]
 		},
 		"Main.Error.Voltage": {
@@ -282,8 +282,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"Yes",
+				"No"
 			]
 		},
 		"Main.Fatal.ACDetect": {
