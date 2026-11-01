@@ -246,8 +246,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"Yes",
+				"No"
 			]
 		},
 		"Main.Error.OverloadRight": {
@@ -255,8 +255,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"Yes",
+				"No"
 			]
 		},
 		"Main.Error.TempLeft": {
@@ -264,8 +264,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"Yes",
+				"No"
 			]
 		},
 		"Main.Error.TempRight": {
@@ -291,8 +291,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"Yes",
+				"No"
 			]
 		},
 		"Main.Fatal.AmpProtectLeft": {
@@ -300,8 +300,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"Yes",
+				"No"
 			]
 		},
 		"Main.Fatal.AmpProtectRight": {
@@ -309,8 +309,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"Yes",
+				"No"
 			]
 		},
 		"Main.Fatal.PowerSupplyBad": {
@@ -318,8 +318,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"Yes",
+				"No"
 			]
 		},
 		"Main.Headphone": {
