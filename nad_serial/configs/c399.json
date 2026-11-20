@@ -220,8 +220,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"No",
+				"Yes"
 			]
 		},
 		"Main.Error.MiscLeft": {
@@ -229,8 +229,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"No",
+				"Yes"
 			]
 		},
 		"Main.Error.MiscRight": {
@@ -238,8 +238,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"No",
+				"Yes"
 			]
 		},
 		"Main.Error.OverloadLeft": {
@@ -247,8 +247,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"No",
+				"Yes"
 			]
 		},
 		"Main.Error.OverloadRight": {
@@ -256,8 +256,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"No",
+				"Yes"
 			]
 		},
 		"Main.Error.TempLeft": {
@@ -265,8 +265,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"No",
+				"Yes"
 			]
 		},
 		"Main.Error.TempRight": {
@@ -274,8 +274,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"No",
+				"Yes"
 			]
 		},
 		"Main.Error.Voltage": {
@@ -283,8 +283,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"No",
+				"Yes"
 			]
 		},
 		"Main.Fatal.ACDetect": {
@@ -292,8 +292,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"No",
+				"Yes"
 			]
 		},
 		"Main.Fatal.AmpProtectLeft": {
@@ -301,8 +301,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"No",
+				"Yes"
 			]
 		},
 		"Main.Fatal.AmpProtectRight": {
@@ -310,8 +310,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"No",
+				"Yes"
 			]
 		},
 		"Main.Fatal.PowerSupplyBad": {
@@ -319,8 +319,8 @@
 			"operators": "?",
 			"type": "boolean",
 			"values": [
-				"Off",
-				"On"
+				"No",
+				"Yes"
 			]
 		},
 		"Main.Headphone": {
@@ -478,15 +478,6 @@
 			"operators": "?",
 			"type": "string"
 		},
-		"Source1.AnalogBypass": {
-			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
-		},
 		"Source1.AnalogGain": {
 			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
 			"max": 5,
@@ -559,15 +550,6 @@
 			"operators": "=+-?",
 			"type": "number",
 			"unit": "dB"
-		},
-		"Source10.AnalogBypass": {
-			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
 		},
 		"Source10.AnalogGain": {
 			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
@@ -642,15 +624,6 @@
 			"type": "number",
 			"unit": "dB"
 		},
-		"Source2.AnalogBypass": {
-			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
-		},
 		"Source2.AnalogGain": {
 			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
 			"max": 5,
@@ -724,15 +697,6 @@
 			"type": "number",
 			"unit": "dB"
 		},
-		"Source3.AnalogBypass": {
-			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
-		},
 		"Source3.AnalogGain": {
 			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
 			"max": 5,
@@ -805,15 +769,6 @@
 			"operators": "=+-?",
 			"type": "number",
 			"unit": "dB"
-		},
-		"Source4.AnalogBypass": {
-			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
 		},
 		"Source4.AnalogGain": {
 			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
@@ -1134,15 +1089,6 @@
 			"type": "number",
 			"unit": "dB"
 		},
-		"Source8.AnalogBypass": {
-			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
-		},
 		"Source8.AnalogGain": {
 			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
 			"max": 5,
@@ -1215,15 +1161,6 @@
 			"operators": "=+-?",
 			"type": "number",
 			"unit": "dB"
-		},
-		"Source9.AnalogBypass": {
-			"description": "Enable/disable analog bypass for the analog source. This only applies to analog sources. 1 <= X <= Main.Sources?.",
-			"operators": "=+-?",
-			"type": "boolean",
-			"values": [
-				"Off",
-				"On"
-			]
 		},
 		"Source9.AnalogGain": {
 			"description": "Apply a gain offset at the input of an analog source. This only applies to analog sources. 1 <= X <= Main.Sources?",
