@@ -184,15 +184,15 @@
             "type": "number",
             "unit": "dB"
         },
-        "Main.Volume": {
-            "description": "Set volume",
-            "max": 12,
-            "min": -80,
-            "operators": "=+-?",
-            "step": 0.5,
-            "type": "number",
-            "unit": "dB"
-        },
+		"Main.Volume": {
+			"description": "Set volume",
+			"max": 10,
+			"min": -70,
+			"operators": "=+-?",
+			"step": 0.5,
+			"type": "number",
+			"unit": "dB"
+		},
         "Main.VolumeDisplayMode": {
             "description": "Show volume as a percent",
             "operators": "=+-?",
