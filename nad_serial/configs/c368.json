@@ -189,9 +189,7 @@
 			"max": 10,
 			"min": -70,
 			"operators": "=+-?",
-			"step": 0.5,
-			"type": "number",
-			"unit": "dB"
+			"step": 0.5
 		},
 		"Main.VolumeDisplayMode": {
 			"description": "Show volume as a percent",
