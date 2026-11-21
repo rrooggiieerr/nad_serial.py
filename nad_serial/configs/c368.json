@@ -2,6 +2,7 @@
 	"device_types": [
 		"amplifier"
 	],
+	"sends_updates": true,
 	"settings": {
 		"Main.Action": {
 			"description": "BluOS Service Mode (if card present)",
@@ -84,6 +85,15 @@
 			"operators": "=+-?",
 			"type": "number"
 		},
+		"Main.ControlStandby": {
+			"description": "Keep RS-232 interface active in standby",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
 		"Main.DigitalOut.Rate": {
 			"description": "Set the digital out sample rate",
 			"operators": "=+-?",
@@ -109,16 +119,6 @@
 			"min": 0,
 			"operators": "=+-?",
 			"type": "number"
-		},
-		"Main.ListeningMode": {
-			"description": "Listening Mode",
-			"operators": "=+-?",
-			"type": "enum",
-			"values": [
-				"Stereo",
-				"Mono",
-				"Reversed"
-			]
 		},
 		"Main.Polarity": {
 			"description": "Set polarity Positive",
@@ -187,7 +187,8 @@
 		"Main.Volume": {
 			"max": 10,
 			"min": -70,
-			"operators": "=+-?"
+			"operators": "=+-?",
+			"step": 0.5
 		},
 		"Main.VolumeDisplayMode": {
 			"description": "Show volume as a percent",
