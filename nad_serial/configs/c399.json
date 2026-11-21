@@ -336,7 +336,7 @@
 			"description": "IR channel.",
 			"max": 7,
 			"min": 0,
-			"operators": "?",
+			"operators": "=+-?",
 			"type": "number"
 		},
 		"Main.Initialized": {
