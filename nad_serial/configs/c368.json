@@ -185,7 +185,6 @@
 			"unit": "dB"
 		},
 		"Main.Volume": {
-			"description": "Set volume",
 			"max": 10,
 			"min": -70,
 			"operators": "=+-?",
