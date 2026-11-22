@@ -1409,7 +1409,7 @@
 		},
 		"Source1.AnalogAudioInput": {
 			"description": "Set Analog Audio Input",
-			"max": 8,
+			"max": 5,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1437,7 +1437,7 @@
 		},
 		"Source1.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1498,18 +1498,15 @@
 			]
 		},
 		"Source10.AnalogAudioInput": {
-			"description": "Get Analog Audio Format",
-			"max": 9,
-			"min": 9,
+			"description": "Get Analog Audio Input",
+			"max": 6,
+			"min": 6,
 			"operators": "?",
 			"type": "number"
 		},
 		"Source10.AnalogGain": {
 			"description": "Get Analog Audio Format",
-			"max": 12,
-			"min": -12,
 			"operators": "?",
-			"step": 3,
 			"type": "number",
 			"unit": "dB"
 		},
@@ -1518,16 +1515,12 @@
 			"operators": "?",
 			"type": "enum",
 			"values": [
-				"Off",
-				"Coaxial",
-				"Optical",
-				"HDMI",
-				"ARC"
+				"Off"
 			]
 		},
 		"Source10.DigitalAudioInput": {
 			"description": "Get Digital Audio Input",
-			"max": 8,
+			"max": 1,
 			"min": 1,
 			"operators": "?",
 			"type": "number"
@@ -1569,7 +1562,9 @@
 				"Video",
 				"SVideo",
 				"Component",
-				"HDMI"
+				"HDMI",
+				"Tuner",
+				"Previous"
 			]
 		},
 		"Source10.VideoInput": {
@@ -1591,7 +1586,7 @@
 		},
 		"Source2.AnalogAudioInput": {
 			"description": "Set Analog Audio Input",
-			"max": 8,
+			"max": 5,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1619,7 +1614,7 @@
 		},
 		"Source2.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1683,7 +1678,7 @@
 		},
 		"Source3.AnalogAudioInput": {
 			"description": "Set Analog Audio Input",
-			"max": 8,
+			"max": 5,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1711,7 +1706,7 @@
 		},
 		"Source3.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1775,7 +1770,7 @@
 		},
 		"Source4.AnalogAudioInput": {
 			"description": "Set Analog Audio Input",
-			"max": 8,
+			"max": 5,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1803,7 +1798,7 @@
 		},
 		"Source4.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1867,7 +1862,7 @@
 		},
 		"Source5.AnalogAudioInput": {
 			"description": "Set Analog Audio Input",
-			"max": 8,
+			"max": 5,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1887,15 +1882,14 @@
 			"type": "enum",
 			"values": [
 				"Off",
-				"Coaxial",
 				"Optical",
-				"HDMI",
-				"ARC"
+				"Coaxial",
+				"HDMI"
 			]
 		},
 		"Source5.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1937,7 +1931,8 @@
 				"Video",
 				"SVideo",
 				"Component",
-				"HDMI"
+				"HDMI",
+				"Previous"
 			]
 		},
 		"Source5.VideoInput": {
@@ -1959,7 +1954,7 @@
 		},
 		"Source6.AnalogAudioInput": {
 			"description": "Set Analog Audio Input",
-			"max": 8,
+			"max": 5,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1987,7 +1982,7 @@
 		},
 		"Source6.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -2051,7 +2046,7 @@
 		},
 		"Source7.AnalogAudioInput": {
 			"description": "Set Analog Audio Input",
-			"max": 8,
+			"max": 5,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -2079,7 +2074,7 @@
 		},
 		"Source7.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -2143,7 +2138,7 @@
 		},
 		"Source8.AnalogAudioInput": {
 			"description": "Set Analog Audio Input",
-			"max": 8,
+			"max": 5,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -2171,7 +2166,7 @@
 		},
 		"Source8.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -2235,7 +2230,7 @@
 		},
 		"Source9.AnalogAudioInput": {
 			"description": "Set Analog Audio Input",
-			"max": 8,
+			"max": 5,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -2263,7 +2258,7 @@
 		},
 		"Source9.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -2305,7 +2300,8 @@
 				"Video",
 				"SVideo",
 				"Component",
-				"HDMI"
+				"HDMI",
+				"Previous"
 			]
 		},
 		"Source9.VideoInput": {
