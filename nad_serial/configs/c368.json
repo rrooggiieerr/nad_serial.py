@@ -35,7 +35,7 @@
 		},
 		"Main.BT.Name": {
 			"description": "Set the Bluetooth Friendly name",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Main.BTWorkMode": {
@@ -228,7 +228,7 @@
 		},
 		"Source1.Name": {
 			"description": "Set the source name",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source10.ADCSampleRate": {
@@ -260,7 +260,7 @@
 		},
 		"Source10.Name": {
 			"description": "Set the source name",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source2.ADCSampleRate": {
@@ -292,7 +292,7 @@
 		},
 		"Source2.Name": {
 			"description": "Set the source name",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source3.ADCSampleRate": {
@@ -324,7 +324,7 @@
 		},
 		"Source3.Name": {
 			"description": "Set the source name",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source4.ADCSampleRate": {
@@ -356,7 +356,7 @@
 		},
 		"Source4.Name": {
 			"description": "Set the source name",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source5.ADCSampleRate": {
@@ -388,7 +388,7 @@
 		},
 		"Source5.Name": {
 			"description": "Set the source name",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source6.ADCSampleRate": {
@@ -420,7 +420,7 @@
 		},
 		"Source6.Name": {
 			"description": "Set the source name",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source7.ADCSampleRate": {
@@ -452,7 +452,7 @@
 		},
 		"Source7.Name": {
 			"description": "Set the source name",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source8.ADCSampleRate": {
@@ -484,7 +484,7 @@
 		},
 		"Source8.Name": {
 			"description": "Set the source name",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source9.ADCSampleRate": {
@@ -516,7 +516,7 @@
 		},
 		"Source9.Name": {
 			"description": "Set the source name",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "string"
 		}
 	}
