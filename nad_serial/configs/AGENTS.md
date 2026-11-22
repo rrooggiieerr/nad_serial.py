@@ -54,7 +54,7 @@ The command list gives, per setting, a name, `Operators`, `Possible Values` and 
 | `Range 25 - 100 Step 25` | `"type": "number"`, `"min": 25`, `"max": 100`, `"step": 25`. Leave out `step` when it is 1 |
 | Two values that mean off and on, e.g. `On`/`Off` or `Yes`/`No` | `"type": "boolean"`, `"values"` with the false value first: `["Off", "On"]`, `["No", "Yes"]` |
 | Any other list of values | `"type": "enum"`, `"values"` with every value spelled exactly as in the document |
-| Free text, e.g. a name or a model | `"type": "string"` |
+| Free text, e.g. a name or a model | `"type": "string"`, with `"operators": "=?"` or `"?"`: a string can't be stepped, even when the document lists `+/-` |
 | Comma separated numbers, e.g. `-60,12`, even when the document says `String` | `"type": "number[]"`. See [List settings](#list-settings) |
 | Comma separated off/on values, e.g. `On,Off` | `"type": "boolean[]"`. See [List settings](#list-settings) |
 | `Description: ...` | `"description"`: the document's description, without changes |

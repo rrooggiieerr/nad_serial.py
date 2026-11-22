@@ -77,7 +77,7 @@ A setting can have the following keys:
 | `firmware` | Optional. The firmware versions that support the setting: `>=`, `>`, `=`, `<=`, or `<` and a version, e.g. `">=v2.20"` for a setting added in v2.20, `"<v2.20"` for a setting removed in v2.20, or `"=v1.44"` for a setting of a single version. Without it, the setting applies to all firmware versions. |
 | `latest` | Optional, for a setting that reports a version, e.g. `Main.Version` or `DSP.Version`. The latest known version, e.g. `"v2.20"`. |
 | `max`, `min` | `number` only. The highest and lowest value. Either a number, the name of a setting that reports it, e.g. `"max": "Main.Sources"`, or a list of these, e.g. `"max": ["Main.Volume.Max", 19]`. See [Values from the device](#values-from-the-device). |
-| `operators` | The operators the setting accepts: `=+-?`, `=?`, `+-?`, `+-`, `=` or `?`. A list type can't be stepped, so it only accepts `=?`, `=` or `?`. |
+| `operators` | The operators the setting accepts: `=+-?`, `=?`, `+-?`, `+-`, `=` or `?`. A list type can't be stepped, so it only accepts `=?`, `=` or `?`. A `string` only accepts `=?` or `?`. |
 | `regex` | `string` only, optional. A regular expression the whole value must match, e.g. `"0x([0-9A-Fa-f]{2})+"` for a hex code with the `0x` prefix, in pairs of digits. |
 | `step` | `number` only. The value changes in steps of this size, e.g. `0.5`. Either a number, the name of a setting that reports it, e.g. `"step": "Tuner.AMStep"`, or a list of these. See [Values from the device](#values-from-the-device). Default `1`. |
 | `type` | `number`, `boolean`, `enum`, `string`, or a list: `number[]` or `boolean[]`, see below. |
