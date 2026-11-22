@@ -23,7 +23,7 @@ Read the model's configuration file and look for:
 | An overridden `Main.Volume` range or operators | Setting the volume: with `=` it is sent directly, with only `+-` it is stepped, outside the range it is refused |
 | A `step` that isn't 1, e.g. `0.5` | Setting and reading a value between whole numbers, through the volume API for `Main.Volume` |
 | `Main.Source` as an `enum` | Selecting a source by name, and refusing a number or an unknown name |
-| A `min`, `max` or `step` that refers to a setting, e.g. `"max": ["Main.Sources", 10]` | The value comes from the device, follows changes, and the fallback is used when the device has no value |
+| A `min`, `max` or `step` that refers to a setting, e.g. `"max": ["Main.Sources", 10]` | The reference and its fallback in the configuration, and with `firmware` conditions, which firmware versions have the referred setting. How a reference works is tested in `test_device.py` |
 | A `number[]` or `boolean[]` setting | Reading the list, invalid values, and that changing it is refused |
 | `firmware` conditions | A setting supported on one side of the version and not on the other, with the `firmware` option |
 | A setting removed with `null`, e.g. `"Main.Version": null` | The device works without it |

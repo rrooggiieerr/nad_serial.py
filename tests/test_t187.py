@@ -4,12 +4,9 @@ Firmware v2.20 of the T187 added and removed settings. From v2.20 it reports its
 limits, for the main zone and Zone2 to Zone4.
 """
 
-from typing import Any
-
 import pytest
 
-from nad_serial import NADAmplifier, NADDevice, NADMultiZoneReceiver
-from nad_serial.exceptions import NADCommandError
+from nad_serial import NADDevice, NADMultiZoneReceiver, configs
 
 from .simulation import SimulatedDevice
 
@@ -45,57 +42,35 @@ async def test_firmware_v2_20(
     await device.async_disconnect()
 
 
-def _limits(device: NADDevice, setting: str) -> tuple[Any, Any]:
-    config = device.get_setting_config(setting)
-    assert config is not None
-    return config.get("min"), config.get("max")
+async def test_volume_limits_config():
+    """The volume limits come from the device, with the documented limits as the fallback."""
+    settings = (await configs.async_read_device_config(BUILD))["settings"]
+    assert settings["Main.Volume"]["min"] == ["Main.Volume.Min", -99]
+    assert settings["Main.Volume"]["max"] == ["Main.Volume.Max", 19]
+    assert settings["Zone2.Volume"]["min"] == ["Zone2.Volume.Min", -99]
+    assert settings["Zone2.Volume"]["max"] == ["Zone2.Volume.Max", 19]
+    assert settings["Zone3.Volume"]["min"] == ["Zone3.Volume.Min", -99]
+    assert settings["Zone3.Volume"]["max"] == ["Zone3.Volume.Max", 19]
+    assert settings["Zone4.Volume"]["min"] == ["Zone4.Volume.Min", -99]
+    assert settings["Zone4.Volume"]["max"] == ["Zone4.Volume.Max", 19]
 
 
-@pytest.mark.simulated_device(
-    firmware="v2.20",
-    values={
-        "Main.Volume.Min": "-70",
-        "Main.Volume.Max": "10",
-        "Zone2.Volume.Min": "-80",
-        "Zone2.Volume.Max": "6",
-        "Zone3.Volume.Min": "-80",
-        "Zone3.Volume.Max": "6",
-        "Zone4.Volume.Min": "-80",
-        "Zone4.Volume.Max": "6",
-    },
-)
-async def test_volume_limits(url: str, device_simulation: SimulatedDevice):
-    """From firmware v2.20, the volume limits come from the device."""
-    device = await NADDevice.async_connect(url)
-    assert isinstance(device, NADAmplifier)
-
-    assert _limits(device, "Main.Volume") == (-70, 10)
-    assert _limits(device, "Zone2.Volume") == (-80, 6)
-    assert _limits(device, "Zone3.Volume") == (-80, 6)
-    assert _limits(device, "Zone4.Volume") == (-80, 6)
-    with pytest.raises(NADCommandError):
-        await device.async_set_volume(11)
-    assert await device.async_set_volume(10)
-
-    await device.async_disconnect()
-
-
-@pytest.mark.simulated_device(firmware="v2.10")
-async def test_volume_limits_older_firmware(
-    url: str, device_simulation: SimulatedDevice
-):
-    """Before firmware v2.20, the documented limits -99 to 19 dB are used."""
-    device = await NADDevice.async_connect(url)
-
-    assert not device.supports_setting("Main.Volume.Min")
-    assert not device.supports_setting("Main.Volume.Max")
-    assert _limits(device, "Main.Volume") == (-99, 19)
-    assert _limits(device, "Zone2.Volume") == (-99, 19)
-    assert _limits(device, "Zone3.Volume") == (-99, 19)
-    assert _limits(device, "Zone4.Volume") == (-99, 19)
-    assert "Main.Volume.Max?" not in device_simulation.commands
-
-    await device.async_disconnect()
+@pytest.mark.parametrize(("version", "supported"), [("v2.20", True), ("v2.10", False)])
+async def test_volume_limits_firmware(version: str, supported: bool):
+    """The device reports its volume limits from firmware v2.20."""
+    config = await configs.async_read_device_config(BUILD, version=version)
+    settings = config["settings"]
+    for setting in (
+        "Main.Volume.Min",
+        "Main.Volume.Max",
+        "Zone2.Volume.Min",
+        "Zone2.Volume.Max",
+        "Zone3.Volume.Min",
+        "Zone3.Volume.Max",
+        "Zone4.Volume.Min",
+        "Zone4.Volume.Max",
+    ):
+        assert (setting in settings) is supported, setting
 
 
 @pytest.mark.simulated_device(
