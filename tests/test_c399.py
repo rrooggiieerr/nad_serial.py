@@ -115,60 +115,11 @@ async def test_volume_limits_invalid_update(
     await device.async_disconnect()
 
 
-def _sources_max(device: NADDevice) -> Any:
-    config = device.get_setting_config("Main.Source")
-    assert config is not None
-    return config.get("max")
-
-
 async def test_sources_config():
     """Main.Source refers to Main.Sources for its maximum, with 10 as the fallback."""
     settings = (await async_read_device_config(BUILD))["settings"]
     assert settings["Main.Source"]["max"] == ["Main.Sources", 10]
     assert settings["Main.Sources"]["operators"] == "?"
-
-
-@pytest.mark.simulated_device(values={"Main.Sources": "6", "Main.Source": "1"})
-async def test_sources(url: str, device_simulation: SimulatedDevice):
-    """The number of sources comes from Main.Sources."""
-    device = await NADDevice.async_connect(url)
-    assert isinstance(device, NADAmplifier)
-    assert _sources_max(device) == 6
-
-    with pytest.raises(NADCommandError):
-        await device.async_set_source(7)
-    assert await device.async_set_source(6)
-    assert device_simulation.get("Main.Source") == "6"
-
-    await device.async_disconnect()
-
-
-@pytest.mark.simulated_device(values={"Main.Sources": "6", "Main.Source": "1"})
-async def test_sources_changed(url: str, device_simulation: SimulatedDevice):
-    """A new number of sources reported by the device is used right away."""
-    device = await NADDevice.async_connect(url)
-
-    device_simulation.send("Main.Sources=4")
-    await asyncio.sleep(0.05)  # Let the reader loop handle the line
-
-    assert _sources_max(device) == 4
-    with pytest.raises(NADCommandError):
-        await device.async_set_source(5)
-
-    await device.async_disconnect()
-
-
-@pytest.mark.simulated_device(values={"Main.Sources": "Unknown", "Main.Source": "1"})
-async def test_sources_unknown(url: str, device_simulation: SimulatedDevice):
-    """Without a number of sources from the device, the fallback of 10 is used."""
-    device = await NADDevice.async_connect(url)
-
-    assert _sources_max(device) == 10
-    with pytest.raises(NADCommandError):
-        await device.async_set_source(11)
-    assert await device.async_set_source(10)
-
-    await device.async_disconnect()
 
 
 @pytest.mark.parametrize("value", [[-50, 6], -50, "-50,6"])
@@ -183,5 +134,21 @@ async def test_volume_limits_not_settable(
         await device.async_change_setting("Main.VolumeLimits", value)
     assert len(device_simulation.commands) == sent
     assert _volume_limits(device) == (-60, 12)
+
+    await device.async_disconnect()
+
+
+@pytest.mark.simulated_device(
+    values={"UI.Title": "Song", "UI.Artist": "Artist", "UI.Album": "Album"}
+)
+async def test_now_playing(url: str, device_simulation: SimulatedDevice):
+    """The title, artist and album are read on connect, and follow changes."""
+    device = await NADDevice.async_connect(url)
+    assert isinstance(device, NADAmplifier)
+    assert (device.title, device.artist, device.album) == ("Song", "Artist", "Album")
+
+    device_simulation.send("UI.Title=Next song")
+    await asyncio.sleep(0.05)  # Let the reader loop handle the line
+    assert device.title == "Next song"
 
     await device.async_disconnect()

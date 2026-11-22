@@ -45,6 +45,23 @@ CONFIGS = {
                 "step": 0.1,
                 "type": "number",
             },
+            # Limits that come from the device, from firmware v2.00
+            "Main.Level": {
+                "max": ["Main.Level.Max", 10],
+                "min": ["Main.Level.Min", -10],
+                "operators": "=+-?",
+                "type": "number",
+            },
+            "Main.Level.Max": {
+                "firmware": ">=v2.00",
+                "operators": "?",
+                "type": "number",
+            },
+            "Main.Level.Min": {
+                "firmware": ">=v2.00",
+                "operators": "?",
+                "type": "number",
+            },
             # What is playing, from the iPod on source 5 or from the UI
             "Ipod.Album": {"operators": "?", "type": "string"},
             "Ipod.Artist": {"operators": "?", "type": "string"},
@@ -418,6 +435,68 @@ async def test_change_setting_between_steps(
 
     assert await device.async_change_setting("Main.Gain", 0.3)
     assert "Main.Gain=0.3" in device_simulation.commands
+
+    await device.async_disconnect()
+
+
+# Settings that refer to other settings
+
+
+def _limits(device: NADDevice, setting: str) -> tuple[Any, Any]:
+    config = device.get_setting_config(setting)
+    assert config is not None
+    return config.get("min"), config.get("max")
+
+
+@pytest.mark.simulated_device(values={"Main.Level.Min": "-5", "Main.Level.Max": "5"})
+async def test_reference(url: str, device_simulation: SimulatedDevice):
+    """A limit that refers to a setting takes the device's value, and follows its changes."""
+    device = await NADDevice.async_connect(url)
+
+    assert _limits(device, "Main.Level") == (-5, 5)
+    with pytest.raises(NADCommandError):
+        await device.async_change_setting("Main.Level", 6)
+    assert await device.async_change_setting("Main.Level", 5)
+
+    device_simulation.send("Main.Level.Max=8")
+    await _settle()
+    assert _limits(device, "Main.Level") == (-5, 8)
+    assert await device.async_change_setting("Main.Level", 8)
+
+    await device.async_disconnect()
+
+
+@pytest.mark.parametrize(
+    "device_simulation",
+    [
+        {"values": {"Main.Level.Min": "Unknown", "Main.Level.Max": ""}},
+        {"values": {"Main.Level.Min": "None", "Main.Level.Max": "None"}},
+    ],
+    indirect=True,
+)
+async def test_reference_fallback(url: str, device_simulation: SimulatedDevice):
+    """Without a value from the device, the fallback of the reference is used."""
+    device = await NADDevice.async_connect(url)
+
+    assert _limits(device, "Main.Level") == (-10, 10)
+    with pytest.raises(NADCommandError):
+        await device.async_change_setting("Main.Level", 11)
+    assert await device.async_change_setting("Main.Level", 10)
+
+    await device.async_disconnect()
+
+
+@pytest.mark.simulated_device(firmware="v1.00")
+async def test_reference_older_firmware(url: str, device_simulation: SimulatedDevice):
+    """On firmware without the referred settings, the fallback is used without asking."""
+    device = await NADDevice.async_connect(url)
+
+    assert not device.supports_setting("Main.Level.Max")
+    assert _limits(device, "Main.Level") == (-10, 10)
+    assert not any(
+        command.startswith(("Main.Level.Min", "Main.Level.Max"))
+        for command in device_simulation.commands
+    )
 
     await device.async_disconnect()
 
