@@ -91,6 +91,13 @@
 			"operators": "?",
 			"type": "string"
 		},
+		"Ipod.Track": {
+			"description": "Track Next/Previous",
+			"max": 1000,
+			"min": 1,
+			"operators": "+-?",
+			"type": "number"
+		},
 		"Main.Amp.Back": {
 			"description": "Set the back Amplifier output to Zone3",
 			"operators": "=+-?",
