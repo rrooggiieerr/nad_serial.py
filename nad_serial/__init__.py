@@ -465,6 +465,10 @@ class NADDevice:
                     continue
 
                 setting_lc = setting.lower()
+                changed = (
+                    setting_lc not in self._setting_states
+                    or self._setting_states[setting_lc] != value
+                )
                 if setting_lc in self._device_config["settings"]:
                     self._setting_states[setting_lc] = value
 
@@ -475,6 +479,8 @@ class NADDevice:
                 ):
                     # Response to a request
                     self._pending_request[1].set_result(value)
+                    if changed and setting_lc in self._setting_states:
+                        self._update_callbacks(setting, value)
                     continue
 
                 if not (
