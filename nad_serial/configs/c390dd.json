@@ -1,0 +1,122 @@
+{
+	"device_types": [
+		"amplifier"
+	],
+	"settings": {
+		"Main.Balance.Samplerate": {
+			"description": "Set the sample rate of the balanced input",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"48kHz",
+				"96kHz",
+				"192kHz"
+			]
+		},
+		"Main.Build": null,
+		"Main.CrossoverFrequency": {
+			"description": "Set the subwoofer crossover frequency",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"40Hz",
+				"50Hz",
+				"60Hz",
+				"70Hz",
+				"80Hz",
+				"90Hz",
+				"100Hz",
+				"120Hz",
+				"140Hz",
+				"150Hz",
+				"160Hz",
+				"170Hz",
+				"180Hz",
+				"190Hz",
+				"200Hz",
+				"Full"
+			]
+		},
+		"Main.ListenMode": {
+			"description": "Set the listening mode",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Stereo",
+				"Mono",
+				"Reversed"
+			]
+		},
+		"Main.Model": null,
+		"Main.Phono.Mode": {
+			"description": "Set the phono cartridge type",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"MM",
+				"MC"
+			]
+		},
+		"Main.Polarity": {
+			"description": "Set the polarity",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Positive",
+				"Reversed"
+			]
+		},
+		"Main.Serial": null,
+		"Main.SerialNumber": null,
+		"Main.Single_ended.Samplerate": {
+			"description": "Set the sample rate of the single-ended input",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"48kHz",
+				"96kHz",
+				"192kHz"
+			]
+		},
+		"Main.Source": {
+			"max": null,
+			"min": null,
+			"type": "enum",
+			"values": [
+				"COAX 1",
+				"COAX 2",
+				"OPT 1",
+				"OPT 2",
+				"AES",
+				"Computer",
+				"USB Back",
+				"USB Front",
+				"SINGLE",
+				"BALANCE",
+				"PHONO",
+				"HDMI 1",
+				"HDMI 2",
+				"HDMI 3",
+				"HDMI_4K 1",
+				"HDMI_4K 2",
+				"HDMI_4K 3",
+				"HDMI TV",
+				"BluOS"
+			]
+		},
+		"Main.SpeakerCompensation": {
+			"description": "Set the speaker impedance compensation",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"2ohms",
+				"4ohms",
+				"5ohms",
+				"6ohms",
+				"7ohms",
+				"8ohms",
+				">8ohms"
+			]
+		}
+	}
+}
