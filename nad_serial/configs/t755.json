@@ -99,7 +99,10 @@
 			"type": "string"
 		},
 		"Ipod.Track": {
-			"operators": "?",
+			"description": "Track Next/Previous",
+			"max": 1000,
+			"min": 1,
+			"operators": "+-?",
 			"type": "number"
 		},
 		"Main.Audyssey": {

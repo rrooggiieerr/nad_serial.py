@@ -94,7 +94,9 @@
 		},
 		"Ipod.Track": {
 			"description": "Track Next/Previous",
-			"operators": "+-",
+			"max": 1000,
+			"min": 1,
+			"operators": "+-?",
 			"type": "number"
 		},
 		"Main.ADCSampleRate": {
