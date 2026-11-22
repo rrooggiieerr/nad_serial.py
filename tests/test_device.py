@@ -438,16 +438,32 @@ async def test_update_from_device(url: str, device_simulation: SimulatedDevice):
     await device.async_disconnect()
 
 
-async def test_reply_is_not_an_update(url: str, device_simulation: SimulatedDevice):
-    """The reply to a command isn't passed to the callbacks; the caller gets the result."""
+async def test_reply_with_known_value(url: str, device_simulation: SimulatedDevice):
+    """A reply that confirms the known value isn't passed to the callbacks."""
+    device = await NADDevice.async_connect(url)
+    updates: list[tuple[str, ValueType | None]] = []
+    device.add_callback(lambda setting, value: updates.append((setting, value)))
+
+    assert await device.async_request_setting("Main.Volume") == -30
+    await _settle()
+
+    assert updates == []
+
+    await device.async_disconnect()
+
+
+async def test_reply_with_new_value(url: str, device_simulation: SimulatedDevice):
+    """A reply that changes the known value is passed to the callbacks."""
     device = await NADDevice.async_connect(url)
     updates: list[tuple[str, ValueType | None]] = []
     device.add_callback(lambda setting, value: updates.append((setting, value)))
 
     assert await device.async_change_setting("Main.Volume", -25)
+    device_simulation.set("Tuner.FM.RDSName", "Radio 10")  # Not reported by the device
+    assert await device.async_request_setting("Tuner.FM.RDSName") == "Radio 10"
     await _settle()
 
-    assert updates == []
+    assert updates == [("Main.Volume", -25), ("Tuner.FM.RDSName", "Radio 10")]
 
     await device.async_disconnect()
 
