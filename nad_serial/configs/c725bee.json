@@ -1,0 +1,92 @@
+{
+	"device_types": [
+		"amplifier",
+		"tuner"
+	],
+	"settings": {
+		"Main.Build": null,
+		"Main.Dimmer": {
+			"description": "Dim the VFD screen",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.IR": {
+			"description": "Send IR Commands via RS232 where <VALUE> is decimal IR code",
+			"max": 255,
+			"min": 0,
+			"operators": "=",
+			"type": "number"
+		},
+		"Main.IR.Channel": {
+			"description": "Change the IR Channel (defaults to 0)",
+			"max": 1,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number"
+		},
+		"Main.Serial": null,
+		"Main.SerialNumber": null,
+		"Main.Sleep": {
+			"description": "Sleep after set number of minutes",
+			"max": 90,
+			"min": 0,
+			"operators": "=+-?",
+			"type": "number",
+			"unit": "min"
+		},
+		"Main.Source": {
+			"max": 6,
+			"min": 1
+		},
+		"Main.SpeakerA": {
+			"description": "Turn Speaker A on or off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.SpeakerB": {
+			"description": "Turn Speaker B on or off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.ToneDefeat": {
+			"description": "Turn tone defeat on or off",
+			"operators": "=+-?",
+			"type": "boolean",
+			"values": [
+				"Off",
+				"On"
+			]
+		},
+		"Main.Volume": null,
+		"Tuner.AMStep": null,
+		"Tuner.Band": {
+			"values": [
+				"AM",
+				"FM",
+				"DAB"
+			]
+		},
+		"Tuner.DAB.DLS": {
+			"description": "Current DAB DLS Text",
+			"operators": "?",
+			"type": "string"
+		},
+		"Tuner.DAB.Service": {
+			"description": "Current DAB service",
+			"operators": "?",
+			"type": "string"
+		}
+	}
+}

@@ -1136,7 +1136,7 @@
 		},
 		"Source1.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1151,7 +1151,7 @@
 			]
 		},
 		"Source1.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1189,15 +1189,48 @@
 			"type": "number"
 		},
 		"Source10.AnalogAudioFormat": {
-			"description": "Set Analog Audio Format",
+			"description": "Get Analog Audio Format",
 			"operators": "?",
 			"type": "enum",
 			"values": [
 				"Stereo"
 			]
 		},
+		"Source10.AnalogAudioInput": {
+			"description": "Get Analog Audio Input",
+			"max": 9,
+			"min": 9,
+			"operators": "?",
+			"type": "number"
+		},
+		"Source10.AnalogGain": {
+			"description": "Set Analog Audio Gain",
+			"max": 12,
+			"min": -12,
+			"operators": "=+-?",
+			"step": 3,
+			"type": "number",
+			"unit": "dB"
+		},
+		"Source10.DigitalAudioFormat": {
+			"description": "Set Digital Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Optical",
+				"Coaxial"
+			]
+		},
+		"Source10.DigitalAudioInput": {
+			"description": "Set Digital Audio Input",
+			"max": 4,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
 		"Source10.Enabled": {
-			"description": "Set Enabled Yes",
+			"description": "Get Enabled Yes",
 			"operators": "?",
 			"type": "boolean",
 			"values": [
@@ -1222,6 +1255,25 @@
 			"max": 7,
 			"min": 0,
 			"operators": "=+-?",
+			"type": "number"
+		},
+		"Source10.VideoFormat": {
+			"description": "Set Source Video Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Video",
+				"SVideo",
+				"Component",
+				"HDMI"
+			]
+		},
+		"Source10.VideoInput": {
+			"description": "Get Source Video Input",
+			"max": 1,
+			"min": 1,
+			"operators": "?",
 			"type": "number"
 		},
 		"Source2.AnalogAudioFormat": {
@@ -1277,7 +1329,7 @@
 			]
 		},
 		"Source2.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1352,7 +1404,7 @@
 		},
 		"Source3.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1367,7 +1419,7 @@
 			]
 		},
 		"Source3.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1442,7 +1494,7 @@
 		},
 		"Source4.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1457,7 +1509,7 @@
 			]
 		},
 		"Source4.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1495,12 +1547,19 @@
 			"type": "number"
 		},
 		"Source5.AnalogAudioFormat": {
-			"description": "Set Analog Audio Format",
+			"description": "Get Analog Audio Format",
 			"operators": "?",
 			"type": "enum",
 			"values": [
 				"Stereo"
 			]
+		},
+		"Source5.AnalogAudioInput": {
+			"description": "Set Analog Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
 		},
 		"Source5.AnalogGain": {
 			"description": "Set Analog Audio Gain",
@@ -1511,8 +1570,25 @@
 			"type": "number",
 			"unit": "dB"
 		},
+		"Source5.DigitalAudioFormat": {
+			"description": "Set Digital Audio Format",
+			"operators": "=+-?",
+			"type": "enum",
+			"values": [
+				"Off",
+				"Optical",
+				"Coaxial"
+			]
+		},
+		"Source5.DigitalAudioInput": {
+			"description": "Set Digital Audio Input",
+			"max": 8,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
+		},
 		"Source5.Enabled": {
-			"description": "Set Source Enabled No/Yes",
+			"description": "Get Source Enabled No/Yes",
 			"operators": "?",
 			"type": "boolean",
 			"values": [
@@ -1540,12 +1616,19 @@
 			"type": "number"
 		},
 		"Source5.VideoFormat": {
-			"description": "Set Source Video Format",
+			"description": "Get Source Video Format",
 			"operators": "?",
 			"type": "enum",
 			"values": [
 				"SVideo"
 			]
+		},
+		"Source5.VideoInput": {
+			"description": "Set Source Video Input",
+			"max": 6,
+			"min": 1,
+			"operators": "=+-?",
+			"type": "number"
 		},
 		"Source6.AnalogAudioFormat": {
 			"description": "Set Analog Audio Format",
@@ -1585,7 +1668,7 @@
 		},
 		"Source6.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1600,7 +1683,7 @@
 			]
 		},
 		"Source6.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1675,7 +1758,7 @@
 		},
 		"Source7.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1690,7 +1773,7 @@
 			]
 		},
 		"Source7.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1702,7 +1785,7 @@
 			"type": "number"
 		},
 		"Source7.TriggerOut": {
-			"description": "Set Source Trigger Out",
+			"description": "Get Source Trigger Out",
 			"max": 0,
 			"min": 0,
 			"operators": "?",
@@ -1765,7 +1848,7 @@
 		},
 		"Source8.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1780,7 +1863,7 @@
 			]
 		},
 		"Source8.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1855,7 +1938,7 @@
 		},
 		"Source9.DigitalAudioInput": {
 			"description": "Set Digital Audio Input",
-			"max": 8,
+			"max": 4,
 			"min": 1,
 			"operators": "=+-?",
 			"type": "number"
@@ -1870,7 +1953,7 @@
 			]
 		},
 		"Source9.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},

@@ -1389,7 +1389,7 @@
 			]
 		},
 		"Source1.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1481,7 +1481,7 @@
 			]
 		},
 		"Source2.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1573,7 +1573,7 @@
 			]
 		},
 		"Source3.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1665,7 +1665,7 @@
 			]
 		},
 		"Source4.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1757,7 +1757,7 @@
 			]
 		},
 		"Source5.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1849,7 +1849,7 @@
 			]
 		},
 		"Source6.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1941,7 +1941,7 @@
 			]
 		},
 		"Source7.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -2033,7 +2033,7 @@
 			]
 		},
 		"Source8.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -2125,7 +2125,7 @@
 			]
 		},
 		"Source9.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
