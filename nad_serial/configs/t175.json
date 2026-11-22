@@ -95,8 +95,10 @@
 		},
 		"Ipod.Track": {
 			"description": "Track Next/Previous",
-			"operators": "+-",
-			"type": "string"
+			"max": 1000,
+			"min": 1,
+			"operators": "+-?",
+			"type": "number"
 		},
 		"Main.Audyssey": {
 			"description": "Set the Audyssey Curve",

@@ -96,3 +96,48 @@ async def test_volume_limits_older_firmware(
     assert "Main.Volume.Max?" not in device_simulation.commands
 
     await device.async_disconnect()
+
+
+@pytest.mark.simulated_device(
+    values={
+        "Tuner.Band": "DAB",
+        "Tuner.DAB.Service": "Radio 2",
+        "Tuner.DAB.DLS": "News",
+        "Main.Source": "10",
+        "Source10.Enabled": "Yes",
+        "Source10.Name": "Tuner",
+    }
+)
+async def test_tuner_content(url: str, device_simulation: SimulatedDevice):
+    """On connect the DAB service and text are read, not the settings of other bands."""
+    device = await NADDevice.async_connect(url)
+    assert isinstance(device, NADMultiZoneReceiver)
+    assert device.channel == "Radio 2"
+    assert device.title == "News"
+    assert not any(
+        command.startswith(("Tuner.FM.RDS", "Tuner.XM."))
+        for command in device_simulation.commands
+    )
+
+    await device.async_disconnect()
+
+
+@pytest.mark.simulated_device(
+    values={
+        "Tuner.Band": "DAB",
+        "Tuner.DAB.DLS": "News",
+        "Main.Source": "1",
+        "Source1.Enabled": "Yes",
+        "Source1.Name": "CD",
+        "Source10.Enabled": "Yes",
+        "Source10.Name": "Tuner",
+    }
+)
+async def test_title_other_source(url: str, device_simulation: SimulatedDevice):
+    """The tuner's title and channel aren't shown when another source is selected."""
+    device = await NADDevice.async_connect(url)
+    assert isinstance(device, NADMultiZoneReceiver)
+    assert device.title is None
+    assert device.channel is None
+
+    await device.async_disconnect()

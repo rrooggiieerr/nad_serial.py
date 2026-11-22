@@ -9,6 +9,7 @@ Tests that are about the connection run over a serial and over a network connect
 """
 
 import asyncio
+from typing import Any
 
 import pytest
 
@@ -44,6 +45,18 @@ CONFIGS = {
                 "step": 0.1,
                 "type": "number",
             },
+            # What is playing, from the iPod on source 5 or from the UI
+            "Ipod.Album": {"operators": "?", "type": "string"},
+            "Ipod.Artist": {"operators": "?", "type": "string"},
+            "Ipod.Enabled": {
+                "operators": "=+-?",
+                "type": "boolean",
+                "values": ["No", "Yes"],
+            },
+            "Ipod.Title": {"operators": "?", "type": "string"},
+            "UI.Album": {"operators": "?", "type": "string"},
+            "UI.Artist": {"operators": "?", "type": "string"},
+            "UI.Title": {"operators": "?", "type": "string"},
             # Settings of one firmware version
             "Main.Before": {"firmware": "<v2.00", "operators": "?", "type": "string"},
             "Main.Since": {"firmware": ">=v2.00", "operators": "?", "type": "string"},
@@ -438,16 +451,32 @@ async def test_update_from_device(url: str, device_simulation: SimulatedDevice):
     await device.async_disconnect()
 
 
-async def test_reply_is_not_an_update(url: str, device_simulation: SimulatedDevice):
-    """The reply to a command isn't passed to the callbacks; the caller gets the result."""
+async def test_reply_with_known_value(url: str, device_simulation: SimulatedDevice):
+    """A reply that confirms the known value isn't passed to the callbacks."""
+    device = await NADDevice.async_connect(url)
+    updates: list[tuple[str, ValueType | None]] = []
+    device.add_callback(lambda setting, value: updates.append((setting, value)))
+
+    assert await device.async_request_setting("Main.Volume") == -30
+    await _settle()
+
+    assert updates == []
+
+    await device.async_disconnect()
+
+
+async def test_reply_with_new_value(url: str, device_simulation: SimulatedDevice):
+    """A reply that changes the known value is passed to the callbacks."""
     device = await NADDevice.async_connect(url)
     updates: list[tuple[str, ValueType | None]] = []
     device.add_callback(lambda setting, value: updates.append((setting, value)))
 
     assert await device.async_change_setting("Main.Volume", -25)
+    device_simulation.set("Tuner.FM.RDSName", "Radio 10")  # Not reported by the device
+    assert await device.async_request_setting("Tuner.FM.RDSName") == "Radio 10"
     await _settle()
 
-    assert updates == []
+    assert updates == [("Main.Volume", -25), ("Tuner.FM.RDSName", "Radio 10")]
 
     await device.async_disconnect()
 
@@ -486,6 +515,147 @@ async def test_unknown_setting_from_device(
 
     assert updates == [("Main.NewSetting", "1"), ("Main.NewSetting", "2")]
     assert device.get_setting_value("Main.NewSetting") == "2"
+
+    await device.async_disconnect()
+
+
+# The built-in tuner
+
+
+@pytest.mark.simulated_device(
+    values={
+        "Main.Source": "10",
+        "Source10.Name": "Radio",
+        "Tuner.Band": "FM",
+        "Tuner.FM.RDSName": "Radio 2",
+        "Tuner.FM.RDSText": "News",
+    }
+)
+async def test_tuner_source(url: str, device_simulation: SimulatedDevice):
+    """On source 10, the title and channel come from the tuner, whatever the source is named."""
+    device = await NADDevice.async_connect(url)
+    assert isinstance(device, NADMultiZoneReceiver)
+
+    assert device.channel == "Radio 2"
+    assert device.title == "News"
+
+    assert await device.async_set_source(3)
+    assert device.channel is None
+    assert device.title is None
+
+    await device.async_disconnect()
+
+
+# What is playing
+
+_PLAYING = {
+    "Ipod.Title": "iPod title",
+    "Ipod.Artist": "iPod artist",
+    "Ipod.Album": "iPod album",
+    "UI.Title": "UI title",
+    "UI.Artist": "UI artist",
+    "UI.Album": "UI album",
+}
+
+
+@pytest.mark.parametrize(
+    ("device_simulation", "expected"),
+    [
+        (
+            {"values": {**_PLAYING, "Ipod.Enabled": "Yes", "Main.Source": "5"}},
+            ("iPod title", "iPod artist", "iPod album"),
+        ),
+        (
+            {"values": {**_PLAYING, "Ipod.Enabled": "No", "Main.Source": "5"}},
+            ("UI title", "UI artist", "UI album"),
+        ),
+        (
+            {"values": {**_PLAYING, "Ipod.Enabled": "Yes", "Main.Source": "3"}},
+            ("UI title", "UI artist", "UI album"),
+        ),
+    ],
+    indirect=["device_simulation"],
+)
+async def test_playing(
+    url: str, device_simulation: SimulatedDevice, expected: tuple[str, str, str]
+):
+    """On source 5 with the iPod enabled, what is playing comes from the iPod, else from the UI."""
+    device = await NADDevice.async_connect(url)
+    assert isinstance(device, NADAmplifier)
+
+    assert (device.title, device.artist, device.album) == expected
+
+    await device.async_disconnect()
+
+
+_TUNER_PLAYING = {
+    "Tuner.Band": "FM",
+    "Tuner.FM.RDSName": "Radio 2",
+    "Tuner.FM.RDSText": "News",
+}
+
+
+def _zone_playing(values: dict[str, str]) -> dict[str, Any]:
+    """The device with the main zone on source 3, and what the iPod, tuner and UI play."""
+    return {"values": {**_PLAYING, **_TUNER_PLAYING, "Main.Source": "3", **values}}
+
+
+@pytest.mark.parametrize(
+    ("device_simulation", "expected"),
+    [
+        # The iPod
+        (
+            _zone_playing({"Ipod.Enabled": "Yes", "Zone2.Source": "5"}),
+            ("iPod title", "iPod artist", "iPod album", None),
+        ),
+        # The tuner
+        (_zone_playing({"Zone2.Source": "10"}), ("News", None, None, "Radio 2")),
+        # Another source: UI is only for the main zone
+        (_zone_playing({"Zone2.Source": "3"}), (None, None, None, None)),
+        # What the main zone plays, here from UI
+        (
+            _zone_playing({"Zone2.Source": "11"}),
+            ("UI title", "UI artist", "UI album", None),
+        ),
+        # What the main zone plays, here the tuner
+        (
+            _zone_playing({"Main.Source": "10", "Zone2.Source": "11"}),
+            ("News", None, None, "Radio 2"),
+        ),
+    ],
+    indirect=["device_simulation"],
+)
+async def test_playing_zone(
+    url: str,
+    device_simulation: SimulatedDevice,
+    expected: tuple[str | None, str | None, str | None, str | None],
+):
+    """A zone shows what it plays: the iPod, the tuner, or on source 11 what the main zone plays."""
+    device = await NADDevice.async_connect(url)
+    assert isinstance(device, NADMultiZoneReceiver)
+    assert device.zones is not None
+    zone = device.zones[0]
+
+    assert (zone.title, zone.artist, zone.album, zone.channel) == expected
+
+    await device.async_disconnect()
+
+
+async def test_playing_zone_updates(url: str, device_simulation: SimulatedDevice):
+    """A zone's callbacks get the updates of what it may be playing."""
+    device = await NADDevice.async_connect(url)
+    assert isinstance(device, NADMultiZoneReceiver)
+    assert device.zones is not None
+    updates: list[str] = []
+    device.zones[0].add_callback(lambda setting, value: updates.append(setting))
+
+    device_simulation.send("Main.Volume=-12")
+    device_simulation.send("UI.Title=Song")
+    device_simulation.send("Tuner.FM.RDSText=Weather")
+    device_simulation.send("Main.Source=4")
+    await _settle()
+
+    assert updates == ["UI.Title", "Tuner.FM.RDSText", "Main.Source"]
 
     await device.async_disconnect()
 

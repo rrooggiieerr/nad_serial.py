@@ -237,6 +237,7 @@ _SETTING_KEYS = {
     "max",
     "min",
     "operators",
+    "poll",
     "regex",
     "step",
     "type",
@@ -259,6 +260,13 @@ def _validate_setting(
 
     if setting["type"].endswith("[]"):
         assert "+" not in setting["operators"], f"{name}: a list can't be stepped"
+    if setting["type"] == "string":
+        assert setting["operators"] in ("=?", "?"), f"{name}: a string can't be stepped"
+    if "poll" in setting:
+        assert isinstance(setting["poll"], bool), f"{name}: poll is true or false"
+        assert "?" in setting["operators"], (
+            f"{name}: only a setting with ? can be polled"
+        )
 
     if setting["type"] in ("boolean", "boolean[]", "enum"):
         values = setting.get("values")

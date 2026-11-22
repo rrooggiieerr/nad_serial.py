@@ -37,13 +37,13 @@ async def test_rds(url: str, device_simulation: SimulatedDevice):
     device = await NADDevice.async_connect(url)
     assert isinstance(device, NADTuner)
 
-    await device.async_request_settings(("Tuner.FM.RDSName", "Tuner.FM.RDSText"))
+    # The RDS name and text are read on connect
     assert device.get_fm_frequency() == 98.5
-    assert device.get_fm_rdsname() == "Radio 2"
-    assert device.get_fm_rdstext() == "News"
+    assert device.channel == "Radio 2"
+    assert device.title == "News"
 
     device_simulation.send("Tuner.FM.RDSText=Weather")
     await asyncio.sleep(0.05)  # Let the reader loop handle the line
-    assert device.get_fm_rdstext() == "Weather"
+    assert device.title == "Weather"
 
     await device.async_disconnect()

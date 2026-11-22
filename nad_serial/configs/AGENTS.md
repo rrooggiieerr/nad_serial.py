@@ -54,7 +54,8 @@ The command list gives, per setting, a name, `Operators`, `Possible Values` and 
 | `Range 25 - 100 Step 25` | `"type": "number"`, `"min": 25`, `"max": 100`, `"step": 25`. Leave out `step` when it is 1 |
 | Two values that mean off and on, e.g. `On`/`Off` or `Yes`/`No` | `"type": "boolean"`, `"values"` with the false value first: `["Off", "On"]`, `["No", "Yes"]` |
 | Any other list of values | `"type": "enum"`, `"values"` with every value spelled exactly as in the document |
-| Free text, e.g. a name or a model | `"type": "string"` |
+| Free text, e.g. a name or a model | `"type": "string"`, with `"operators": "=?"` or `"?"`: a string can't be stepped, even when the document lists `+/-` |
+| `Possible Values: N/A` with only `Operators: +/-`, e.g. `Ipod.Track` (next/previous) | `"type": "number"`, `"operators": "+-"`, without `min` and `max` |
 | Comma separated numbers, e.g. `-60,12`, even when the document says `String` | `"type": "number[]"`. See [List settings](#list-settings) |
 | Comma separated off/on values, e.g. `On,Off` | `"type": "boolean[]"`. See [List settings](#list-settings) |
 | `Description: ...` | `"description"`: the document's description, without changes |
@@ -74,6 +75,9 @@ More rules:
   documented value as the last item, the fallback: `"max": ["Main.Volume.Max", 19]`. Only the last
   item may be a number, and every name must be a `number` setting in the same configuration.
 - A `regex` is only for `string` settings whose value must have a fixed format, e.g. an IR code.
+- `"poll": true` is for a setting the device changes without reporting it, e.g. `Tuner.FM.RDSName`
+  after tuning to another station. The document doesn't say this: only add it when the user has
+  seen it on a device, and only for a setting with `?`.
 
 ### List settings
 

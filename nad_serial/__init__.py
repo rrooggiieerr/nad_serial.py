@@ -53,6 +53,22 @@ _BASE_SETTINGS: Final = (
     "Main.Version",
     "Main.Power",
 )
+# The settings with information about what is playing, read on connect
+_AMPLIFIER_CONTENT_SETTINGS: Final = (
+    "UI.Title",
+    "UI.Artist",
+    "UI.Album",
+    "Ipod.Enabled",
+    "Ipod.Title",
+    "Ipod.Artist",
+    "Ipod.Album",
+)
+# By tuner band, the settings with the channel name and the title
+_TUNER_CONTENT_SETTINGS: Final = {
+    "FM": ("Tuner.FM.RDSName", "Tuner.FM.RDSText"),
+    "DAB": ("Tuner.DAB.Service", "Tuner.DAB.DLS"),
+    "XM": ("Tuner.XM.ChannelName", "Tuner.XM.Title"),
+}
 
 logger = logging.getLogger(__name__)
 
@@ -465,6 +481,10 @@ class NADDevice:
                     continue
 
                 setting_lc = setting.lower()
+                changed = (
+                    setting_lc not in self._setting_states
+                    or self._setting_states[setting_lc] != value
+                )
                 if setting_lc in self._device_config["settings"]:
                     self._setting_states[setting_lc] = value
 
@@ -475,6 +495,8 @@ class NADDevice:
                 ):
                     # Response to a request
                     self._pending_request[1].set_result(value)
+                    if changed and setting_lc in self._setting_states:
+                        self._update_callbacks(setting, value)
                     continue
 
                 if not (
@@ -780,6 +802,10 @@ class NADAmplifier(NADDevice):
                 for name in ("Volume", "Mute", "Source", "ListeningMode")
             )
 
+        # What is playing, the settings the device doesn't support are skipped
+        with contextlib.suppress(NADConnectionError):
+            await self.async_request_settings(_AMPLIFIER_CONTENT_SETTINGS)
+
         source_config = self.get_setting_config(f"{self._prefix}.Source")
         if not source_config or source_config["type"] != "number":
             return
@@ -886,6 +912,24 @@ class NADAmplifier(NADDevice):
         return source_names or None
 
     @property
+    def _source_is_tuner(self) -> bool:
+        """If the current source is the built-in tuner, which is always source 10."""
+        device = self._parent_device if isinstance(self, NADZone) else self
+        return (
+            isinstance(device, NADTuner)
+            and self.get_setting_value(f"{self._prefix}.Source") == 10
+        )
+
+    @property
+    def _source_is_ipod(self) -> bool:
+        """If the current source is the iPod: source 5, when the iPod interface is enabled."""
+        device = self._parent_device if isinstance(self, NADZone) else self
+        return (
+            device.get_setting_value("Ipod.Enabled") is True
+            and self.get_setting_value(f"{self._prefix}.Source") == 5
+        )
+
+    @property
     def source_name(self) -> str | None:
         """The name of the current source, if known."""
         source_config = self.get_setting_config(f"{self._prefix}.Source")
@@ -945,6 +989,34 @@ class NADAmplifier(NADDevice):
     async def async_set_source(self, source: int | str) -> bool:
         """Sets the source."""
         return await self.async_change_setting(f"{self._prefix}.Source", source)
+
+    @property
+    def title(self) -> str | None:
+        """Currently playing title, if known."""
+        return self._amplifier_title()
+
+    def _amplifier_title(self) -> str | None:
+        """The title from the amplifier's own settings, e.g. of the iPod or a streaming source."""
+        return self._amplifier_content("Title")
+
+    def _amplifier_content(self, name: str) -> str | None:
+        """Title, Artist or Album of what is playing: from the iPod on its source, else from UI."""
+        if self._source_is_tuner:
+            return None  # What the tuner plays comes from the tuner
+        device = self._parent_device if isinstance(self, NADZone) else self
+        setting = f"Ipod.{name}" if self._source_is_ipod else f"UI.{name}"
+        value = device.get_setting_value(setting)
+        return str(value) if value else None
+
+    @property
+    def artist(self) -> str | None:
+        """Currently playing artist, if known."""
+        return self._amplifier_content("Artist")
+
+    @property
+    def album(self) -> str | None:
+        """Currently playing album name, if known."""
+        return self._amplifier_content("Album")
 
 
 class NADMultiZoneAmplifier(NADAmplifier):
@@ -1030,6 +1102,58 @@ class NADZone(NADAmplifier):
         """The source names by source, None if they are not known."""
         return self._parent_device.source_names
 
+    @property
+    def _follows_main(self) -> bool:
+        """If the zone plays what the main zone plays, which is source 11."""
+        return self.get_setting_value(f"{self._prefix}.Source") == 11
+
+    @property
+    @override
+    def title(self) -> str | None:
+        """Currently playing title in the zone, if known."""
+        if self._follows_main:
+            return self._parent_device.title
+        if self._source_is_tuner:
+            return self._parent_tuner._tuner_title()  # noqa: SLF001
+        if self._source_is_ipod:
+            return self._amplifier_content("Title")
+        return None  # UI.Title is only for the main zone
+
+    @property
+    @override
+    def artist(self) -> str | None:
+        """Currently playing artist in the zone, if known."""
+        if self._follows_main:
+            return self._parent_device.artist
+        if self._source_is_ipod:
+            return self._amplifier_content("Artist")
+        return None
+
+    @property
+    @override
+    def album(self) -> str | None:
+        """Currently playing album name in the zone, if known."""
+        if self._follows_main:
+            return self._parent_device.album
+        if self._source_is_ipod:
+            return self._amplifier_content("Album")
+        return None
+
+    @property
+    def channel(self) -> str | None:
+        """Channel the tuner is tuned in to, when the zone plays the tuner."""
+        if self._follows_main:
+            return getattr(self._parent_device, "channel", None)
+        if self._source_is_tuner:
+            return self._parent_tuner._tuner_channel()  # noqa: SLF001
+        return None
+
+    @property
+    def _parent_tuner(self) -> NADTuner:
+        """The parent device as tuner, only when it has a tuner."""
+        assert isinstance(self._parent_device, NADTuner)
+        return self._parent_device
+
     @override
     def add_callback(
         self, callback: Callable[[str, ValueType | None], None]
@@ -1037,7 +1161,13 @@ class NADZone(NADAmplifier):
         """Adds a callback."""
 
         def zone_callback(setting: str, value: ValueType | None) -> None:
-            if setting.lower().startswith((f"{self._prefix.lower()}.", "source")):
+            if (
+                setting.lower().startswith(
+                    (f"{self._prefix.lower()}.", "source", "ipod.", "tuner.", "ui.")
+                )
+                or setting.lower() == "main.source"
+            ):
+                # The zone's own settings, and those of what it may be playing
                 callback(setting, value)
 
         return self._parent_device.add_callback(zone_callback)
@@ -1089,6 +1219,12 @@ class NADTuner(NADDevice):
                 )
             )
 
+        # The channel name and title, only those of the current band respond
+        band = self.get_setting_value("Tuner.Band")
+        if isinstance(band, str) and band in _TUNER_CONTENT_SETTINGS:
+            with contextlib.suppress(NADConnectionError):
+                await self.async_request_settings(_TUNER_CONTENT_SETTINGS[band])
+
     def get_band(self) -> str | None:
         """Gets the tuner band."""
         value = self.get_setting_value("Tuner.Band")
@@ -1129,15 +1265,59 @@ class NADTuner(NADDevice):
         """Selects a tuner preset."""
         return await self.async_change_setting("Tuner.Preset", preset)
 
-    def get_fm_rdsname(self) -> str | None:
-        """Gets the RDS name."""
-        value = self.get_setting_value("Tuner.FM.RDSName")
-        return str(value) if value else None
+    @property
+    def title(self) -> str | None:
+        """Title of what the tuner is playing, if known."""
+        return self._tuner_title()
 
-    def get_fm_rdstext(self) -> str | None:
-        """Gets the RDS text."""
-        value = self.get_setting_value("Tuner.FM.RDSText")
-        return str(value) if value else None
+    def _tuner_title(self) -> str | None:
+        """The title from the tuner, e.g. the RDS text."""
+        if self.get_setting_value("Tuner.Band") == "FM" and self.supports_setting(
+            "Tuner.FM.RDSText"
+        ):
+            value = self.get_setting_value("Tuner.FM.RDSText")
+            return str(value) if value else None
+
+        if self.get_setting_value("Tuner.Band") == "DAB" and self.supports_setting(
+            "Tuner.DAB.DLS"
+        ):
+            value = self.get_setting_value("Tuner.DAB.DLS")
+            return str(value) if value else None
+
+        if self.get_setting_value("Tuner.Band") == "XM" and self.supports_setting(
+            "Tuner.XM.Title"
+        ):
+            value = self.get_setting_value("Tuner.XM.Title")
+            return str(value) if value else None
+
+        return None
+
+    @property
+    def channel(self) -> str | None:
+        """Channel currently tuned in to."""
+        return self._tuner_channel()
+
+    def _tuner_channel(self) -> str | None:
+        """The channel from the tuner, e.g. the RDS name."""
+        if self.get_setting_value("Tuner.Band") == "FM" and self.supports_setting(
+            "Tuner.FM.RDSName"
+        ):
+            value = self.get_setting_value("Tuner.FM.RDSName")
+            return str(value) if value else None
+
+        if self.get_setting_value("Tuner.Band") == "DAB" and self.supports_setting(
+            "Tuner.DAB.Service"
+        ):
+            value = self.get_setting_value("Tuner.DAB.Service")
+            return str(value) if value else None
+
+        if self.get_setting_value("Tuner.Band") == "XM" and self.supports_setting(
+            "Tuner.XM.ChannelName"
+        ):
+            value = self.get_setting_value("Tuner.XM.ChannelName")
+            return str(value) if value else None
+
+        return None
 
 
 class NADReceiver(NADAmplifier, NADTuner):
@@ -1145,8 +1325,40 @@ class NADReceiver(NADAmplifier, NADTuner):
 
     _device_type: str = "receiver"
 
+    @property
+    @override
+    def title(self) -> str | None:
+        """Currently playing title, if known."""
+        if self._source_is_tuner:
+            return self._tuner_title()
+        return self._amplifier_title()
+
+    @property
+    @override
+    def channel(self) -> str | None:
+        """Channel currently tuned in to, when the tuner is the selected source."""
+        if self._source_is_tuner:
+            return self._tuner_channel()
+        return None
+
 
 class NADMultiZoneReceiver(NADMultiZoneAmplifier, NADTuner):
     """A NAD device with a multi-zone amplifier and a tuner."""
 
     _device_type: str = "receiver"
+
+    @property
+    @override
+    def title(self) -> str | None:
+        """Currently playing title, if known."""
+        if self._source_is_tuner:
+            return self._tuner_title()
+        return self._amplifier_title()
+
+    @property
+    @override
+    def channel(self) -> str | None:
+        """Channel currently tuned in to, when the tuner is the selected source."""
+        if self._source_is_tuner:
+            return self._tuner_channel()
+        return None

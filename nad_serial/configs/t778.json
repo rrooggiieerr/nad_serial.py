@@ -91,6 +91,13 @@
 			"operators": "?",
 			"type": "string"
 		},
+		"Ipod.Track": {
+			"description": "Track Next/Previous",
+			"max": 1000,
+			"min": 1,
+			"operators": "+-?",
+			"type": "number"
+		},
 		"Main.Amp.Back": {
 			"description": "Set the back Amplifier output to Zone3",
 			"operators": "=+-?",
@@ -1383,7 +1390,7 @@
 		},
 		"Source1.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source1.Preset": {
@@ -1475,7 +1482,7 @@
 		},
 		"Source2.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source2.Preset": {
@@ -1567,7 +1574,7 @@
 		},
 		"Source3.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source3.Preset": {
@@ -1659,7 +1666,7 @@
 		},
 		"Source4.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source4.Preset": {
@@ -1751,7 +1758,7 @@
 		},
 		"Source5.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source5.Preset": {
@@ -1843,7 +1850,7 @@
 		},
 		"Source6.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source6.Preset": {
@@ -1935,7 +1942,7 @@
 		},
 		"Source7.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source7.Preset": {
@@ -2027,7 +2034,7 @@
 		},
 		"Source8.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source8.Preset": {
@@ -2119,7 +2126,7 @@
 		},
 		"Source9.Name": {
 			"description": "Get the source name",
-			"operators": "?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Source9.Preset": {
