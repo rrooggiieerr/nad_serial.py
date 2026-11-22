@@ -96,7 +96,7 @@
 		"Ipod.Track": {
 			"description": "Track Next/Previous",
 			"operators": "+-",
-			"type": "string"
+			"type": "number"
 		},
 		"Main.Audyssey": {
 			"description": "Set the Audyssey Curve",

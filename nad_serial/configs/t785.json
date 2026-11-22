@@ -96,7 +96,7 @@
 		"Ipod.Track": {
 			"description": "Track Next/Previous",
 			"operators": "+-",
-			"type": "string"
+			"type": "number"
 		},
 		"Main.Amp.Back": {
 			"description": "Set the back Amplifier output to Zone4",

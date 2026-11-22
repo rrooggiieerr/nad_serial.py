@@ -95,7 +95,7 @@
 		"Ipod.Track": {
 			"description": "Track Next/Previous",
 			"operators": "+-",
-			"type": "string"
+			"type": "number"
 		},
 		"Main.ADCSampleRate": {
 			"description": "Analog to Digital Sample Rate",
