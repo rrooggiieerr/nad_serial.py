@@ -113,7 +113,7 @@
 		},
 		"Main.BT.Name": {
 			"description": "Set Bluetooth device name.",
-			"operators": "=+-?",
+			"operators": "=?",
 			"type": "string"
 		},
 		"Main.BT.SinkDevice": {
