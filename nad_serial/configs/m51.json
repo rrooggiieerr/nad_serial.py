@@ -3,6 +3,8 @@
 		"amplifier"
 	],
 	"settings": {
+		"Main.Build": null,
+		"Main.Model": null,
 		"Main.Polarity": {
 			"description": "Set the polarity",
 			"operators": "=+-?",
@@ -12,6 +14,8 @@
 				"Reversed"
 			]
 		},
+		"Main.Serial": null,
+		"Main.SerialNumber": null,
 		"Main.Source": {
 			"max": null,
 			"min": null,
