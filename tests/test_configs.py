@@ -259,6 +259,8 @@ def _validate_setting(
 
     if setting["type"].endswith("[]"):
         assert "+" not in setting["operators"], f"{name}: a list can't be stepped"
+    if setting["type"] == "string":
+        assert setting["operators"] in ("=?", "?"), f"{name}: a string can't be stepped"
 
     if setting["type"] in ("boolean", "boolean[]", "enum"):
         values = setting.get("values")
