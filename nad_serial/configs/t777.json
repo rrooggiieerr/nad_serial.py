@@ -1544,7 +1544,7 @@
 			]
 		},
 		"Source1.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1582,7 +1582,7 @@
 			"type": "number"
 		},
 		"Source10.AnalogAudioFormat": {
-			"description": "Set Analog Audio Format",
+			"description": "Get Analog Audio Format",
 			"operators": "?",
 			"type": "enum",
 			"values": [
@@ -1590,14 +1590,14 @@
 			]
 		},
 		"Source10.AnalogAudioInput": {
-			"description": "Set Analog Audio Format",
+			"description": "Get Analog Audio Format",
 			"max": 9,
 			"min": 9,
 			"operators": "?",
 			"type": "number"
 		},
 		"Source10.AnalogGain": {
-			"description": "Set Analog Audio Format",
+			"description": "Get Analog Audio Format",
 			"max": 12,
 			"min": -12,
 			"operators": "?",
@@ -1606,7 +1606,7 @@
 			"unit": "dB"
 		},
 		"Source10.DigitalAudioFormat": {
-			"description": "Set source's digital audio to HDMI's audio return channel (ARC)",
+			"description": "Get source's digital audio to HDMI's audio return channel (ARC)",
 			"operators": "?",
 			"type": "enum",
 			"values": [
@@ -1618,14 +1618,14 @@
 			]
 		},
 		"Source10.DigitalAudioInput": {
-			"description": "Set Digital Audio Input",
+			"description": "Get Digital Audio Input",
 			"max": 8,
 			"min": 1,
 			"operators": "?",
 			"type": "number"
 		},
 		"Source10.Enabled": {
-			"description": "Set Enabled Yes",
+			"description": "Get Enabled Yes",
 			"operators": "?",
 			"type": "boolean",
 			"values": [
@@ -1726,7 +1726,7 @@
 			]
 		},
 		"Source2.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1818,7 +1818,7 @@
 			]
 		},
 		"Source3.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1910,7 +1910,7 @@
 			]
 		},
 		"Source4.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -2002,7 +2002,7 @@
 			]
 		},
 		"Source5.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -2094,7 +2094,7 @@
 			]
 		},
 		"Source6.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -2186,7 +2186,7 @@
 			]
 		},
 		"Source7.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -2278,7 +2278,7 @@
 			]
 		},
 		"Source8.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -2370,7 +2370,7 @@
 			]
 		},
 		"Source9.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},

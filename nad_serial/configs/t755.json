@@ -1151,7 +1151,7 @@
 			]
 		},
 		"Source1.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1189,7 +1189,7 @@
 			"type": "number"
 		},
 		"Source10.AnalogAudioFormat": {
-			"description": "Set Analog Audio Format",
+			"description": "Get Analog Audio Format",
 			"operators": "?",
 			"type": "enum",
 			"values": [
@@ -1197,7 +1197,7 @@
 			]
 		},
 		"Source10.Enabled": {
-			"description": "Set Enabled Yes",
+			"description": "Get Enabled Yes",
 			"operators": "?",
 			"type": "boolean",
 			"values": [
@@ -1277,7 +1277,7 @@
 			]
 		},
 		"Source2.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1367,7 +1367,7 @@
 			]
 		},
 		"Source3.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1457,7 +1457,7 @@
 			]
 		},
 		"Source4.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1495,7 +1495,7 @@
 			"type": "number"
 		},
 		"Source5.AnalogAudioFormat": {
-			"description": "Set Analog Audio Format",
+			"description": "Get Analog Audio Format",
 			"operators": "?",
 			"type": "enum",
 			"values": [
@@ -1512,7 +1512,7 @@
 			"unit": "dB"
 		},
 		"Source5.Enabled": {
-			"description": "Set Source Enabled No/Yes",
+			"description": "Get Source Enabled No/Yes",
 			"operators": "?",
 			"type": "boolean",
 			"values": [
@@ -1540,7 +1540,7 @@
 			"type": "number"
 		},
 		"Source5.VideoFormat": {
-			"description": "Set Source Video Format",
+			"description": "Get Source Video Format",
 			"operators": "?",
 			"type": "enum",
 			"values": [
@@ -1600,7 +1600,7 @@
 			]
 		},
 		"Source6.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1690,7 +1690,7 @@
 			]
 		},
 		"Source7.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1702,7 +1702,7 @@
 			"type": "number"
 		},
 		"Source7.TriggerOut": {
-			"description": "Set Source Trigger Out",
+			"description": "Get Source Trigger Out",
 			"max": 0,
 			"min": 0,
 			"operators": "?",
@@ -1780,7 +1780,7 @@
 			]
 		},
 		"Source8.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
@@ -1870,7 +1870,7 @@
 			]
 		},
 		"Source9.Name": {
-			"description": "Get the source name",
+			"description": "Set the source name",
 			"operators": "=?",
 			"type": "string"
 		},
