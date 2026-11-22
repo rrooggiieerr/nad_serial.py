@@ -78,6 +78,7 @@ A setting can have the following keys:
 | `latest` | Optional, for a setting that reports a version, e.g. `Main.Version` or `DSP.Version`. The latest known version, e.g. `"v2.20"`. |
 | `max`, `min` | `number` only. The highest and lowest value. Either a number, the name of a setting that reports it, e.g. `"max": "Main.Sources"`, or a list of these, e.g. `"max": ["Main.Volume.Max", 19]`. See [Values from the device](#values-from-the-device). |
 | `operators` | The operators the setting accepts: `=+-?`, `=?`, `+-?`, `+-`, `=` or `?`. A list type can't be stepped, so it only accepts `=?`, `=` or `?`. A `string` only accepts `=?` or `?`. |
+| `poll` | Optional. `true` for a setting the device changes without reporting it, e.g. the RDS name of an FM station. The setting is then polled, also on a device that reports other changes on its own (`sends_updates`). Only for a setting with `?`. |
 | `regex` | `string` only, optional. A regular expression the whole value must match, e.g. `"0x([0-9A-Fa-f]{2})+"` for a hex code with the `0x` prefix, in pairs of digits. |
 | `step` | `number` only. The value changes in steps of this size, e.g. `0.5`. Either a number, the name of a setting that reports it, e.g. `"step": "Tuner.AMStep"`, or a list of these. See [Values from the device](#values-from-the-device). Default `1`. |
 | `type` | `number`, `boolean`, `enum`, `string`, or a list: `number[]` or `boolean[]`, see below. |

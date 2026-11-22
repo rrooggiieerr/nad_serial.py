@@ -46,11 +46,13 @@
 		"Tuner.FM.RDSName": {
 			"description": "FM RDS Name",
 			"operators": "?",
+			"poll": true,
 			"type": "string"
 		},
 		"Tuner.FM.RDSText": {
 			"description": "FM RDS Text",
 			"operators": "?",
+			"poll": true,
 			"type": "string"
 		},
 		"Tuner.Preset": {

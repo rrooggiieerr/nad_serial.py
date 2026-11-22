@@ -75,6 +75,9 @@ More rules:
   documented value as the last item, the fallback: `"max": ["Main.Volume.Max", 19]`. Only the last
   item may be a number, and every name must be a `number` setting in the same configuration.
 - A `regex` is only for `string` settings whose value must have a fixed format, e.g. an IR code.
+- `"poll": true` is for a setting the device changes without reporting it, e.g. `Tuner.FM.RDSName`
+  after tuning to another station. The document doesn't say this: only add it when the user has
+  seen it on a device, and only for a setting with `?`.
 
 ### List settings
 
