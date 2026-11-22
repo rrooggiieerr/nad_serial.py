@@ -133,10 +133,10 @@ Install NAD Serial with pip:
 
 `pip3 install nad_serial`
 
-## Contribution and appreciation
+## Contributing and supporting this project
 
-Do you enjoy using NAD Serial? You can contribute or show your appreciation, in the
-following ways.
+Are you enjoying this Python library? There are several ways you can contribute to the project,
+help other users, or support my work.
 
 ### Contribute your device model
 
@@ -147,23 +147,30 @@ Is there no configuration file for your device model yet, or is the configuratio
 incorrect? Create a [configuration file](nad_serial/configs/README.md) and submit a pull request
 with the new or updated configuration file.
 
-### Star this GitHub page
+### Star this library
 
-Help other NAD device users find NAD Serial by starring this GitHub page. Click ⭐ Star on
-the top right of the GitHub page.
+Help other NAD users discover this library by starring the GitHub repository. Just click
+**⭐ Star** at the top right of [this page](https://github.com/rrooggiieerr/nad_serial.py).
 
 ### Support my work
 
-Please consider supporting my work through one of the following platforms. Your contribution is
-greatly appreciated and keeps me motivated:
+I’ve put a lot of time and effort into developing and maintaining this library. If you find it
+useful, please consider supporting its continued development by [sponsoring me on GitHub][github]
+or [buying me a coffee ☕️][buymecoffee].
+
+Your support is greatly appreciated and helps keep me motivated to continue developing and
+maintaining this library!
 
 [![GitHub Sponsors][github-shield]][github]
 [![BuyMeCoffee][buymecoffee-shield]][buymecoffee]
 
 ### Hire me
 
-If you're in need of a freelance Python developer for your project please contact me. You can find
-my email address on [my GitHub profile](https://github.com/rrooggiieerr).
+Would you like a Home Assistant integration developed for your product, or do you need an
+experienced Python developer for your project?
+
+I'm available for freelance development work. You can find my contact details on
+[my GitHub profile](https://github.com/rrooggiieerr).
 
 [python-shield]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [releases]: https://github.com/rrooggiieerr/nad_serial.py/releases
