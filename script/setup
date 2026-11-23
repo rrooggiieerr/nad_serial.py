@@ -10,7 +10,8 @@ if [ ! -n "$VIRTUAL_ENV" ]; then
   if [ -x "$(command -v uv)" ]; then
     uv venv .venv
   else
-    python3 -m venv .venv
+    python_version="$(cat .python-version 2>/dev/null || echo 3)"
+    "python${python_version}" -m venv .venv
   fi
   source .venv/bin/activate
 fi
