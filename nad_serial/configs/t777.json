@@ -657,7 +657,9 @@
 				"PLIIMusic",
 				"SurroundEX",
 				"NEO6Cinema",
-				"NEO6Music"
+				"NEO6Music",
+				"NeuralX",
+				"DolbySurround"
 			]
 		},
 		"Main.ListeningMode.Analog": {
@@ -673,7 +675,9 @@
 				"PLIIMovie",
 				"PLIIMusic",
 				"NEO6Cinema",
-				"NEO6Music"
+				"NEO6Music",
+				"NeuralX",
+				"DolbySurround"
 			]
 		},
 		"Main.ListeningMode.DTS.Stereo": {
@@ -682,7 +686,8 @@
 			"values": [
 				"None",
 				"NEO6Cinema",
-				"NEO6Music"
+				"NEO6Music",
+				"NeuralX"
 			]
 		},
 		"Main.ListeningMode.DTS.Surround": {
@@ -693,7 +698,8 @@
 				"None",
 				"StereoDownmix",
 				"NEO6Music",
-				"NEO6Cinema"
+				"NEO6Cinema",
+				"NeuralX"
 			]
 		},
 		"Main.ListeningMode.Dolby.Stereo": {
@@ -704,7 +710,8 @@
 				"None",
 				"ProLogic",
 				"PLIIMovie",
-				"PLIIMusic"
+				"PLIIMusic",
+				"DolbySurround"
 			]
 		},
 		"Main.ListeningMode.Dolby.Surround": {
@@ -716,7 +723,8 @@
 				"StereoDownmix",
 				"PLIIMovie",
 				"PLIIMusic",
-				"SurroundEX"
+				"SurroundEX",
+				"DolbySurround"
 			]
 		},
 		"Main.ListeningMode.PCM.Stereo": {
@@ -732,7 +740,9 @@
 				"PLIIMovie",
 				"PLIIMusic",
 				"NEO6Cinema",
-				"NEO6Music"
+				"NEO6Music",
+				"NeuralX",
+				"DolbySurround"
 			]
 		},
 		"Main.ListeningMode.PCM.Surround": {
@@ -744,7 +754,9 @@
 				"PLIIMusic",
 				"NEO6Cinema",
 				"NEO6Music",
-				"StereoDownmix"
+				"StereoDownmix",
+				"NeuralX",
+				"DolbySurround"
 			]
 		},
 		"Main.OSD.TempDisplay": {
